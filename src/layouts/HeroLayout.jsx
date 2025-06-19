@@ -13,11 +13,11 @@ const HeroLayout = ({ movie }) => {
   }, 3000);
 
   return (
-    <div className="h-150 relative flex items-center justify-center transition-all duration-300 ease-in-out">
+    <div className="h-screen relative flex items-center justify-center transition-all duration-300 ease-in-out">
       {movie.map((item, idx) => (
         <img
           key={idx}
-          src={import.meta.env.VITE_IMAGE_PATH + item.backdrop_path}
+          src={import.meta.env.VITE_IMAGE_PATH_ORIGINAL + item.backdrop_path}
           className={`w-full object-cover absolute inset-0 h-full image-bg  transition-all duration-300 ease-in-out ${
             idx === 0 ? "" : "opacity-0"
           }`}
