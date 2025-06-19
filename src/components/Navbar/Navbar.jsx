@@ -1,15 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const Navbar = () => {
+  const [isTop, setIsTop] = useState(true);
+//   useEffect(() => {
+//     window.screenY === 0 && setIsTop(true);
+//   }, []);
+
+  window.addEventListener("scroll", () => {
+    if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
+      return setIsTop(false);
+    }
+    setIsTop(true);
+  });
+  console.log(isTop);
   return (
-    <div className="drawer">
+    <div className="drawer z-3">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content">
-        {/* Page content here */}
-        {/* <label htmlFor="my-drawer" className="btn btn-primary drawer-button">
-          Open drawer
-        </label> */}
-        <div className="navbar bg-base-100 mx-auto px-10 fixed w-full">
+        <div
+          className={`transition-all duration-300 ease-in-out navbar  ${
+            isTop ? "bg-transparent text-white" : "bg-base-100"
+          } mx-auto px-10 fixed w-full`}
+        >
           <div className="navbar-start">
             <label
               htmlFor="my-drawer"
