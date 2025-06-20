@@ -3,11 +3,14 @@ import Navbar from "./components/Navbar/Navbar";
 import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/HomePage";
 import MovieDetails from "./pages/MovieDetails";
+import SmoothFollower from "./components/utilities/CursorAnimation";
 
 function App() {
   return (
     <>
       <Navbar />
+      <SmoothFollower />
+
       {/* <Router> */}
       <MainLayout>
         <Routes>
