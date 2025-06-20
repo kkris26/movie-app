@@ -3,14 +3,14 @@ import React, { useEffect, useState } from "react";
 const HeroLayout = ({ movie }) => {
   const [loading, setLoading] = useState(false);
   let indexImage = 0;
-  setInterval(() => {
-    const imageBg = document.querySelectorAll(".image-bg");
-    imageBg.forEach((image) => {
-      image.classList.add("opacity-0");
-    });
-    indexImage = indexImage == movie.length - 1 ? 0 : indexImage + 1;
-    imageBg[indexImage].classList.remove("opacity-0");
-  }, 3000);
+  // setInterval(() => {
+  //   const imageBg = document.querySelectorAll(".image-bg");
+  //   imageBg.forEach((image) => {
+  //     image.classList.add("opacity-0");
+  //   });
+  //   indexImage = indexImage == movie.length - 1 ? 0 : indexImage + 1;
+  //   imageBg[indexImage].classList.remove("opacity-0");
+  // }, 3000);
 
   return (
     <div className="h-screen relative flex items-center justify-center transition-all duration-300 ease-in-out">
@@ -23,9 +23,9 @@ const HeroLayout = ({ movie }) => {
           }`}
         />
       ))}
-      <div className=" inset-0 absolute bg-black/20"></div>
+      <div className=" inset-0 absolute bg-black/10"></div>
 
-      <h1 className="z-2 text-8xl text-white">Welcome to Movora</h1>
+      <h1 className="z-2 text-6xl text-white">Welcome to Movora</h1>
     </div>
   );
 };
