@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const Navbar = () => {
   const [isTop, setIsTop] = useState(true);
-//   useEffect(() => {
-//     window.screenY === 0 && setIsTop(true);
-//   }, []);
-
   window.addEventListener("scroll", () => {
     if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
       return setIsTop(false);
     }
     setIsTop(true);
   });
-  console.log(isTop);
   return (
     <div className="drawer z-3">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -44,7 +40,9 @@ const Navbar = () => {
             </label>
           </div>
           <div className="navbar-center">
-            <a className="btn btn-ghost text-xl">MovoRa</a>
+            <Link to="/" className="btn btn-ghost text-xl">
+              MovoRa
+            </Link>
           </div>
           <div className="navbar-end">
             <button className="btn btn-ghost btn-circle">

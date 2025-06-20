@@ -1,16 +1,108 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { FaEye } from "react-icons/fa";
+import { IoIosStar, IoMdTime } from "react-icons/io";
+import { IoEyeOutline, IoEyeSharp, IoPersonSharp } from "react-icons/io5";
+import { MdDateRange } from "react-icons/md";
 
-import { Link, useParams } from "react-router-dom";
+import { data, Link, useParams } from "react-router-dom";
 
 const MovieDetails = () => {
   const { id } = useParams();
+  const [movieByID, setMovieByID] = useState(
+    localStorage.getItem(id) ? JSON.parse(localStorage.getItem(id)) : {}
+  );
+
+  const formatDate = (value) => {
+    const date = new Date(value);
+    const options = {
+      //   weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    return date.toLocaleDateString("en-GB", options);
+  };
+
+  const formatNumber = (value) => {
+    return Number.parseFloat(value).toFixed(1);
+  };
+
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      Authorization: `Bearer ${import.meta.env.VITE_ACCESS_TOKEN}`,
+    },
+  };
+  const getMovieByID = async () => {
+    if (localStorage.getItem(id)) {
+      return;
+    }
+    try {
+      const response = await fetch(
+        import.meta.env.VITE_MOVIE_DETAILS + id,
+        options
+      );
+      const data = await response.json();
+      setMovieByID(data);
+      localStorage.setItem(id, JSON.stringify(data));
+      console.log("Fetch Movie Details");
+    } catch (error) {}
+  };
+  useEffect(() => {
+    getMovieByID();
+  }, []);
+
+  console.log(movieByID);
+
   return (
-    <div className="h-screen flex items-center flex-col gap-5 justify-center">
-      <h1>ID = {id}</h1>
-      <Link to="/" className="btn btn-primary">
-        Home
-      </Link>
-    </div>
+    <>
+      <div
+        className="h-screen bg-cover relative flex items-center px-10"
+        style={{
+          backgroundImage: `url(${
+            import.meta.env.VITE_IMAGE_PATH_ORIGINAL + movieByID.backdrop_path
+          }`,
+        }}
+      >
+        <div className="z-1 w-140 flex flex-col gap-3 justify-start text-white">
+          <h1 className="text-6xl font-bold tracking-wider">
+            {movieByID.title}
+          </h1>
+          {/* <h3 className="text-lg">{movieByID.tagline}</h3> */}
+          <div className="flex gap-4 text-sm text-gray-300">
+            <div className="flex gap-2 items-center">
+              <MdDateRange />
+              <p>{formatDate(movieByID.release_date)}</p>
+            </div>
+            <div className="flex gap-2 items-center">
+              <IoEyeSharp className="text-lg" />
+              <p>{movieByID.popularity}</p>
+            </div>
+            <div className="flex gap-2 items-center ">
+              <IoIosStar className="text-yellow-500 text-lg" />
+              <div className="flex items-center gap-1">
+                <p>
+                  {formatNumber(movieByID.vote_average)} /{" "}
+                  {movieByID.vote_count}
+                </p>
+                <IoPersonSharp className="text-[12px]" />
+              </div>
+            </div>
+            <div className="flex items-center gap-2">
+              <IoMdTime className="text-lg"/>
+              <p>{movieByID.runtime} min.</p>
+            </div>
+          </div>
+          <p className="text-gray-300 ">{movieByID.overview}</p>
+          <button className="bg-white rounded-none btn w-max mt-2 text-black">
+            View More
+          </button>
+        </div>
+        <div className="absolute inset-0 bg-linear-to-l from-transparent to-black/60 z-0"></div>
+      </div>
+      <div className=" flex items-center flex-col gap-5 justify-center"></div>
+    </>
   );
 };
 

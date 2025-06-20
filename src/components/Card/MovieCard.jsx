@@ -25,7 +25,8 @@ const MovieCard = ({ item, genre }) => {
               className="bg-base-300 p-1 px-2 rounded-md text-xs cursor-pointer hover:bg-base-200  transition-all 0.3s"
               key={index}
             >
-              {genre.map((item) => item.id === genreId && item.name)}
+              {genre.length > 0 &&
+                genre.map((item) => item.id === genreId && item.name)}
             </li>
           ))}
         </ul>
