@@ -14,73 +14,52 @@ import { MdDateRange } from "react-icons/md";
 
 import { data, Link, useParams } from "react-router-dom";
 import { formatRating } from "../components/utilities/Formatter/formatter";
+import { getAPIData } from "../services/getAPIService";
 
 const MovieDetails = () => {
   const { id } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [movieByID, setMovieByID] = useState(
-    localStorage.getItem(id) ? JSON.parse(localStorage.getItem(id)) : {}
-  );
+  const [loading, setLoading] = useState({
+    [id]: true,
+  });
+  const [movieByID, setMovieByID] = useState({});
 
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_ACCESS_TOKEN}`,
-    },
-  };
   const getMovieByID = async () => {
-    if (localStorage.getItem(id)) {
-      return;
-    }
-    try {
-      const response = await fetch(
-        import.meta.env.VITE_MOVIE_DETAILS + id,
-        options
-      );
-      const data = await response.json();
-        setMovieByID(data);
-      //   //   localStorage.setItem(id, JSON.stringify(data));
-      console.log("Fetch Movie Details");
-      //   setLoading(false);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
-    }
+    getAPIData({
+      key: id,
+      apiUrl: import.meta.env.VITE_MOVIE_DETAILS + id,
+      setter: setMovieByID,
+      text: "Fetch Movie by ID",
+      resultData: null,
+      setterLoading: setLoading,
+    });
   };
   useEffect(() => {
     getMovieByID();
   }, []);
-
-  console.log(movieByID);
+  console.log("isi loadings");
+  console.log(loading[id]);
   return (
     <>
-      {loading ? (
+      {loading[id] ? (
         <div className="h-screen  flex items-center px-10">
-          <div className="skeleton h-screen inset-0 absolute w-full"></div>
-          <div className="z-1 w-150 flex flex-col gap-4 justify-start text-white">
-            <div className="skeleton h-18 w-full bg-neutral-800"></div>
+          <div className="skeleton h-screen inset-0 bg-base-200/50 absolute w-full"></div>
+          <div className="z-1 w-150 flex flex-col gap-5 justify-start text-white">
+            <div className="skeleton h-18 w-full"></div>
             <div className="flex gap-4 text-sm text-gray-300">
               <div className="flex gap-1 items-center ">
-                <FaStar className="text-yellow-500 text-md" />
-
-                <div className="flex items-center gap-1">
-                  <div className="skeleton h-4 w-20 bg-neutral-800"></div>
-                </div>
+                <div className="skeleton h-4 w-5"></div>
+                <div className="skeleton h-4 w-20"></div>
               </div>
               <div className="flex items-center gap-1">
-                <IoMdTime className="text-lg" />
-                <div className="skeleton h-4 w-20 bg-neutral-800"></div>
+                <div className="skeleton h-4 w-5"></div>
+                <div className="skeleton h-4 w-20"></div>
               </div>
             </div>
-            <div className="text-gray-300 line-clamp-2 w-full flex flex-col gap-2">
-              <div className="skeleton h-4 w-full bg-neutral-800"></div>{" "}
-              <div className="skeleton h-4 w-full bg-neutral-800"></div>{" "}
+            <div className="text-gray-300 w-full flex flex-col gap-2">
+              <div className="skeleton h-4 w-full"></div>{" "}
+              <div className="skeleton h-4 w-full"></div>{" "}
             </div>
-            <button className="bg-white rounded-none btn w-max mt-2 text-black">
-              View More
-            </button>
+            <div className="skeleton h-10 w-30"></div>{" "}
           </div>
         </div>
       ) : (

@@ -5,12 +5,13 @@ const options = {
     Authorization: `Bearer ${import.meta.env.VITE_ACCESS_TOKEN}`,
   },
 };
-export const getMovieService = async ({
+export const getAPIData = async ({
   key,
   apiUrl,
   setter,
   setterLoading,
   text,
+  resultData = "results",
 }) => {
   try {
     const localData = localStorage.getItem(key);
@@ -20,8 +21,10 @@ export const getMovieService = async ({
     }
     const response = await fetch(apiUrl, options);
     const data = await response.json();
-    setter(data.results);
-    localStorage.setItem(key, JSON.stringify(data.results));
+    console.log(data);
+    const results = !resultData ? data : data[resultData];
+    setter(results);
+    localStorage.setItem(key, JSON.stringify(results));
     console.log(text);
   } catch (err) {
     console.log(err);
@@ -29,11 +32,17 @@ export const getMovieService = async ({
     setTimeout(() => {
       setterLoading((prev) => ({ ...prev, [key]: false }));
       console.log("finish");
-    }, 1000);
+    }, 500);
   }
 };
 
-export const getAPIData = async ({ key, apiUrl, setter, resultData, text }) => {
+export const getAPIData2 = async ({
+  key,
+  apiUrl,
+  setter,
+  resultData,
+  text,
+}) => {
   try {
     const localData = localStorage.getItem(key);
     if (localData) {

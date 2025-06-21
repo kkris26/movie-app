@@ -17,7 +17,7 @@ const MovieListLayout = ({
       <div className="grid grid-cols-5 gap-y-10 gap-x-4 ">
         {loading
           ? [...Array(5)].map((_, idx) => (
-              <div className="flex flex-col gap-3 ">
+              <div className="flex flex-col gap-3 " key={idx}>
                 <div className="skeleton h-95 w-full"></div>
                 <div className="skeleton h-4 w-[70%]"></div>
               </div>

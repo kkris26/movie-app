@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import HeroLayout from "../layouts/HeroLayout";
 import MovieListLayout from "../layouts/MovieListLayout";
-import { getAPIData, getMovieService } from "../services/getAPIService";
+import { getAPIData } from "../services/getAPIService";
 
 const HomePage = () => {
   const movieList = {
@@ -32,11 +32,12 @@ const HomePage = () => {
       setter: setGenre,
       text: "Fetch Genre",
       resultData: "genres",
+      setterLoading: setLoading,
     });
   };
 
   const getMovieNowPlaying = () => {
-    getMovieService({
+    getAPIData({
       key: movieList.now_playing_movie,
       apiUrl: import.meta.env.VITE_NOW_PLAYING_MOVIE_LIST,
       setter: setNowPlayingMovie,
@@ -45,7 +46,7 @@ const HomePage = () => {
     });
   };
   const getPopularMovie = () => {
-    getMovieService({
+    getAPIData({
       key: movieList.popular_movie,
       apiUrl: import.meta.env.VITE_POPULAR_MOVIE_LIST,
       setter: setPopularMovie,
@@ -54,7 +55,7 @@ const HomePage = () => {
     });
   };
   const getTopRatedMovie = () => {
-    getMovieService({
+    getAPIData({
       key: movieList.top_rated_movie,
       apiUrl: import.meta.env.VITE_TOP_RATED_MOVIE_LIST,
       setter: setTopRatedMovie,
@@ -63,7 +64,7 @@ const HomePage = () => {
     });
   };
   const getUpcomingMovie = () => {
-    getMovieService({
+    getAPIData({
       key: movieList.upcoming_movie,
       apiUrl: import.meta.env.VITE_UPCOMING_MOVIE_LIST,
       setter: setUpcomingMovie,
