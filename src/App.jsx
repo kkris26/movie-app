@@ -1,11 +1,14 @@
-import { Route, Router, Routes } from "react-router-dom";
+import { Route, useLocation, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import MainLayout from "./layouts/MainLayout";
 import HomePage from "./pages/HomePage";
 import MovieDetails from "./pages/MovieDetails";
 import SmoothFollower from "./components/utilities/CursorAnimation";
+import PageTransitions from "./components/utilities/transitions/PageTransitions";
+import { AnimatePresence } from "framer-motion";
 
 function App() {
+  const location = useLocation();
   return (
     <>
       <Navbar />
@@ -13,10 +16,26 @@ function App() {
 
       {/* <Router> */}
       <MainLayout>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/movie/:id" element={<MovieDetails />} />
-        </Routes>
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route
+              path="/"
+              element={
+                <PageTransitions>
+                  <HomePage />
+                </PageTransitions>
+              }
+            />
+            <Route
+              path="/movie/:id"
+              element={
+                <PageTransitions>
+                  <MovieDetails />
+                </PageTransitions>
+              }
+            />
+          </Routes>
+        </AnimatePresence>
       </MainLayout>
       {/* </Router> */}
     </>
