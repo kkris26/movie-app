@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-const HeroLayout = ({ movie }) => {
+const HeroLayout = ({ data }) => {
   const [loading, setLoading] = useState(false);
   let indexImage = 0;
   // setInterval(() => {
@@ -14,7 +14,7 @@ const HeroLayout = ({ movie }) => {
 
   return (
     <div className="h-screen relative flex items-center justify-center transition-all duration-300 ease-in-out">
-      {movie.map((item, idx) => (
+      {data.map((item, idx) => (
         <img
           key={idx}
           src={import.meta.env.VITE_IMAGE_PATH_ORIGINAL + item.backdrop_path}

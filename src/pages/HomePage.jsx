@@ -1,77 +1,115 @@
 import React, { useEffect, useState } from "react";
 import HeroLayout from "../layouts/HeroLayout";
-
-import MovieCard from "../components/Card/MovieCard";
+import MovieListLayout from "../layouts/MovieListLayout";
+import { getAPIData, getMovieService } from "../services/getAPIService";
 
 const HomePage = () => {
-  const [movie, setMovie] = useState(
-    localStorage.getItem("movie")
-      ? JSON.parse(localStorage.getItem("movie"))
-      : []
-  );
-  const [genre, setGenre] = useState(
-    localStorage.getItem("genre")
-      ? JSON.parse(localStorage.getItem("genre"))
-      : []
-  );
-
-  const options = {
-    method: "GET",
-    headers: {
-      accept: "application/json",
-      Authorization: `Bearer ${import.meta.env.VITE_ACCESS_TOKEN}`,
-    },
+  const movieList = {
+    genre: "genre",
+    now_playing_movie: "now_playing_movie",
+    popular_movie: "popular_movie",
+    top_rated_movie: "top_rated_movie",
+    upcoming_movie: "upcoming_movie",
   };
+
+  const [nowPlayingMovie, setNowPlayingMovie] = useState([]);
+  const [popularMovie, setPopularMovie] = useState([]);
+  const [topRatedMovie, setTopRatedMovie] = useState([]);
+  const [upcomingMovie, setUpcomingMovie] = useState([]);
+  const [loading, setLoading] = useState({
+    genre: true,
+    now_playing_movie: true,
+    popular_movie: true,
+    top_rated_movie: true,
+    upcoming_movie: true,
+  });
+  const [genre, setGenre] = useState([]);
 
   const getGenre = async () => {
-    try {
-      if (localStorage.getItem("genre")) {
-        return;
-      }
-      const response = await fetch(import.meta.env.VITE_GENRE_LIST, options);
-      const data = await response.json();
-      setGenre(data.genres);
-      localStorage.setItem("genre", JSON.stringify(data.genres));
-      console.log("fetch data genre");
-    } catch (err) {
-      console.log(err);
-    }
+    getAPIData({
+      key: movieList.genre,
+      apiUrl: import.meta.env.VITE_GENRE_LIST,
+      setter: setGenre,
+      text: "Fetch Genre",
+      resultData: "genres",
+    });
   };
 
-  const getMovie = async () => {
-    try {
-      if (localStorage.getItem("movie")) {
-        return;
-      }
-      const response = await fetch(import.meta.env.VITE_MOVIE_LIST, options);
-      const data = await response.json();
-      setMovie(data.results);
-      localStorage.setItem("movie", JSON.stringify(data.results));
-      console.log("fetch data movie");
-    } catch (err) {
-      console.log(err);
-    }
+  const getMovieNowPlaying = () => {
+    getMovieService({
+      key: movieList.now_playing_movie,
+      apiUrl: import.meta.env.VITE_NOW_PLAYING_MOVIE_LIST,
+      setter: setNowPlayingMovie,
+      text: "Fetch Now Playing Movie",
+      setterLoading: setLoading,
+    });
+  };
+  const getPopularMovie = () => {
+    getMovieService({
+      key: movieList.popular_movie,
+      apiUrl: import.meta.env.VITE_POPULAR_MOVIE_LIST,
+      setter: setPopularMovie,
+      text: "Fetch Popular Movie",
+      setterLoading: setLoading,
+    });
+  };
+  const getTopRatedMovie = () => {
+    getMovieService({
+      key: movieList.top_rated_movie,
+      apiUrl: import.meta.env.VITE_TOP_RATED_MOVIE_LIST,
+      setter: setTopRatedMovie,
+      text: "Fetch Top Rated Movie",
+      setterLoading: setLoading,
+    });
+  };
+  const getUpcomingMovie = () => {
+    getMovieService({
+      key: movieList.upcoming_movie,
+      apiUrl: import.meta.env.VITE_UPCOMING_MOVIE_LIST,
+      setter: setUpcomingMovie,
+      text: "Fetch Top Upcoming Movie",
+      setterLoading: setLoading,
+    });
   };
 
   useEffect(() => {
     getGenre();
-    getMovie();
+    getMovieNowPlaying();
+    getPopularMovie();
+    getTopRatedMovie();
+    getUpcomingMovie();
   }, []);
 
-  console.log(movie);
-  console.log(genre);
+  // console.log(genre);
 
   return (
     <>
-      <HeroLayout movie={movie} />
-      <div className="flex flex-col min-h-screen items-center justify-center px-10 mt-10">
-        <div className="grid grid-cols-5 gap-y-10 gap-x-4 ">
-          {movie.length > 0 &&
-            movie.map((item) => (
-              <MovieCard item={item} key={item.id} genre={genre} />
-            ))}
-        </div>
-      </div>
+      <HeroLayout data={nowPlayingMovie} />
+      <MovieListLayout
+        data={nowPlayingMovie}
+        genre={genre}
+        heading="Now Playing"
+        loading={loading.now_playing_movie}
+      />
+      <MovieListLayout
+        data={popularMovie}
+        genre={genre}
+        heading="Popular Movie"
+        loading={loading.popular_movie}
+      />
+      <MovieListLayout
+        data={topRatedMovie}
+        genre={genre}
+        heading="Top Rated"
+        loading={loading.top_rated_movie}
+      />
+      <MovieListLayout
+        data={upcomingMovie}
+        genre={genre}
+        heading="Upcoming List"
+        type="upcoming"
+        loading={loading.upcoming_movie}
+      />
     </>
   );
 };
