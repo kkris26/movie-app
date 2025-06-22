@@ -6,6 +6,7 @@ import MovieDetails from "./pages/MovieDetails";
 import SmoothFollower from "./components/utilities/CursorAnimation";
 import PageTransitions from "./components/utilities/transitions/PageTransitions";
 import { AnimatePresence } from "framer-motion";
+import AudioPlay from "./components/Button/AudioPlay";
 
 function App() {
   const location = useLocation();
@@ -13,6 +14,7 @@ function App() {
     <>
       <Navbar />
       <SmoothFollower />
+      <AudioPlay />
 
       {/* <Router> */}
       <MainLayout>

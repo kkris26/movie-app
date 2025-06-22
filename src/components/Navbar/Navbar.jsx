@@ -1,14 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getAPIData } from "../../services/getAPIService";
 
 const Navbar = () => {
   const [isTop, setIsTop] = useState(true);
+  const [genres, setGenres] = useState([]);
+  const [loading, setLoading] = useState();
   window.addEventListener("scroll", () => {
     if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
       return setIsTop(false);
     }
     setIsTop(true);
   });
+  const getGenre = () => {
+    getAPIData({
+      key: "genre",
+      apiUrl: import.meta.env.VITE_MOVIE_LLIST_BY_GENRE,
+      setter: setGenres,
+      text: "Fetch Genre",
+      resultData: "genres",
+      setterLoading: setLoading,
+    });
+  };
+  useEffect(() => {
+    getGenre();
+  }, []);
+  console.log(genres);
+  console.log(loading);
   return (
     <div className="drawer z-3">
       <input id="my-drawer" type="checkbox" className="drawer-toggle" />
@@ -91,15 +109,16 @@ const Navbar = () => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-          {/* Sidebar content here */}
-          <li>
-            <a>Sidebar Item 1</a>
-          </li>
-          <li>
-            <a>Sidebar Item 2</a>
-          </li>
-        </ul>
+        <div className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+          <h1 className="text-xl">Genre</h1>
+          <ul>
+            {genres.map((item) => (
+              <li>
+                <Link to={"genres/" + item.id}>{item.name}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </div>
   );

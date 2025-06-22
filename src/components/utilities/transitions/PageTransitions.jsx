@@ -9,7 +9,7 @@ const PageTransitions = ({ children }) => {
         animate={{ scaleY: 0 }}
         transition={{ duration: 0.7, ease: "circInOut" }}
       ></motion.div>
-      <div className="relative z-0">{children}</div>
+      <div className="">{children}</div>
       <motion.div
         className="fixed top-0 left-0 w-full h-full bg-base-200 origin-bottom z-50"
         exit={{ scaleY: 1 }}

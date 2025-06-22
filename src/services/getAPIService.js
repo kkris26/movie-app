@@ -35,27 +35,3 @@ export const getAPIData = async ({
     }, 500);
   }
 };
-
-export const getAPIData2 = async ({
-  key,
-  apiUrl,
-  setter,
-  resultData,
-  text,
-}) => {
-  try {
-    const localData = localStorage.getItem(key);
-    if (localData) {
-      setter(JSON.parse(localData));
-      return;
-    }
-    const response = await fetch(apiUrl, options);
-    const data = await response.json();
-    const results = resultData ? data[resultData] : data;
-    setter(results);
-    localStorage.setItem(key, JSON.stringify(results));
-    console.log(text);
-  } catch (err) {
-    console.log(err);
-  }
-};
