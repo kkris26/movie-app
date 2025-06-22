@@ -6,7 +6,9 @@ import MovieListLayout from "../layouts/MovieListLayout";
 const MovieByGenres = () => {
   const { id } = useParams();
   const [movieList, setMovieList] = useState([]);
-  const [loading, setLoading] = useState([]);
+  const [loading, setLoading] = useState({
+    [id]: true,
+  });
   const [genre, setGenre] = useState([]);
   const getMovieList = () => {
     getAPIData({
@@ -28,24 +30,48 @@ const MovieByGenres = () => {
     });
   };
 
-  const genreName = genre.length > 0 && genre.find((item) => item.id == id).name;
+  const genreName =
+    genre.length > 0 && genre.find((item) => item.id == id).name;
   console.log(id);
   useEffect(() => {
     getMovieList();
     getGenre();
   }, []);
 
-  console.log(genreName);
+  console.log(loading[id]);
   console.log("genres");
   return (
-    <MovieListLayout
-      data={movieList}
-      genre={genre}
-      heading={"Movie by Genres " + genreName}
-      type="byGenre"
-      loading={loading.id}
-      height="min-h-screen"
-    />
+    <>
+      {loading[id] ? (
+        <div className="h-screen  flex items-center px-10">
+          <div className="skeleton h-screen inset-0 bg-base-200/50 absolute w-full"></div>
+          <div className="skeleton h-10 w-80"></div>
+
+        </div>
+      ) : (
+        <>
+          <div
+            className="h-screen bg-cover relative flex items-center px-10"
+            style={{
+              backgroundImage: `url(${
+                import.meta.env.VITE_IMAGE_PATH_ORIGINAL +
+                  movieList[0].backdrop_path
+              }`,
+            }}
+          >
+            <h1 className="text-5xl">Showing List {genreName}</h1>
+          </div>
+          <MovieListLayout
+            data={movieList}
+            genre={genre}
+            heading={"Movie by Genres " + genreName}
+            type="byGenre"
+            loading={loading.id}
+            height="min-h-screen"
+          />
+        </>
+      )}
+    </>
   );
 };
 

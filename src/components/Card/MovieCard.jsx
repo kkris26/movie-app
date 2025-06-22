@@ -2,8 +2,19 @@ import { Link } from "react-router-dom";
 
 import { FaStar } from "react-icons/fa";
 import { formatDate, formatRating } from "../utilities/Formatter/formatter";
+import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
+import { useEffect, useState } from "react";
 
 const MovieCard = ({ item, genre, type }) => {
+  const [favorite, setFavorite] = useState({});
+  const handleFavorite = (id) => {
+    setFavorite({ [id]: !favorite[id] });
+    console.log(`${id} to Fav`);
+  };
+  useEffect(() => {
+    localStorage.setItem("favorite", JSON.stringify(favorite));
+  }, [favorite]);
+  console.log(favorite);
   return (
     <div className="flex flex-col gap-3 ">
       <div className="relative group img-card cursor-pointer rounded-sm overflow-hidden ">
@@ -27,21 +38,34 @@ const MovieCard = ({ item, genre, type }) => {
           />
         </Link>
       </div>
-      <h2 className="text-md cursor-pointer hover:text-primary transition-all 0.3s">
-        {item.title}
-      </h2>
+      <div className="flex justify-between items-center">
+        <h2 className="text-md cursor-pointer hover:text-primary transition-all 0.3s">
+          {item.title}
+        </h2>
+        <div
+          className="text-lg  cursor-pointer relative"
+          onClick={() => handleFavorite(item.id)}
+        >
+          <IoMdHeart className={favorite[item.id] ? `block ` : `hidden`} />
+          <IoMdHeartEmpty
+            className={!favorite[item.id] ? `block ` : `hidden`}
+          />
+        </div>
+      </div>
       <div>
-        <ul className="flex gap-2 flex-wrap">
-          {item.genre_ids.map((genreId, index) => (
-            <li
-              className="bg-base-300 p-1 px-2 rounded-md text-xs cursor-pointer hover:bg-base-200  transition-all 0.3s"
-              key={index}
-            >
-              {genre.length > 0 &&
-                genre.map((item) => item.id === genreId && item.name)}
-            </li>
-          ))}
-        </ul>
+        {type === "byGenre" && (
+          <ul className="flex gap-2 flex-wrap">
+            {item.genre_ids.map((genreId, index) => (
+              <li
+                className="bg-base-300 p-1 px-2 rounded-md text-xs cursor-pointer hover:bg-base-200  transition-all 0.3s"
+                key={index}
+              >
+                {genre.length > 0 &&
+                  genre.map((item) => item.id === genreId && item.name)}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </div>
   );
