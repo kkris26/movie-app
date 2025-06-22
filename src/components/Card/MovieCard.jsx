@@ -31,7 +31,7 @@ const MovieCard = ({ item, genre, type }) => {
         {item.title}
       </h2>
       <div>
-        {/* <ul className="flex gap-2 flex-wrap">
+        <ul className="flex gap-2 flex-wrap">
           {item.genre_ids.map((genreId, index) => (
             <li
               className="bg-base-300 p-1 px-2 rounded-md text-xs cursor-pointer hover:bg-base-200  transition-all 0.3s"
@@ -41,7 +41,7 @@ const MovieCard = ({ item, genre, type }) => {
                 genre.map((item) => item.id === genreId && item.name)}
             </li>
           ))}
-        </ul> */}
+        </ul>
       </div>
     </div>
   );

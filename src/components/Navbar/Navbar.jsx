@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAPIData } from "../../services/getAPIService";
 
@@ -6,6 +6,7 @@ const Navbar = () => {
   const [isTop, setIsTop] = useState(true);
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState();
+  const menuRef = useRef();
   window.addEventListener("scroll", () => {
     if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
       return setIsTop(false);
@@ -15,21 +16,28 @@ const Navbar = () => {
   const getGenre = () => {
     getAPIData({
       key: "genre",
-      apiUrl: import.meta.env.VITE_MOVIE_LLIST_BY_GENRE,
+      apiUrl: import.meta.env.VITE_GENRE_LIST,
       setter: setGenres,
       text: "Fetch Genre",
       resultData: "genres",
       setterLoading: setLoading,
     });
   };
+
+  const handleClose = () => {
+    menuRef.current.checked = false;
+  };
   useEffect(() => {
     getGenre();
   }, []);
-  console.log(genres);
-  console.log(loading);
   return (
     <div className="drawer z-3">
-      <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+      <input
+        ref={menuRef}
+        id="my-drawer"
+        type="checkbox"
+        className="drawer-toggle"
+      />
       <div className="drawer-content">
         <div
           className={`transition-all duration-300 ease-in-out navbar  ${
@@ -111,13 +119,20 @@ const Navbar = () => {
         ></label>
         <div className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
           <h1 className="text-xl">Genre</h1>
-          <ul>
+          <div className=" flex flex-col gap-2">
             {genres.map((item) => (
-              <li>
-                <Link to={"genres/" + item.id}>{item.name}</Link>
-              </li>
+              <label
+                htmlFor="my-drawer"
+                aria-label="close sidebar"
+                className="drawer-overlay"
+                key={item.id}
+              >
+                <Link to={"genre/" + item.id} onClick={handleClose}>
+                  {item.name}
+                </Link>
+              </label>
             ))}
-          </ul>
+          </div>
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ import SmoothFollower from "./components/utilities/CursorAnimation";
 import PageTransitions from "./components/utilities/transitions/PageTransitions";
 import { AnimatePresence } from "framer-motion";
 import AudioPlay from "./components/Button/AudioPlay";
+import MovieByGenres from "./pages/MovieByGenres";
 
 function App() {
   const location = useLocation();
@@ -33,6 +34,14 @@ function App() {
               element={
                 <PageTransitions>
                   <MovieDetails />
+                </PageTransitions>
+              }
+            />
+            <Route
+              path="/genre/:id"
+              element={
+                <PageTransitions>
+                  <MovieByGenres />
                 </PageTransitions>
               }
             />

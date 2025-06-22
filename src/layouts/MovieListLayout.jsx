@@ -7,9 +7,12 @@ const MovieListLayout = ({
   heading = "Movie List",
   type = "",
   loading,
+  height = "h-125",
 }) => {
   return (
-    <div className="flex flex-col px-10 mt-10 gap-4 h-125  overflow-hidden">
+    <div
+      className={`flex flex-col px-10 mt-10 gap-4 ${height}  overflow-hidden`}
+    >
       <div className="flex justify-between w-full items-center">
         <h2 className="text-2xl">{heading}</h2>
         <button className="btn btn-outline">View More</button>
