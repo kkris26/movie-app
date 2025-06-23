@@ -12,11 +12,11 @@ const MovieListLayout = ({
   customClass = "",
   btntext = "Go Back",
   btnLink = "/",
+  fav,
+  setFav,
 }) => {
   return (
-    <div
-      className={`flex flex-col px-10 gap-4 overflow-hidden  ${customClass} `}
-    >
+    <div className={`flex flex-col gap-4 overflow-hidden  ${customClass} `}>
       <div className="flex justify-between w-full items-center z-1">
         <h2 className="text-2xl">{heading}</h2>
         <Link to={btnLink} className="btn btn-outline">
@@ -40,10 +40,19 @@ const MovieListLayout = ({
                   key={item.id}
                   genre={genre}
                   type={type}
+                  fav={fav}
+                  setFav={setFav}
                 />
               ))
           : data.map((item) => (
-              <MovieCard item={item} key={item.id} genre={genre} type={type} />
+              <MovieCard
+                item={item}
+                key={item.id}
+                genre={genre}
+                type={type}
+                fav={fav}
+                setFav={setFav}
+              />
             ))}
       </div>
     </div>

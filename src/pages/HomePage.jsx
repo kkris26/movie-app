@@ -17,6 +17,7 @@ const HomePage = () => {
   const [popularMovie, setPopularMovie] = useState([]);
   const [topRatedMovie, setTopRatedMovie] = useState([]);
   const [upcomingMovie, setUpcomingMovie] = useState([]);
+  const [favorite, setFavorite] = useState({});
   const [loading, setLoading] = useState({
     genre: true,
     now_playing_movie: true,
@@ -25,6 +26,8 @@ const HomePage = () => {
     upcoming_movie: true,
   });
   const [genre, setGenre] = useState([]);
+
+  console.log(favorite);
 
   const getGenre = async () => {
     getAPIData({
@@ -77,7 +80,6 @@ const HomePage = () => {
     getUpcomingMovie();
   }, []);
 
-
   const idContent = "contentHome";
 
   return (
@@ -93,6 +95,8 @@ const HomePage = () => {
           max={5}
           btnLink="/now_playing"
           btntext="View More"
+          fav={favorite}
+          setFav={setFavorite}
         />
         <MovieListLayout
           data={popularMovie}

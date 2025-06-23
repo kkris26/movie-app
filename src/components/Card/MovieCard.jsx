@@ -6,16 +6,14 @@ import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { useEffect, useState } from "react";
 import GenreLabelLink from "../Label/GenreLabelLink";
 
-const MovieCard = ({ item, genre, type }) => {
-  const [favorite, setFavorite] = useState({});
+const MovieCard = ({ item, genre, type, fav, setFav }) => {
   const handleFavorite = (id) => {
-    setFavorite({ [id]: !favorite[id] });
-    console.log(`${id} to Fav`);
+    setFav((prev) => ({ ...prev, [id]: !fav[id] }));
   };
   useEffect(() => {
-    localStorage.setItem("favorite", JSON.stringify(favorite));
-  }, [favorite]);
-  // console.log(favorite);
+    localStorage.setItem("favorite", JSON.stringify(fav));
+    console.log(fav);
+  }, [fav]);
   return (
     <div className="flex flex-col gap-3 ">
       <div className="relative group img-card cursor-pointer rounded-sm overflow-hidden ">
@@ -25,7 +23,7 @@ const MovieCard = ({ item, genre, type }) => {
               <p>{formatDate(item.release_date)}</p>
             </div>
           ) : (
-            <div className="absolute right-4 top-4  bg-amber-500 px-2 rounded flex items-center gap-1 z-1">
+            <div className="absolute right-4 top-4  bg-amber-500 px-2 rounded flex items-center gap-1 z-2">
               <FaStar className="text-md" />
               <p>{formatRating(item.vote_average)}</p>
             </div>
@@ -50,10 +48,9 @@ const MovieCard = ({ item, genre, type }) => {
           className="text-lg  cursor-pointer relative"
           onClick={() => handleFavorite(item.id)}
         >
-          <IoMdHeart className={favorite[item.id] ? `block ` : `hidden`} />
-          <IoMdHeartEmpty
-            className={!favorite[item.id] ? `block ` : `hidden`}
-          />
+          {/* <IoMdHeart className={`block `} /> */}
+          <IoMdHeart className={fav?.[item.id] ? `block ` : `hidden`} />
+          <IoMdHeartEmpty className={fav?.[item.id] ? `hidden ` : `block`} />
         </div>
       </div>
       <div className="w-full overflow-auto z-0 scroll-thin">

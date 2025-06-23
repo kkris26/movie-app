@@ -128,23 +128,17 @@ const Navbar = () => {
         <div className="menu bg-base-200 text-base-content h-full w-80 p-6 gap-2 flex-col justify-between flex">
           <div className="flex flex-col gap-5">
             <h1 className="text-4xl">Category</h1>
-            <div className=" flex flex-col gap-2 text-2xl font-light">
+            <div className=" flex flex-col gap-4 text-2xl font-light">
               {movieMenu.map((item, index) => (
-                <label
-                  htmlFor="my-drawer"
-                  aria-label="close sidebar"
-                  className="drawer-overlay"
-                  key={index}
+                <Link
+                key={index}
+                  to={item.link}
+                  onClick={handleClose}
+                  className="text-base-content/80 underline underline-offset-6 flex items-center gap-4 justify-between hover:text-base-content"
                 >
-                  <Link
-                    to={item.link}
-                    onClick={handleClose}
-                    className="text-base-content/80 underline underline-offset-6 flex items-center gap-4 justify-between hover:text-base-content"
-                  >
-                    {item.name}
-                    <GoArrowUpRight />
-                  </Link>
-                </label>
+                  {item.name}
+                  <GoArrowUpRight />
+                </Link>
               ))}
             </div>
           </div>
@@ -152,20 +146,14 @@ const Navbar = () => {
             <h1 className="text-2xl">Movie Genre</h1>
             <div className=" flex flex-wrap gap-x-4 text-md ">
               {genres.map((item) => (
-                <label
-                  htmlFor="my-drawer"
-                  aria-label="close sidebar"
-                  className="drawer-overlay"
-                  key={item.id}
+                <Link
+                key={item.id}
+                  to={"genre/" + item.id}
+                  onClick={handleClose}
+                  className="text-base-content/70 underline underline-offset-3 items-center hover:text-base-content"
                 >
-                  <Link
-                    to={"genre/" + item.id}
-                    onClick={handleClose}
-                    className="text-base-content/70 underline underline-offset-3 items-center hover:text-base-content"
-                  >
-                    {item.name}
-                  </Link>
-                </label>
+                  {item.name}
+                </Link>
               ))}
             </div>
           </div>

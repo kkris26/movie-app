@@ -2,7 +2,7 @@ import React from "react";
 
 const ContentLayouts = ({ children, customClass, id }) => {
   return (
-    <div id={id} className={`py-15 ${customClass}`}>
+    <div id={id} className={`py-15 w-7xl mx-auto ${customClass}`}>
       {children}
     </div>
   );

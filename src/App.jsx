@@ -18,7 +18,6 @@ function App() {
       <Navbar />
       <SmoothFollower />
       <AudioPlay />
-
       <MainLayout>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
@@ -57,7 +56,6 @@ function App() {
           </Routes>
         </AnimatePresence>
       </MainLayout>
-
       <Footer />
     </>
   );

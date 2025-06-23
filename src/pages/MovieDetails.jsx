@@ -114,33 +114,35 @@ const MovieDetails = () => {
               }`,
             }}
           >
-            <div className="z-1 relative w-150 flex flex-col gap-4 justify-start text-white">
-              <h1 className="text-7xl font-bold tracking-wider">
-                {movieByID.title}
-              </h1>
-              <div className="flex gap-4 text-sm text-gray-300">
-                <div className="flex gap-1 items-center ">
-                  <FaStar className="text-yellow-500 text-md" />
+            <div className="w-7xl mx-auto">
+              <div className="z-1 relative w-150 flex flex-col gap-4 justify-start text-white">
+                <h1 className="text-7xl font-bold tracking-wider">
+                  {movieByID.title}
+                </h1>
+                <div className="flex gap-4 text-sm text-gray-300">
+                  <div className="flex gap-1 items-center ">
+                    <FaStar className="text-yellow-500 text-md" />
 
+                    <div className="flex items-center gap-1">
+                      <p>
+                        {formatRating(movieByID.vote_average)} /{" "}
+                        {movieByID.vote_count}
+                      </p>
+                      <IoPersonSharp className="text-[11px]" />
+                    </div>
+                  </div>
                   <div className="flex items-center gap-1">
-                    <p>
-                      {formatRating(movieByID.vote_average)} /{" "}
-                      {movieByID.vote_count}
-                    </p>
-                    <IoPersonSharp className="text-[11px]" />
+                    <IoMdTime className="text-lg" />
+                    <p>{movieByID.runtime} min.</p>
                   </div>
                 </div>
-                <div className="flex items-center gap-1">
-                  <IoMdTime className="text-lg" />
-                  <p>{movieByID.runtime} min.</p>
-                </div>
+                <p className="text-gray-300 line-clamp-2 w-full">
+                  {movieByID.overview}
+                </p>
+                <button className="bg-white rounded-none btn w-max mt-2 text-black">
+                  <a href="#content-details">View More</a>
+                </button>
               </div>
-              <p className="text-gray-300 line-clamp-2 w-full">
-                {movieByID.overview}
-              </p>
-              <button className="bg-white rounded-none btn w-max mt-2 text-black">
-                <a href="#content-details">View More</a>
-              </button>
             </div>
             <div className="absolute inset-0 bg-linear-to-l from-transparent to-black/70 z-0"></div>
           </div>
