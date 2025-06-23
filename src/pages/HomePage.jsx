@@ -86,31 +86,34 @@ const HomePage = () => {
   return (
     <>
       <HeroLayout data={nowPlayingMovie} />
+      <div className="gap-4 flex flex-col">
+
       <MovieListLayout
         data={nowPlayingMovie}
         genre={genre}
         heading="Now Playing"
         loading={loading.now_playing_movie}
-      />
+        />
       <MovieListLayout
         data={popularMovie}
         genre={genre}
         heading="Popular Movie"
         loading={loading.popular_movie}
-      />
+        />
       <MovieListLayout
         data={topRatedMovie}
         genre={genre}
         heading="Top Rated"
         loading={loading.top_rated_movie}
-      />
+        />
       <MovieListLayout
         data={upcomingMovie}
         genre={genre}
         heading="Upcoming List"
         type="upcoming"
         loading={loading.upcoming_movie}
-      />
+        />
+        </div>
     </>
   );
 };

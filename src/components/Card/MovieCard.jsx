@@ -53,19 +53,21 @@ const MovieCard = ({ item, genre, type }) => {
         </div>
       </div>
       <div className="w-full overflow-auto z-0 scroll-thin">
-        {type === "byGenre" && (
-          <ul className="flex gap-1 w-max">
+        {/* {type === "byGenre" && ( */}
+          <ul className="flex gap-1 flex-wrap">
             {item.genre_ids.map((genreId, index) => (
               <li
-                className="bg-base-300 w-max p-1 px-2 rounded-md text-xs cursor-pointer hover:bg-base-200  transition-all 0.3s"
+                className="bg-base-300 w-max p-1 px-2 rounded-md text-[11px] cursor-pointer hover:bg-base-200  transition-all 0.3s"
                 key={index}
               >
-                {genre.length > 0 &&
-                  genre.map((item) => item.id === genreId && item.name)}
+                <Link to={"/genre/" + genreId}>
+                  {genre.length > 0 &&
+                    genre.map((item) => item.id === genreId && item.name)}
+                </Link>
               </li>
             ))}
           </ul>
-        )}
+        {/* )} */}
       </div>
     </div>
   );
