@@ -90,6 +90,8 @@ const HomePage = () => {
           heading="Now Playing"
           loading={loading.now_playing_movie}
           max={5}
+          btnLink="/now_playing"
+          btntext="View More"
         />
         <MovieListLayout
           data={popularMovie}
@@ -97,6 +99,8 @@ const HomePage = () => {
           heading="Popular Movie"
           loading={loading.popular_movie}
           max={5}
+          btnLink="/popular"
+          btntext="View More"
         />
         <MovieListLayout
           data={topRatedMovie}
@@ -104,6 +108,8 @@ const HomePage = () => {
           heading="Top Rated"
           loading={loading.top_rated_movie}
           max={5}
+          btnLink="/top_rated"
+          btntext="View More"
         />
         <MovieListLayout
           data={upcomingMovie}
@@ -112,6 +118,8 @@ const HomePage = () => {
           type="upcoming"
           loading={loading.upcoming_movie}
           max={5}
+          btnLink="/upcoming"
+          btntext="View More"
         />
       </ContentLayouts>
     </>

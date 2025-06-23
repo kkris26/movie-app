@@ -1,5 +1,6 @@
 import React from "react";
 import MovieCard from "../components/Card/MovieCard";
+import { Link } from "react-router-dom";
 
 const MovieListLayout = ({
   data,
@@ -9,14 +10,18 @@ const MovieListLayout = ({
   max,
   loading,
   customClass = "",
+  btntext = "Go Back",
+  btnLink = "/",
 }) => {
   return (
     <div
-      className={`flex flex-col px-10 gap-4 overflow-hidden ${customClass} `}
+      className={`flex flex-col px-10 gap-4 overflow-hidden  ${customClass} `}
     >
-      <div className="flex justify-between w-full items-center">
+      <div className="flex justify-between w-full items-center z-1">
         <h2 className="text-2xl">{heading}</h2>
-        <button className="btn btn-outline">View More</button>
+        <Link to={btnLink} className="btn btn-outline">
+          {btntext}
+        </Link>
       </div>
       <div className="grid grid-cols-5 gap-y-10 gap-x-4 ">
         {loading
