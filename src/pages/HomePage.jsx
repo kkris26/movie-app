@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import HeroLayout from "../layouts/HeroLayout";
 import MovieListLayout from "../layouts/MovieListLayout";
 import { getAPIData } from "../services/getAPIService";
+import ContentLayouts from "../layouts/ContentLayouts";
 
 const HomePage = () => {
   const movieList = {
@@ -86,34 +87,34 @@ const HomePage = () => {
   return (
     <>
       <HeroLayout data={nowPlayingMovie} />
-      <div className="gap-4 flex flex-col mt-10">
 
-      <MovieListLayout
-        data={nowPlayingMovie}
-        genre={genre}
-        heading="Now Playing"
-        loading={loading.now_playing_movie}
+      <ContentLayouts customClass="flex flex-col gap-4">
+        <MovieListLayout
+          data={nowPlayingMovie}
+          genre={genre}
+          heading="Now Playing"
+          loading={loading.now_playing_movie}
         />
-      <MovieListLayout
-        data={popularMovie}
-        genre={genre}
-        heading="Popular Movie"
-        loading={loading.popular_movie}
+        <MovieListLayout
+          data={popularMovie}
+          genre={genre}
+          heading="Popular Movie"
+          loading={loading.popular_movie}
         />
-      <MovieListLayout
-        data={topRatedMovie}
-        genre={genre}
-        heading="Top Rated"
-        loading={loading.top_rated_movie}
+        <MovieListLayout
+          data={topRatedMovie}
+          genre={genre}
+          heading="Top Rated"
+          loading={loading.top_rated_movie}
         />
-      <MovieListLayout
-        data={upcomingMovie}
-        genre={genre}
-        heading="Upcoming List"
-        type="upcoming"
-        loading={loading.upcoming_movie}
+        <MovieListLayout
+          data={upcomingMovie}
+          genre={genre}
+          heading="Upcoming List"
+          type="upcoming"
+          loading={loading.upcoming_movie}
         />
-        </div>
+      </ContentLayouts>
     </>
   );
 };

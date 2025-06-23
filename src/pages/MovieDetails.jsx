@@ -21,6 +21,7 @@ import { getAPIData, getRelatedMovieData } from "../services/getAPIService";
 import MovieListLayout from "../layouts/MovieListLayout";
 import ListLabel from "../components/Label/ListLabel";
 import GenreLabelLink from "../components/Label/GenreLabelLink";
+import ContentLayouts from "../layouts/ContentLayouts";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -144,55 +145,58 @@ const MovieDetails = () => {
             </div>
             <div className="absolute inset-0 bg-linear-to-l from-transparent to-black/70 z-0"></div>
           </div>
-          <div
-            id="content-details"
-            className="flex gap-10 items-center h-screen w-5xl mx-auto"
-          >
-            <div className="h-full flex items-center">
-              <img
-                src={import.meta.env.VITE_IMAGE_PATH + movieByID.poster_path}
-                alt=""
-                srcSet=""
-                className="w-90 p-2 border-2 border-white"
-              />
-            </div>
-            <div className=" flex flex-col justify-center flex-1 h-full items-start gap-4 z-1">
-              <h2 className="text-3xl">{movieByID.title}</h2>
-              <ul className="flex gap-2 flex-wrap">
-                {loading.genre ? (
-                  <p>Loading ...</p>
-                ) : (
-                  movieByID.genres.map((genreId, index) => (
-                    <GenreLabelLink
-                      key={index}
-                      genreId={genreId.id}
-                      genre={genre}
-                    />
-                  ))
-                )}
-              </ul>
-              <p className="text-sm">
-                Release on {formatDate(movieByID.release_date)}
-              </p>
-              <p className="text-sm">{movieByID.overview}</p>
-              <div className="flex flex-col gap-1">
-                <p className="text-sm">Production by</p>
+
+          <ContentLayouts>
+            <div
+              id="content-details"
+              className="flex gap-10 items-center h-screen w-5xl mx-auto"
+            >
+              <div className="h-full flex items-center">
+                <img
+                  src={import.meta.env.VITE_IMAGE_PATH + movieByID.poster_path}
+                  alt=""
+                  srcSet=""
+                  className="w-90 p-2 border-2 border-white"
+                />
+              </div>
+              <div className=" flex flex-col justify-center flex-1 h-full items-start gap-4 z-1">
+                <h2 className="text-3xl">{movieByID.title}</h2>
                 <ul className="flex gap-2 flex-wrap">
-                  {movieByID.production_companies.map((item) => (
-                    <ListLabel key={item.id}>{item.name}</ListLabel>
-                  ))}
+                  {loading.genre ? (
+                    <p>Loading ...</p>
+                  ) : (
+                    movieByID.genres.map((genreId, index) => (
+                      <GenreLabelLink
+                        key={index}
+                        genreId={genreId.id}
+                        genre={genre}
+                      />
+                    ))
+                  )}
                 </ul>
+                <p className="text-sm">
+                  Release on {formatDate(movieByID.release_date)}
+                </p>
+                <p className="text-sm">{movieByID.overview}</p>
+                <div className="flex flex-col gap-1">
+                  <p className="text-sm">Production by</p>
+                  <ul className="flex gap-2 flex-wrap">
+                    {movieByID.production_companies.map((item) => (
+                      <ListLabel key={item.id}>{item.name}</ListLabel>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-          <MovieListLayout
-            data={relatedMovie}
-            genre={genre}
-            heading="Related Movie"
-            type="byGenre"
-            loading={loading["relatedMovie-" + id]}
-            height="min-h-screen mt-10"
-          />
+            <MovieListLayout
+              data={relatedMovie}
+              genre={genre}
+              heading="Related Movie"
+              type="byGenre"
+              loading={loading["relatedMovie-" + id]}
+              height="min-h-screen mt-10"
+            />
+          </ContentLayouts>
         </>
       )}
     </>
