@@ -12,8 +12,8 @@ const HeroLayout = ({ data, id, loading }) => {
       indexImage = indexImage === data.length - 1 ? 0 : indexImage + 1;
       imageBg[indexImage].classList.remove("opacity-0");
     }, 5000);
-    console.log(data);
     return () => {
+      console.log("kill interval");
       clearInterval(interval);
     };
   }, [data]);
@@ -31,7 +31,7 @@ const HeroLayout = ({ data, id, loading }) => {
                   import.meta.env.VITE_IMAGE_PATH_ORIGINAL + item.backdrop_path
                 }
                 className={`w-full object-cover absolute inset-0 h-full image-bg  transition-all duration-300 ease-in-out
-                  opacity-0
+                  ${idx == 0 ? "" : "opacity-0"}
                `}
               />
             ))}
