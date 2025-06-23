@@ -17,7 +17,7 @@ import {
   formatDate,
   formatRating,
 } from "../components/utilities/Formatter/formatter";
-import { getAPIData, getRelatedMovieData } from "../services/getAPIService";
+import { getAPIData } from "../services/getAPIService";
 import MovieListLayout from "../layouts/MovieListLayout";
 import ListLabel from "../components/Label/ListLabel";
 import GenreLabelLink from "../components/Label/GenreLabelLink";

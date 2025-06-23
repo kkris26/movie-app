@@ -9,6 +9,7 @@ import { AnimatePresence } from "framer-motion";
 import AudioPlay from "./components/Button/AudioPlay";
 import MovieByGenres from "./pages/MovieByGenres";
 import MovieCategoryPage from "./pages/MovieCategoryPage";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const location = useLocation();
@@ -18,7 +19,6 @@ function App() {
       <SmoothFollower />
       <AudioPlay />
 
-      {/* <Router> */}
       <MainLayout>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
@@ -57,7 +57,8 @@ function App() {
           </Routes>
         </AnimatePresence>
       </MainLayout>
-      {/* </Router> */}
+
+      <Footer />
     </>
   );
 }

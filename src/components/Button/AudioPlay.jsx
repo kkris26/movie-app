@@ -17,31 +17,31 @@ const AudioPlay = () => {
     setIsPlay(false);
   };
 
-//   window.onload = () => {
-//     setFirst(true);
-//   };
+  //   window.onload = () => {
+  //     setFirst(true);
+  //   };
   return (
     <>
       <div
-        className={`fixed max-h-screen overflow-hidden ${
-          first ? "opacity-100 z-3" : "opacity-0 z-0"
-        } transition-all duration-800 inset-0 bg-base-200 flex items-center justify-center`}
-       >
-        <div className="z-1  flex flex-col gap-4 items-center">
-          <h1 className="text-6xl">Welcome to Movora</h1>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam,
-            nihil.
+        className={`fixed h-screen overflow-hidden ${
+          first ? "opacity-100 z-999" : "opacity-0 z-0"
+        } transition-all duration-800 inset-0 bg-base-200 flex items-center justify-start mx-40`}
+      >
+        <div className="z-1  flex flex-col gap-6 w-160">
+          <h1 className="text-8xl text-start">Welcome to Movora</h1>
+          <p className="text-start">
+            Movora lets you browse trending, upcoming, and top-rated films by
+            genre. <br></br>Explore now and never miss a great movie again.
           </p>
-          <button className="btn btn-outline w-max" onClick={handlePlay}>
-            Let's Go
+          <button
+            className="btn btn-lg btn-outline border-white hover:bg-white hover:text-black rounded-none w-max"
+            onClick={handlePlay}
+          >
+            Explore Movies
           </button>
         </div>
         <img
-          src={
-            import.meta.env.VITE_IMAGE_PATH_ORIGINAL +
-            "/sItIskd5xpiE64bBWYwZintkGf3.jpg"
-          }
+          src="/cinema-bg.jpeg"
           className="inset-0 fixed h-screen w-full object-cover"
         />
         <div className="fixed inset-0 bg-black/30"></div>

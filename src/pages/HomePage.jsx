@@ -77,13 +77,14 @@ const HomePage = () => {
     getUpcomingMovie();
   }, []);
 
-  // console.log(genre);
+
+  const idContent = "contentHome";
 
   return (
     <>
-      <HeroLayout data={nowPlayingMovie} />
+      <HeroLayout loading={loading} data={nowPlayingMovie} id={idContent} />
 
-      <ContentLayouts customClass="flex flex-col gap-10">
+      <ContentLayouts customClass="flex flex-col gap-10 pt-20" id={idContent}>
         <MovieListLayout
           data={nowPlayingMovie}
           genre={genre}

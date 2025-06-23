@@ -74,7 +74,7 @@ const Navbar = () => {
             </label>
           </div>
           <div className="navbar-center">
-            <Link to="/" className="btn btn-ghost text-xl">
+            <Link to="/" className=" text-xl">
               MovoRa
             </Link>
           </div>
@@ -139,7 +139,7 @@ const Navbar = () => {
                   <Link
                     to={item.link}
                     onClick={handleClose}
-                    className="text-base-content/80 flex items-center gap-4 justify-between hover:text-base-content"
+                    className="text-base-content/80 underline underline-offset-6 flex items-center gap-4 justify-between hover:text-base-content"
                   >
                     {item.name}
                     <GoArrowUpRight />
@@ -161,7 +161,7 @@ const Navbar = () => {
                   <Link
                     to={"genre/" + item.id}
                     onClick={handleClose}
-                    className="text-base-content/70 items-center hover:text-base-content"
+                    className="text-base-content/70 underline underline-offset-3 items-center hover:text-base-content"
                   >
                     {item.name}
                   </Link>
