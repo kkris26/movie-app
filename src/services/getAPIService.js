@@ -64,7 +64,7 @@ export const getRelatedMovieData = async ({
   } finally {
     setTimeout(() => {
       setterLoading((prev) => ({ ...prev, [key]: false }));
-      console.log("finish");
+      console.log(key + " finish");
     }, 500);
   }
 };

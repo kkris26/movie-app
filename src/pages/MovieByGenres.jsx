@@ -67,7 +67,7 @@ const MovieByGenres = () => {
             heading={"Movie by Genres " + genreName}
             type="byGenre"
             loading={loading.id}
-            height="min-h-screen"
+            height="min-h-screen mt-10"
           />
         </>
       )}

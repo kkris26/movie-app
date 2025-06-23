@@ -86,7 +86,7 @@ const HomePage = () => {
   return (
     <>
       <HeroLayout data={nowPlayingMovie} />
-      <div className="gap-4 flex flex-col">
+      <div className="gap-4 flex flex-col mt-10">
 
       <MovieListLayout
         data={nowPlayingMovie}

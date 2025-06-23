@@ -4,6 +4,7 @@ import { FaStar } from "react-icons/fa";
 import { formatDate, formatRating } from "../utilities/Formatter/formatter";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { useEffect, useState } from "react";
+import GenreLabelLink from "../Label/GenreLabelLink";
 
 const MovieCard = ({ item, genre, type }) => {
   const [favorite, setFavorite] = useState({});
@@ -39,9 +40,12 @@ const MovieCard = ({ item, genre, type }) => {
         </Link>
       </div>
       <div className="flex justify-between items-center gap-1">
-        <h2 className="text-md cursor-pointer hover:text-primary transition-all 0.3s line-clamp-1">
+        <Link
+          to={`/movie/${item.id}`}
+          className="text-md z-1 cursor-pointer hover:text-primary transition-all 0.3s line-clamp-1"
+        >
           {item.title}
-        </h2>
+        </Link>
         <div
           className="text-lg  cursor-pointer relative"
           onClick={() => handleFavorite(item.id)}
@@ -54,19 +58,11 @@ const MovieCard = ({ item, genre, type }) => {
       </div>
       <div className="w-full overflow-auto z-0 scroll-thin">
         {/* {type === "byGenre" && ( */}
-          <ul className="flex gap-1 flex-wrap">
-            {item.genre_ids.map((genreId, index) => (
-              <li
-                className="bg-base-300 w-max p-1 px-2 rounded-md text-[11px] cursor-pointer hover:bg-base-200  transition-all 0.3s"
-                key={index}
-              >
-                <Link to={"/genre/" + genreId}>
-                  {genre.length > 0 &&
-                    genre.map((item) => item.id === genreId && item.name)}
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <ul className="flex gap-1 flex-wrap">
+          {item.genre_ids.map((genreId, index) => (
+            <GenreLabelLink key={index} genreId={genreId} genre={genre} />
+          ))}
+        </ul>
         {/* )} */}
       </div>
     </div>

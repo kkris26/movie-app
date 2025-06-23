@@ -19,12 +19,15 @@ import {
 } from "../components/utilities/Formatter/formatter";
 import { getAPIData, getRelatedMovieData } from "../services/getAPIService";
 import MovieListLayout from "../layouts/MovieListLayout";
+import ListLabel from "../components/Label/ListLabel";
+import GenreLabelLink from "../components/Label/GenreLabelLink";
 
 const MovieDetails = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState({
     [id]: true,
     ["relatedMovie-" + id]: true,
+    genre: true,
   });
   const [movieByID, setMovieByID] = useState({});
   const [genre, setGenre] = useState([]);
@@ -55,8 +58,6 @@ const MovieDetails = () => {
   const getRelated = () => {
     if (movieByID?.genres) {
       const genreList = movieByID.genres.map((item) => item.id);
-      console.log("genre List");
-      console.log(genreList.length > 0 && genreList.join(","));
       const genreListJoin = genreList.length > 0 && genreList.join("|");
       getRelatedMovieData({
         key: "relatedMovie-" + id,
@@ -76,7 +77,8 @@ const MovieDetails = () => {
   useEffect(() => {
     getRelated();
   }, [movieByID]);
-  console.log(relatedMovie);
+  console.log(loading.genre);
+  console.log(movieByID);
   return (
     <>
       {loading[id] ? (
@@ -112,7 +114,7 @@ const MovieDetails = () => {
               }`,
             }}
           >
-            <div className="z-1 w-150 flex flex-col gap-4 justify-start text-white">
+            <div className="z-1 relative w-150 flex flex-col gap-4 justify-start text-white">
               <h1 className="text-7xl font-bold tracking-wider">
                 {movieByID.title}
               </h1>
@@ -151,20 +153,23 @@ const MovieDetails = () => {
                 src={import.meta.env.VITE_IMAGE_PATH + movieByID.poster_path}
                 alt=""
                 srcSet=""
-                className="w-90 p-1 border-4 border-white"
+                className="w-90 p-2 border-2 border-white"
               />
             </div>
-            <div className=" flex flex-col justify-center flex-1 h-full items-start gap-4">
+            <div className=" flex flex-col justify-center flex-1 h-full items-start gap-4 z-1">
               <h2 className="text-3xl">{movieByID.title}</h2>
               <ul className="flex gap-2 flex-wrap">
-                {movieByID.genres.map((item, idx) => (
-                  <li
-                    className="bg-base-300 p-1 px-2 rounded-md text-xs cursor-pointer hover:bg-base-200  transition-all 0.3s"
-                    key={idx}
-                  >
-                    {genre.map((genre) => genre.id === item.id && genre.name)}
-                  </li>
-                ))}
+                {loading.genre ? (
+                  <p>Loading ...</p>
+                ) : (
+                  movieByID.genres.map((genreId, index) => (
+                    <GenreLabelLink
+                      key={index}
+                      genreId={genreId.id}
+                      genre={genre}
+                    />
+                  ))
+                )}
               </ul>
               <p className="text-sm">
                 Release on {formatDate(movieByID.release_date)}
@@ -174,12 +179,7 @@ const MovieDetails = () => {
                 <p className="text-sm">Production by</p>
                 <ul className="flex gap-2 flex-wrap">
                   {movieByID.production_companies.map((item) => (
-                    <li
-                      key={item.id}
-                      className="bg-base-300 p-1 px-2 rounded-md text-xs cursor-pointer hover:bg-base-200  transition-all 0.3s"
-                    >
-                      {item.name}
-                    </li>
+                    <ListLabel key={item.id}>{item.name}</ListLabel>
                   ))}
                 </ul>
               </div>
@@ -191,7 +191,7 @@ const MovieDetails = () => {
             heading="Related Movie"
             type="byGenre"
             loading={loading["relatedMovie-" + id]}
-            height="min-h-screen"
+            height="min-h-screen mt-10"
           />
         </>
       )}
