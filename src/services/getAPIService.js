@@ -55,7 +55,7 @@ export const getRelatedMovieData = async ({
     const data = await response.json();
     // console.log(data);
     const results = !resultData ? data : data[resultData];
-    const filter = results.filter((item) => item.id !== id);
+    const filter = results.filter((item) => item.id !== id).slice(0, 10);
     setter(filter);
     localStorage.setItem(key, JSON.stringify(filter));
     console.log(text);

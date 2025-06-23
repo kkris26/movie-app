@@ -52,7 +52,7 @@ const MovieCard = ({ item, genre, type }) => {
           />
         </div>
       </div>
-      <div className="w-full overflow-scroll z-0">
+      <div className="w-full overflow-auto z-0 scroll-thin">
         {type === "byGenre" && (
           <ul className="flex gap-1 w-max">
             {item.genre_ids.map((genreId, index) => (

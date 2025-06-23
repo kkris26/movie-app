@@ -156,7 +156,7 @@ const MovieDetails = () => {
             </div>
             <div className=" flex flex-col justify-center flex-1 h-full items-start gap-4">
               <h2 className="text-3xl">{movieByID.title}</h2>
-              <ul className="flex gap-2">
+              <ul className="flex gap-2 flex-wrap">
                 {movieByID.genres.map((item, idx) => (
                   <li
                     className="bg-base-300 p-1 px-2 rounded-md text-xs cursor-pointer hover:bg-base-200  transition-all 0.3s"
@@ -172,7 +172,7 @@ const MovieDetails = () => {
               <p className="text-sm">{movieByID.overview}</p>
               <div className="flex flex-col gap-1">
                 <p className="text-sm">Production by</p>
-                <ul className="flex gap-1 justify-center">
+                <ul className="flex gap-2 flex-wrap">
                   {movieByID.production_companies.map((item) => (
                     <li
                       key={item.id}

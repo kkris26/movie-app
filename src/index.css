@@ -19,6 +19,22 @@
   transform-origin: bottom;
 }
 
+/* Scrollbar horizontal lebih kecil */
+.scroll-thin::-webkit-scrollbar {
+  height: 1px; /* Ukuran horizontal scroll bar */
+}
+
+.scroll-thin::-webkit-scrollbar-thumb {
+  height: 1px;
+  background-color: rgba(100, 100, 100, 0.5); /* Warna thumb */
+  border-radius: 10px;
+}
+
+.scroll-thin::-webkit-scrollbar-track {
+  height: 1px;
+  background-color: transparent;
+}
+
 @layer utilities {
   @keyframes revealAndDisappear {
     0% {
