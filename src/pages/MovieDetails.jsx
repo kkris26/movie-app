@@ -13,15 +13,22 @@ import {
 import { MdDateRange } from "react-icons/md";
 
 import { data, Link, useParams } from "react-router-dom";
-import { formatRating } from "../components/utilities/Formatter/formatter";
-import { getAPIData } from "../services/getAPIService";
+import {
+  formatDate,
+  formatRating,
+} from "../components/utilities/Formatter/formatter";
+import { getAPIData, getRelatedMovieData } from "../services/getAPIService";
+import MovieListLayout from "../layouts/MovieListLayout";
 
 const MovieDetails = () => {
   const { id } = useParams();
   const [loading, setLoading] = useState({
     [id]: true,
+    ["relatedMovie-" + id]: true,
   });
   const [movieByID, setMovieByID] = useState({});
+  const [genre, setGenre] = useState([]);
+  const [relatedMovie, setRelatedMovie] = useState([]);
 
   const getMovieByID = async () => {
     getAPIData({
@@ -33,11 +40,43 @@ const MovieDetails = () => {
       setterLoading: setLoading,
     });
   };
+
+  const getGenre = async () => {
+    getAPIData({
+      key: "genre",
+      apiUrl: import.meta.env.VITE_GENRE_LIST,
+      setter: setGenre,
+      text: "Fetch Genre",
+      resultData: "genres",
+      setterLoading: setLoading,
+    });
+  };
+
+  const getRelated = () => {
+    if (movieByID?.genres) {
+      const genreList = movieByID.genres.map((item) => item.id);
+      console.log("genre List");
+      console.log(genreList.length > 0 && genreList.join(","));
+      const genreListJoin = genreList.length > 0 && genreList.join("|");
+      getRelatedMovieData({
+        key: "relatedMovie-" + id,
+        apiUrl: import.meta.env.VITE_MOVIE_LLIST_BY_GENRE + genreListJoin,
+        setter: setRelatedMovie,
+        text: "Fetch Movie By Genres",
+        setterLoading: setLoading,
+        id: parseInt(id),
+      });
+    }
+  };
+
   useEffect(() => {
     getMovieByID();
+    getGenre();
   }, []);
-  console.log("isi loadings");
-  console.log(loading[id]);
+  useEffect(() => {
+    getRelated();
+  }, [movieByID]);
+  console.log(relatedMovie);
   return (
     <>
       {loading[id] ? (
@@ -63,44 +102,98 @@ const MovieDetails = () => {
           </div>
         </div>
       ) : (
-        <div
-          className="h-screen bg-cover relative flex items-center px-10"
-          style={{
-            backgroundImage: `url(${
-              import.meta.env.VITE_IMAGE_PATH_ORIGINAL + movieByID.backdrop_path
-            }`,
-          }}
-        >
-          <div className="z-1 w-150 flex flex-col gap-4 justify-start text-white">
-            <h1 className="text-7xl font-bold tracking-wider">
-              {movieByID.title}
-            </h1>
-            <div className="flex gap-4 text-sm text-gray-300">
-              <div className="flex gap-1 items-center ">
-                <FaStar className="text-yellow-500 text-md" />
+        <>
+          <div
+            className="h-screen bg-cover relative flex items-center px-10"
+            style={{
+              backgroundImage: `url(${
+                import.meta.env.VITE_IMAGE_PATH_ORIGINAL +
+                movieByID.backdrop_path
+              }`,
+            }}
+          >
+            <div className="z-1 w-150 flex flex-col gap-4 justify-start text-white">
+              <h1 className="text-7xl font-bold tracking-wider">
+                {movieByID.title}
+              </h1>
+              <div className="flex gap-4 text-sm text-gray-300">
+                <div className="flex gap-1 items-center ">
+                  <FaStar className="text-yellow-500 text-md" />
 
+                  <div className="flex items-center gap-1">
+                    <p>
+                      {formatRating(movieByID.vote_average)} /{" "}
+                      {movieByID.vote_count}
+                    </p>
+                    <IoPersonSharp className="text-[11px]" />
+                  </div>
+                </div>
                 <div className="flex items-center gap-1">
-                  <p>
-                    {formatRating(movieByID.vote_average)} /{" "}
-                    {movieByID.vote_count}
-                  </p>
-                  <IoPersonSharp className="text-[11px]" />
+                  <IoMdTime className="text-lg" />
+                  <p>{movieByID.runtime} min.</p>
                 </div>
               </div>
-              <div className="flex items-center gap-1">
-                <IoMdTime className="text-lg" />
-                <p>{movieByID.runtime} min.</p>
+              <p className="text-gray-300 line-clamp-2 w-full">
+                {movieByID.overview}
+              </p>
+              <button className="bg-white rounded-none btn w-max mt-2 text-black">
+                <a href="#content-details">View More</a>
+              </button>
+            </div>
+            <div className="absolute inset-0 bg-linear-to-l from-transparent to-black/70 z-0"></div>
+          </div>
+          <div
+            id="content-details"
+            className="flex gap-10 items-center h-screen w-5xl mx-auto"
+          >
+            <div className="h-full flex items-center">
+              <img
+                src={import.meta.env.VITE_IMAGE_PATH + movieByID.poster_path}
+                alt=""
+                srcSet=""
+                className="w-90 p-1 border-4 border-white"
+              />
+            </div>
+            <div className=" flex flex-col justify-center flex-1 h-full items-start gap-4">
+              <h2 className="text-3xl">{movieByID.title}</h2>
+              <ul className="flex gap-2">
+                {movieByID.genres.map((item, idx) => (
+                  <li
+                    className="bg-base-300 p-1 px-2 rounded-md text-xs cursor-pointer hover:bg-base-200  transition-all 0.3s"
+                    key={idx}
+                  >
+                    {genre.map((genre) => genre.id === item.id && genre.name)}
+                  </li>
+                ))}
+              </ul>
+              <p className="text-sm">
+                Release on {formatDate(movieByID.release_date)}
+              </p>
+              <p className="text-sm">{movieByID.overview}</p>
+              <div className="flex flex-col gap-1">
+                <p className="text-sm">Production by</p>
+                <ul className="flex gap-1 justify-center">
+                  {movieByID.production_companies.map((item) => (
+                    <li
+                      key={item.id}
+                      className="bg-base-300 p-1 px-2 rounded-md text-xs cursor-pointer hover:bg-base-200  transition-all 0.3s"
+                    >
+                      {item.name}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
-            <p className="text-gray-300 line-clamp-2 w-full">
-              {movieByID.overview}
-            </p>
-            <button className="bg-white rounded-none btn w-max mt-2 text-black">
-              View More
-            </button>
           </div>
-          <div className="absolute inset-0 bg-linear-to-l from-transparent to-black/70 z-0"></div>
-        </div>
+          <MovieListLayout
+            data={relatedMovie}
+            genre={genre}
+            heading="Related Movie"
+            type="byGenre"
+            loading={loading["relatedMovie-" + id]}
+            height="min-h-screen"
+          />
+        </>
       )}
     </>
   );

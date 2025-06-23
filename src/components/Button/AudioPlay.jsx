@@ -42,7 +42,7 @@ const AudioPlay = () => {
             import.meta.env.VITE_IMAGE_PATH_ORIGINAL +
             "/sItIskd5xpiE64bBWYwZintkGf3.jpg"
           }
-          className="inset-0 fixed h-screen object-cover"
+          className="inset-0 fixed h-screen w-full object-cover"
         />
         <div className="fixed inset-0 bg-black/30"></div>
       </div>

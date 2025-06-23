@@ -14,7 +14,7 @@ const MovieCard = ({ item, genre, type }) => {
   useEffect(() => {
     localStorage.setItem("favorite", JSON.stringify(favorite));
   }, [favorite]);
-  console.log(favorite);
+  // console.log(favorite);
   return (
     <div className="flex flex-col gap-3 ">
       <div className="relative group img-card cursor-pointer rounded-sm overflow-hidden ">
@@ -38,8 +38,8 @@ const MovieCard = ({ item, genre, type }) => {
           />
         </Link>
       </div>
-      <div className="flex justify-between items-center">
-        <h2 className="text-md cursor-pointer hover:text-primary transition-all 0.3s">
+      <div className="flex justify-between items-center gap-1">
+        <h2 className="text-md cursor-pointer hover:text-primary transition-all 0.3s line-clamp-1">
           {item.title}
         </h2>
         <div
@@ -52,12 +52,12 @@ const MovieCard = ({ item, genre, type }) => {
           />
         </div>
       </div>
-      <div>
+      <div className="w-full overflow-scroll z-0">
         {type === "byGenre" && (
-          <ul className="flex gap-2 flex-wrap">
+          <ul className="flex gap-1 w-max">
             {item.genre_ids.map((genreId, index) => (
               <li
-                className="bg-base-300 p-1 px-2 rounded-md text-xs cursor-pointer hover:bg-base-200  transition-all 0.3s"
+                className="bg-base-300 w-max p-1 px-2 rounded-md text-xs cursor-pointer hover:bg-base-200  transition-all 0.3s"
                 key={index}
               >
                 {genre.length > 0 &&
