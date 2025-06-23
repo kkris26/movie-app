@@ -10,7 +10,6 @@ export const getAPIData = async ({
   apiUrl,
   setter,
   setterLoading,
-  text,
   resultData = "results",
 }) => {
   try {
@@ -25,13 +24,13 @@ export const getAPIData = async ({
     const results = !resultData ? data : data[resultData];
     setter(results);
     localStorage.setItem(key, JSON.stringify(results));
-    console.log(text);
+    console.log("Done Fetching Data " + key);
   } catch (err) {
     console.log(err);
   } finally {
     setTimeout(() => {
       setterLoading((prev) => ({ ...prev, [key]: false }));
-      console.log("finish");
+      console.log(key + " finish load");
     }, 500);
   }
 };
@@ -40,7 +39,6 @@ export const getRelatedMovieData = async ({
   apiUrl,
   setter,
   setterLoading,
-  text,
   resultData = "results",
   id,
 }) => {
@@ -58,13 +56,13 @@ export const getRelatedMovieData = async ({
     const filter = results.filter((item) => item.id !== id).slice(0, 10);
     setter(filter);
     localStorage.setItem(key, JSON.stringify(filter));
-    console.log(text);
+    console.log("Done Fetching Data " + key);
   } catch (err) {
     console.log(err);
   } finally {
     setTimeout(() => {
       setterLoading((prev) => ({ ...prev, [key]: false }));
-      console.log(key + " finish");
+      console.log(key + " finish load");
     }, 500);
   }
 };

@@ -42,7 +42,7 @@ const MovieCard = ({ item, genre, type }) => {
       <div className="flex justify-between items-center gap-1">
         <Link
           to={`/movie/${item.id}`}
-          className="text-md z-1 cursor-pointer hover:text-primary transition-all 0.3s line-clamp-1"
+          className="text-md z-1 cursor-pointer hover:text-base-content/70 transition-all 0.3s line-clamp-1"
         >
           {item.title}
         </Link>

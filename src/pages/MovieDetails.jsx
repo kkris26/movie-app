@@ -60,13 +60,12 @@ const MovieDetails = () => {
     if (movieByID?.genres) {
       const genreList = movieByID.genres.map((item) => item.id);
       const genreListJoin = genreList.length > 0 && genreList.join("|");
-      getRelatedMovieData({
+      getAPIData({
         key: "relatedMovie-" + id,
         apiUrl: import.meta.env.VITE_MOVIE_LLIST_BY_GENRE + genreListJoin,
         setter: setRelatedMovie,
         text: "Fetch Movie By Genres",
         setterLoading: setLoading,
-        id: parseInt(id),
       });
     }
   };
@@ -178,23 +177,25 @@ const MovieDetails = () => {
                   Release on {formatDate(movieByID.release_date)}
                 </p>
                 <p className="text-sm">{movieByID.overview}</p>
-                <div className="flex flex-col gap-1">
-                  <p className="text-sm">Production by</p>
-                  <ul className="flex gap-2 flex-wrap">
-                    {movieByID.production_companies.map((item) => (
-                      <ListLabel key={item.id}>{item.name}</ListLabel>
-                    ))}
-                  </ul>
-                </div>
+                {movieByID.production_companies.length > 0 && (
+                  <div className="flex flex-col gap-1">
+                    <p className="text-sm">Production by</p>
+                    <ul className="flex gap-2 flex-wrap">
+                      {movieByID.production_companies.map((item) => (
+                        <ListLabel key={item.id}>{item.name}</ListLabel>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             </div>
             <MovieListLayout
-              data={relatedMovie}
+              data={relatedMovie.filter((item) => item.id !== parseInt(id))}
               genre={genre}
               heading="Related Movie"
               type="byGenre"
               loading={loading["relatedMovie-" + id]}
-              height="min-h-screen mt-10"
+              max={10}
             />
           </ContentLayouts>
         </>

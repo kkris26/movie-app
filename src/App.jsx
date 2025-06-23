@@ -8,6 +8,7 @@ import PageTransitions from "./components/utilities/transitions/PageTransitions"
 import { AnimatePresence } from "framer-motion";
 import AudioPlay from "./components/Button/AudioPlay";
 import MovieByGenres from "./pages/MovieByGenres";
+import MovieCategoryPage from "./pages/MovieCategoryPage";
 
 function App() {
   const location = useLocation();
@@ -42,6 +43,14 @@ function App() {
               element={
                 <PageTransitions>
                   <MovieByGenres />
+                </PageTransitions>
+              }
+            />
+            <Route
+              path="/:category"
+              element={
+                <PageTransitions>
+                  <MovieCategoryPage />
                 </PageTransitions>
               }
             />

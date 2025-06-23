@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAPIData } from "../../services/getAPIService";
+import { GoArrowUpRight } from "react-icons/go";
 
 const Navbar = () => {
   const [isTop, setIsTop] = useState(true);
   const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState();
+  useEffect(() => {
+    getGenre();
+  }, []);
   const menuRef = useRef();
   window.addEventListener("scroll", () => {
     if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
@@ -27,9 +31,13 @@ const Navbar = () => {
   const handleClose = () => {
     menuRef.current.checked = false;
   };
-  useEffect(() => {
-    getGenre();
-  }, []);
+
+  const movieMenu = [
+    { name: "Now Playing", link: "/now_playing" },
+    { name: "Popular", link: "/popular" },
+    { name: "Top Rated", link: "/top_rated" },
+    { name: "Upcoming", link: "/upcoming" },
+  ];
   return (
     <div className="drawer z-3">
       <input
@@ -117,21 +125,49 @@ const Navbar = () => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <div className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
-          <h1 className="text-xl">Genre</h1>
-          <div className=" flex flex-col gap-2">
-            {genres.map((item) => (
-              <label
-                htmlFor="my-drawer"
-                aria-label="close sidebar"
-                className="drawer-overlay"
-                key={item.id}
-              >
-                <Link to={"genre/" + item.id} onClick={handleClose}>
-                  {item.name}
-                </Link>
-              </label>
-            ))}
+        <div className="menu bg-base-200 text-base-content h-full w-80 p-6 gap-2 flex-col justify-between flex">
+          <div className="flex flex-col gap-5">
+            <h1 className="text-4xl">Category</h1>
+            <div className=" flex flex-col gap-2 text-2xl font-light">
+              {movieMenu.map((item, index) => (
+                <label
+                  htmlFor="my-drawer"
+                  aria-label="close sidebar"
+                  className="drawer-overlay"
+                  key={index}
+                >
+                  <Link
+                    to={item.link}
+                    onClick={handleClose}
+                    className="text-base-content/80 flex items-center gap-4 justify-between hover:text-base-content"
+                  >
+                    {item.name}
+                    <GoArrowUpRight />
+                  </Link>
+                </label>
+              ))}
+            </div>
+          </div>
+          <div className="flex flex-col gap-2">
+            <h1 className="text-2xl">Movie Genre</h1>
+            <div className=" flex flex-wrap gap-x-4 text-md ">
+              {genres.map((item) => (
+                <label
+                  htmlFor="my-drawer"
+                  aria-label="close sidebar"
+                  className="drawer-overlay"
+                  key={item.id}
+                >
+                  <Link
+                    to={"genre/" + item.id}
+                    onClick={handleClose}
+                    className="text-base-content/70 items-center hover:text-base-content"
+                  >
+                    {item.name}
+                  </Link>
+                </label>
+              ))}
+            </div>
           </div>
         </div>
       </div>

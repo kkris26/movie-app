@@ -6,12 +6,13 @@ const MovieListLayout = ({
   genre,
   heading = "Movie List",
   type = "",
+  max,
   loading,
-  height = "h-140",
+  customClass = "",
 }) => {
   return (
     <div
-      className={`flex flex-col px-10 gap-4 ${height}  overflow-hidden`}
+      className={`flex flex-col px-10 gap-4 overflow-hidden ${customClass} `}
     >
       <div className="flex justify-between w-full items-center">
         <h2 className="text-2xl">{heading}</h2>
@@ -25,8 +26,18 @@ const MovieListLayout = ({
                 <div className="skeleton h-4 w-[70%]"></div>
               </div>
             ))
-          : data.length > 0 &&
-            data.map((item) => (
+          : data.length > 0 && max
+          ? data
+              .slice(0, max)
+              .map((item) => (
+                <MovieCard
+                  item={item}
+                  key={item.id}
+                  genre={genre}
+                  type={type}
+                />
+              ))
+          : data.map((item) => (
               <MovieCard item={item} key={item.id} genre={genre} type={type} />
             ))}
       </div>

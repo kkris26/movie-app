@@ -72,7 +72,7 @@ const SmoothFollower = () => {
   return (
     <div className="pointer-events-none fixed inset-0 z-50">
       <div
-        className="absolute rounded-full dark:bg-white bg-black "
+        className="absolute rounded-full bg-accent "
         style={{
           width: "8px",
           height: "8px",
@@ -83,7 +83,7 @@ const SmoothFollower = () => {
       />
 
       <div
-        className="absolute rounded-full border dark:border-white border-black "
+        className="absolute rounded-full border  border-accent"
         style={{
           width: isHovering ? "44px" : "28px",
           height: isHovering ? "44px" : "28px",

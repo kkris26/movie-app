@@ -31,7 +31,6 @@ const HomePage = () => {
       key: movieList.genre,
       apiUrl: import.meta.env.VITE_GENRE_LIST,
       setter: setGenre,
-      text: "Fetch Genre",
       resultData: "genres",
       setterLoading: setLoading,
     });
@@ -42,7 +41,6 @@ const HomePage = () => {
       key: movieList.now_playing_movie,
       apiUrl: import.meta.env.VITE_NOW_PLAYING_MOVIE_LIST,
       setter: setNowPlayingMovie,
-      text: "Fetch Now Playing Movie",
       setterLoading: setLoading,
     });
   };
@@ -51,7 +49,6 @@ const HomePage = () => {
       key: movieList.popular_movie,
       apiUrl: import.meta.env.VITE_POPULAR_MOVIE_LIST,
       setter: setPopularMovie,
-      text: "Fetch Popular Movie",
       setterLoading: setLoading,
     });
   };
@@ -60,7 +57,6 @@ const HomePage = () => {
       key: movieList.top_rated_movie,
       apiUrl: import.meta.env.VITE_TOP_RATED_MOVIE_LIST,
       setter: setTopRatedMovie,
-      text: "Fetch Top Rated Movie",
       setterLoading: setLoading,
     });
   };
@@ -69,7 +65,6 @@ const HomePage = () => {
       key: movieList.upcoming_movie,
       apiUrl: import.meta.env.VITE_UPCOMING_MOVIE_LIST,
       setter: setUpcomingMovie,
-      text: "Fetch Top Upcoming Movie",
       setterLoading: setLoading,
     });
   };
@@ -88,24 +83,27 @@ const HomePage = () => {
     <>
       <HeroLayout data={nowPlayingMovie} />
 
-      <ContentLayouts customClass="flex flex-col gap-4">
+      <ContentLayouts customClass="flex flex-col gap-10">
         <MovieListLayout
           data={nowPlayingMovie}
           genre={genre}
           heading="Now Playing"
           loading={loading.now_playing_movie}
+          max={5}
         />
         <MovieListLayout
           data={popularMovie}
           genre={genre}
           heading="Popular Movie"
           loading={loading.popular_movie}
+          max={5}
         />
         <MovieListLayout
           data={topRatedMovie}
           genre={genre}
           heading="Top Rated"
           loading={loading.top_rated_movie}
+          max={5}
         />
         <MovieListLayout
           data={upcomingMovie}
@@ -113,6 +111,7 @@ const HomePage = () => {
           heading="Upcoming List"
           type="upcoming"
           loading={loading.upcoming_movie}
+          max={5}
         />
       </ContentLayouts>
     </>

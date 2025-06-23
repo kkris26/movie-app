@@ -3,8 +3,10 @@ import { useParams } from "react-router-dom";
 import { getAPIData } from "../services/getAPIService";
 import MovieListLayout from "../layouts/MovieListLayout";
 import ContentLayouts from "../layouts/ContentLayouts";
+import HeroSection from "../layouts/HeroSection";
+import HeroSectionLoad from "../components/Loading/HeroSectionLoad";
 
-const MovieByGenres = () => {
+const MovieListSection = () => {
   const { id } = useParams();
   const [movieList, setMovieList] = useState([]);
   const [loading, setLoading] = useState({
@@ -16,7 +18,6 @@ const MovieByGenres = () => {
       key: id,
       apiUrl: import.meta.env.VITE_MOVIE_LLIST_BY_GENRE + id,
       setter: setMovieList,
-      text: "Fetch MovieBy Genres",
       setterLoading: setLoading,
     });
   };
@@ -25,7 +26,6 @@ const MovieByGenres = () => {
       key: "genre",
       apiUrl: import.meta.env.VITE_GENRE_LIST,
       setter: setGenre,
-      text: "Fetch Genre",
       resultData: "genres",
       setterLoading: setLoading,
     });
@@ -44,31 +44,16 @@ const MovieByGenres = () => {
   return (
     <>
       {loading[id] ? (
-        <div className="h-screen  flex items-center px-10">
-          <div className="skeleton h-screen inset-0 bg-base-200/50 absolute w-full"></div>
-          <div className="skeleton h-10 w-80"></div>
-        </div>
+        <HeroSectionLoad />
       ) : (
         <>
-          <div
-            className="h-screen bg-cover relative flex items-center px-10"
-            style={{
-              backgroundImage: `url(${
-                import.meta.env.VITE_IMAGE_PATH_ORIGINAL +
-                movieList[0].backdrop_path
-              }`,
-            }}
-          >
-            <h1 className="text-5xl">Showing List {genreName}</h1>
-          </div>
+          <HeroSection image={movieList[0].backdrop_path} />
           <ContentLayouts>
             <MovieListLayout
               data={movieList}
               genre={genre}
-              heading={"Movie by Genres " + genreName}
-              type="byGenre"
+              heading={genreName + " Movies"}
               loading={loading.id}
-              height="min-h-screen"
             />
           </ContentLayouts>
         </>
@@ -77,4 +62,4 @@ const MovieByGenres = () => {
   );
 };
 
-export default MovieByGenres;
+export default MovieListSection;
