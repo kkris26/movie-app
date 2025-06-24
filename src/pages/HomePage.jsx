@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import HeroLayout from "../layouts/HeroLayout";
 import MovieListLayout from "../layouts/MovieListLayout";
 import { getAPIData } from "../services/getAPIService";
@@ -26,6 +26,8 @@ const HomePage = () => {
     upcoming_movie: true,
   });
   const [genre, setGenre] = useState([]);
+
+  const sectionRef = useRef();
 
   console.log(favorite);
 
@@ -80,13 +82,19 @@ const HomePage = () => {
     getUpcomingMovie();
   }, []);
 
-  const idContent = "contentHome";
+  const scroolTo = () => {
+    sectionRef.current.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <>
-      <HeroLayout loading={loading} data={nowPlayingMovie} id={idContent} />
+      <HeroLayout
+        loading={loading}
+        data={nowPlayingMovie}
+        scrollAction={scroolTo}
+      />
 
-      <ContentLayouts customClass="flex flex-col gap-10 pt-20" id={idContent}>
+      <ContentLayouts customClass="flex flex-col gap-10 pt-20" ref={sectionRef}>
         <MovieListLayout
           data={nowPlayingMovie}
           genre={genre}

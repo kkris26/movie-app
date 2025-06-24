@@ -55,6 +55,7 @@ const MovieCategoryPage = () => {
           }
           loading={loading[category] || loading.genre}
           type={category}
+          loadCardItem={10}
         />
       </ContentLayouts>
     </>

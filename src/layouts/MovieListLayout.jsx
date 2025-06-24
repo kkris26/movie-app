@@ -13,6 +13,7 @@ const MovieListLayout = ({
   customClass = "",
   btntext = "Go Back",
   btnLink = "/",
+  loadCardItem = 5,
 }) => {
   return (
     <div className={`flex flex-col gap-4 overflow-hidden  ${customClass} `}>
@@ -33,7 +34,7 @@ const MovieListLayout = ({
         } gap-y-10 gap-x-4 `}
       >
         {loading ? (
-          [...Array(5)].map((_, idx) => (
+          [...Array(loadCardItem)].map((_, idx) => (
             <div className="flex flex-col gap-3 " key={idx}>
               <div className="skeleton h-95 w-full"></div>
               <div className="skeleton h-6 w-[90%]"></div>

@@ -49,6 +49,7 @@ const MovieListSection = () => {
           genre={genre}
           heading={genreName + " Movies"}
           loading={loading[id]}
+          loadCardItem={10}
         />
       </ContentLayouts>
     </>

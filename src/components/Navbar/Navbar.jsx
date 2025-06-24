@@ -157,9 +157,6 @@ const Navbar = (pathname) => {
                             alt=""
                           />
                           <div className="gap-0 flex flex-col">
-                            {/* <p className="line-clamp-1 text-[10px] text-base-content/80">
-                              {formatDate(item.release_date)}
-                            </p> */}
                             <p
                               className="text-sm line-clamp-1 text-base-content/90"
                               key={item.id}
@@ -231,7 +228,7 @@ const Navbar = (pathname) => {
               </button>
               <Link className="text-2xl relative" to={"/favorite"}>
                 <IoMdHeart />
-                <p className="text-[8px] text-white w-max leading-1.5 p-[3px] rounded-full bg-primary flex items-center justify-center absolute top-[-3px] left-[18px]">
+                <p className="text-[8px] text-white w-max leading-1.5 p-[3px] rounded-full bg-info flex items-center justify-center absolute top-[-3px] left-[18px]">
                   {favorite.length}
                 </p>
               </Link>
@@ -247,7 +244,7 @@ const Navbar = (pathname) => {
           <div className="menu bg-base-200 text-base-content h-full w-80 p-6 gap-2 flex-col justify-between flex">
             <div className="flex flex-col gap-5">
               <h1 className="text-4xl">Category</h1>
-              <div className=" flex flex-col gap-4 text-2xl font-light">
+              <div className=" flex flex-col gap-5 text-2xl font-light">
                 {movieMenu.map((item, index) => (
                   <Link
                     key={index}
@@ -260,17 +257,9 @@ const Navbar = (pathname) => {
                   </Link>
                 ))}
               </div>
-              <Link
-                className="text-2xl underline underline-offset-6 flex items-center justify-between"
-                to={"/favorite"}
-                onClick={handleCloseMenu}
-              >
-                Favorite List
-                <GoArrowUpRight />
-              </Link>
             </div>
             <div className="flex flex-col gap-2">
-              <h1 className="text-2xl">Movie Genre</h1>
+              <h1 className="text-xl">Movie Genre</h1>
               <div className=" flex flex-wrap gap-x-4 text-md ">
                 {genres.map((item) => (
                   <Link

@@ -32,6 +32,6 @@ export const getAPIData = async ({
     setTimeout(() => {
       setterLoading((prev) => ({ ...prev, [key]: false }));
       console.log(key + " finish load");
-    }, 500);
+    }, 200);
   }
 };

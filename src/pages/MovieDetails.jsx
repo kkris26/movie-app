@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { BsPerson } from "react-icons/bs";
 import { FaEye, FaStar } from "react-icons/fa";
 import { GoArrowUpRight, GoPerson } from "react-icons/go";
@@ -34,6 +34,8 @@ const MovieDetails = () => {
   const [movieByID, setMovieByID] = useState({});
   const [genre, setGenre] = useState([]);
   const [relatedMovie, setRelatedMovie] = useState([]);
+
+  const sectionRef = useRef();
 
   const getMovieByID = async () => {
     getAPIData({
@@ -78,6 +80,10 @@ const MovieDetails = () => {
   useEffect(() => {
     getRelated();
   }, [movieByID]);
+
+  const scroolTo = () => {
+    sectionRef.current.scrollIntoView({ behavior: "smooth" });
+  };
   return (
     <>
       {loading[id] ? (
@@ -114,7 +120,7 @@ const MovieDetails = () => {
           <div className="w-7xl mx-auto">
             <div className="z-1 relative w-150 flex flex-col gap-5 justify-start text-white">
               <h1 className="text-7xl tracking-wider">{movieByID.title}</h1>
-              <div className="flex gap-4 text-sm text-gray-300">
+              <div className="flex gap-4 text-sm text-gray-200">
                 <div className="flex gap-1 items-center ">
                   <FaStar className="text-yellow-500 text-md" />
 
@@ -134,13 +140,13 @@ const MovieDetails = () => {
               <p className="text-gray-200 font-light line-clamp-2 w-full">
                 {movieByID.overview}
               </p>
-              <a
-                className="text-xl border-b font-light flex gap-2 w-max items-center hover:text-white/80"
-                href={`#content-details`}
+              <button
+                onClick={scroolTo}
+                className="text-xl cursor-pointer border-b font-light flex gap-2 w-max items-center hover:text-white/80"
               >
                 Start Explore
                 <GoArrowUpRight className="text-xl mb-[-4px]" />
-              </a>
+              </button>
             </div>
           </div>
           <div className="absolute inset-0 bg-linear-to-l from-transparent to-black/70 z-0"></div>
@@ -176,8 +182,8 @@ const MovieDetails = () => {
             </div>
           ) : (
             <div
-              id="content-details"
-              className="flex gap-10 items-center h-screen w-5xl mx-auto"
+              ref={sectionRef}
+              className="flex gap-10 items-center h-screen w-5xl mx-auto pb-15"
             >
               <div className=" flex items-center p-2 rounded-md border-2 border-base-content ">
                 <img
@@ -207,7 +213,7 @@ const MovieDetails = () => {
                 </p>
                 <p className="text-sm">{movieByID.overview}</p>
                 {movieByID.production_companies.length > 0 && (
-                  <div className="flex flex-col gap-1">
+                  <div className="flex flex-col gap-2">
                     <p className="text-sm">Production by</p>
                     <ul className="flex gap-2 flex-wrap">
                       {movieByID.production_companies.map((item) => (

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import HeroSectionLoad from "../components/Loading/HeroSectionLoad";
 import { GoArrowUpRight } from "react-icons/go";
 
-const HeroLayout = ({ data, id, loading }) => {
+const HeroLayout = ({ data, loading, scrollAction }) => {
   let indexImage = 0;
   useEffect(() => {
     const interval = setInterval(() => {
@@ -22,9 +22,8 @@ const HeroLayout = ({ data, id, loading }) => {
     <>
       {loading.now_playing_movie ? (
         <HeroSectionLoad />
-        
       ) : (
-        <div className="h-screen relative flex items-center   transition-all duration-300 ease-in-out">
+        <div className="h-screen relative flex items-center transition-all duration-300 ease-in-out">
           {data.length > 0 &&
             data.map((item, idx) => (
               <img
@@ -37,8 +36,8 @@ const HeroLayout = ({ data, id, loading }) => {
                `}
               />
             ))}
-          <div className="flex flex-col gap-4 w-200 mx-40">
-            <div className="z-1  flex flex-col gap-6 text-white">
+          <div className="flex flex-col gap-4 w-7xl mx-auto">
+            <div className="z-1  flex flex-col gap-6 text-white w-200">
               <h1 className="text-8xl text-start">
                 Your Gateway to the World of Movies
               </h1>
@@ -48,13 +47,13 @@ const HeroLayout = ({ data, id, loading }) => {
                 one place. Movora is your personalized home for cinematic
                 discovery.
               </p>
-              <a
-                className="text-xl border-b font-light flex gap-2 w-max items-center hover:text-white/80"
-                href={`#${id}`}
+              <button
+                className="text-xl cursor-pointer border-b font-light flex gap-2 w-max items-center hover:text-white/80"
+                onClick={scrollAction}
               >
                 Start Explore
                 <GoArrowUpRight className="text-xl mb-[-4px]" />
-              </a>
+              </button>
             </div>
           </div>
           <div className=" inset-0 absolute bg-black/30"></div>
