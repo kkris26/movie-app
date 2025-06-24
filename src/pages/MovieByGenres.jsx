@@ -16,7 +16,7 @@ const MovieListSection = () => {
   const getMovieList = () => {
     getAPIData({
       key: id,
-      apiUrl: import.meta.env.VITE_MOVIE_LLIST_BY_GENRE + id,
+      apiUrl: import.meta.env.VITE_MOVIE_LIST_BY_GENRE + id,
       setter: setMovieList,
       setterLoading: setLoading,
     });

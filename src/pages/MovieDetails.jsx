@@ -65,7 +65,7 @@ const MovieDetails = () => {
       const genreListJoin = genreList.length > 0 && genreList.join("|");
       getAPIData({
         key: "relatedMovie-" + id,
-        apiUrl: import.meta.env.VITE_MOVIE_LLIST_BY_GENRE + genreListJoin,
+        apiUrl: import.meta.env.VITE_MOVIE_LIST_BY_GENRE + genreListJoin,
         setter: setRelatedMovie,
         text: "Fetch Movie By Genres",
         setterLoading: setLoading,
