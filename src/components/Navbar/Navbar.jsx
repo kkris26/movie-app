@@ -4,6 +4,8 @@ import { getAPIData } from "../../services/getAPIService";
 import { GoArrowUpRight } from "react-icons/go";
 import { FiSearch } from "react-icons/fi";
 import { RxHamburgerMenu } from "react-icons/rx";
+import { IoMdHeart } from "react-icons/io";
+import { useFavorite } from "../../contexts/FavoriteContext";
 
 const Navbar = (pathname) => {
   const [isTop, setIsTop] = useState(true);
@@ -17,6 +19,7 @@ const Navbar = (pathname) => {
     getGenre();
   }, []);
   const [bgNavbar, setBgNavbar] = useState(true);
+  const { favorite } = useFavorite();
 
   const menuRef = useRef();
   const inputSearchRef = useRef();
@@ -51,6 +54,9 @@ const Navbar = (pathname) => {
     setTimeout(() => {
       inputSearchRef.current.focus();
     }, 20);
+  };
+  const handleCloseSearchModal = () => {
+    modalSearchRef.current.close();
   };
   useEffect(() => {
     if (searchQuery == "") {
@@ -97,9 +103,9 @@ const Navbar = (pathname) => {
   return (
     <>
       {/* modal */}
-      <dialog ref={modalSearchRef} id="my_modal_2" className="modal">
+      <dialog ref={modalSearchRef} id="my_modal_2" className="modal z-9">
         <div className="modal-box p-0 pb-4">
-          <div className="flex items-center gap-3 border-b-1 border-white/10 px-4 py-2">
+          <div className="flex items-center gap-3 border-b-1 border-base-content/5 px-4 py-2">
             <label htmlFor="search-movie">
               <FiSearch />
             </label>
@@ -114,33 +120,59 @@ const Navbar = (pathname) => {
             />
             <button
               ref={closeSearchRef}
-              onClick={() => document.getElementById("my_modal_2").close()}
+              onClick={handleCloseSearchModal}
               className="btn btn-xs"
             >
               Esc
             </button>
           </div>
           {loading.searchMovie ? (
-            <div className="h-30 flex items-center justify-center">
+            <div className="h-100 flex items-center justify-center">
               <p className="text-gray-200/70">
                 {searchQuery ? "Loading ..." : "Start Searching"}
               </p>
             </div>
           ) : (
-            <div className="h-40 overflow-auto p-4">
-              <p>Search Results for "{searchQuery}"</p>
-              <ul>
+            <div className="">
+              <p className="text-xs pt-2 border-b border-base-content/5 bg-base-content/3 px-4  pb-2">
+                Search Results for "{searchQuery}"
+              </p>
+              <ul className="h-100 overflow-auto px-4">
                 {searchMovies.length > 0 ? (
-                  searchMovies.map((item) => (
-                    <li
-                      className="border-b border-white/10 py-2 text-white/50"
-                      key={item.id}
-                    >
-                      {item.title}
-                    </li>
-                  ))
+                  searchMovies.map(
+                    (item) =>
+                      item.poster_path && (
+                        <Link
+                          onClick={handleCloseSearchModal}
+                          to={"/movie/" + item.id}
+                          key={item.id}
+                          className="flex items-center w-full border-b  border-base-content/5  hover:bg-gray-500/10 gap-3 py-2"
+                        >
+                          <img
+                            src={
+                              import.meta.env.VITE_IMAGE_PATH + item.poster_path
+                            }
+                            className="w-10 min-w-10 min-h-12 bg-base-content rounded-xs"
+                            alt=""
+                          />
+                          <div className="gap-0 flex flex-col">
+                            <p
+                              className="text-sm text-base-content/90"
+                              key={item.id}
+                            >
+                              {item.title}
+                            </p>
+                            <p className="line-clamp-1 text-xs text-base-content/80">
+                              {item.overview}
+                            </p>
+                          </div>
+                        </Link>
+                      )
+                  )
                 ) : (
-                  <li>Not Found</li>
+                  <div className="h-full flex items-center justify-center">
+                    <p className="text-gray-200/70">Not Found</p>
+                  </div>
                 )}
               </ul>
             </div>
@@ -172,7 +204,9 @@ const Navbar = (pathname) => {
               <label
                 htmlFor="my-drawer"
                 aria-label="open sidebar"
-                className="cursor-pointer text-2xl hover:text-white/80 focus:outline-0"
+                className={`text-2xl cursor-pointer  hover:${
+                  bgNavbar && isTop ? "text-white/80" : "text-base-content/80"
+                } focus:outline-0`}
               >
                 <RxHamburgerMenu />
               </label>
@@ -184,11 +218,19 @@ const Navbar = (pathname) => {
             </div>
             <div className="navbar-end items-center gap-3">
               <button
-                className="text-2xl  hover:text-white/80 focus:outline-0"
+                className={`text-2xl cursor-pointer  hover:${
+                  bgNavbar && isTop ? "text-white/80" : "text-base-content/80"
+                } focus:outline-0`}
                 onClick={handleOpenSearchModal}
               >
                 <FiSearch />
               </button>
+              <Link className="text-2xl relative" to={"/favorite"}>
+                <IoMdHeart />
+                <p className="text-[8px] text-white w-max leading-1.5 p-[3px] rounded-full bg-primary flex items-center justify-center absolute top-[-3px] left-[18px]">
+                  {favorite.length}
+                </p>
+              </Link>
             </div>
           </div>
         </div>
@@ -207,7 +249,7 @@ const Navbar = (pathname) => {
                     key={index}
                     to={item.link}
                     onClick={handleCloseMenu}
-                    className="text-base-content/80 underline underline-offset-6 flex items-center gap-4 justify-between hover:text-base-content"
+                    className="text-base-content/90 underline underline-offset-6 flex items-center gap-4 justify-between hover:text-base-content"
                   >
                     {item.name}
                     <GoArrowUpRight />
@@ -215,11 +257,12 @@ const Navbar = (pathname) => {
                 ))}
               </div>
               <Link
-                className="text-3xl underline underline-offset-6"
+                className="text-2xl underline underline-offset-6 flex items-center justify-between"
                 to={"/favorite"}
                 onClick={handleCloseMenu}
               >
                 Favorite List
+                <GoArrowUpRight />
               </Link>
             </div>
             <div className="flex flex-col gap-2">
@@ -230,7 +273,7 @@ const Navbar = (pathname) => {
                     key={item.id}
                     to={"genre/" + item.id}
                     onClick={handleCloseMenu}
-                    className="text-base-content/70 underline underline-offset-3 items-center hover:text-base-content"
+                    className="text-base-content/90 underline underline-offset-3 items-center hover:text-base-content"
                   >
                     {item.name}
                   </Link>

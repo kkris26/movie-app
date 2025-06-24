@@ -25,18 +25,14 @@ const FavoriteMoviePage = () => {
   }, []);
   return (
     <>
-      {loading.genre ? (
-        <HeroSectionLoad />
-      ) : (
-        <ContentLayouts type="no-hero">
-          <MovieListLayout
-            data={favorite}
-            genre={genre}
-            heading={"Favorite Movie"}
-            loading={loading.genre}
-          />
-        </ContentLayouts>
-      )}
+      <ContentLayouts type="no-hero">
+        <MovieListLayout
+          data={favorite}
+          genre={genre}
+          heading={"Favorite Movie"}
+          loading={loading.genre}
+        />
+      </ContentLayouts>
     </>
   );
 };

@@ -19,7 +19,7 @@ const MovieCard = ({ item, genre, type }) => {
               <p>{formatDate(item.release_date)}</p>
             </div>
           ) : (
-            <div className="absolute right-4 top-4  bg-amber-500 px-2 rounded flex items-center gap-1 z-2">
+            <div className="absolute right-4 top-4 text-white  bg-amber-500 px-2 rounded flex items-center gap-1 z-2">
               <FaStar className="text-md" />
               <p>{formatRating(item.vote_average)}</p>
             </div>

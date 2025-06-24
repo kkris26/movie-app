@@ -17,7 +17,7 @@ const MovieCategoryPage = () => {
   const getCategoryMovie = () => {
     getAPIData({
       key: category,
-      apiUrl: import.meta.env.VITE_MOVIE_DETAILS + category,
+      apiUrl: import.meta.env.VITE_MOVIE_DETAILS + category + "?region=ID",
       setter: setMovieCategory,
       setterLoading: setLoading,
     });
@@ -46,22 +46,17 @@ const MovieCategoryPage = () => {
   console.log(category);
   return (
     <>
-      {loading[category] || loading.genre ? (
-        <HeroSectionLoad />
-      ) : (
-        <>
-          <ContentLayouts type="no-hero">
-            <MovieListLayout
-              data={movieCategory}
-              genre={genre}
-              heading={
-                "Category " + movieList.find((item) => item.link == category).name
-              }
-              loading={loading.category}
-            />
-          </ContentLayouts>
-        </>
-      )}
+      <ContentLayouts type="no-hero">
+        <MovieListLayout
+          data={movieCategory}
+          genre={genre}
+          heading={
+            "Category " + movieList.find((item) => item.link == category).name
+          }
+          loading={loading[category] || loading.genre}
+          type={category}
+        />
+      </ContentLayouts>
     </>
   );
 };

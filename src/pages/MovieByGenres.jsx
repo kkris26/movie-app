@@ -43,21 +43,14 @@ const MovieListSection = () => {
   console.log("genres");
   return (
     <>
-      {loading[id] ? (
-        <HeroSectionLoad />
-      ) : (
-        <>
-          {/* <HeroSection image={movieList[0].backdrop_path} /> */}
-          <ContentLayouts type="no-hero">
-            <MovieListLayout
-              data={movieList}
-              genre={genre}
-              heading={genreName + " Movies"}
-              loading={loading.id}
-            />
-          </ContentLayouts>
-        </>
-      )}
+      <ContentLayouts type="no-hero">
+        <MovieListLayout
+          data={movieList}
+          genre={genre}
+          heading={genreName + " Movies"}
+          loading={loading[id]}
+        />
+      </ContentLayouts>
     </>
   );
 };

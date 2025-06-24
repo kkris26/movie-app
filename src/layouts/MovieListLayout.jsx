@@ -29,19 +29,24 @@ const MovieListLayout = ({
       </div>
       <div
         className={`grid ${
-          data.length === 0 ? "" : "grid-cols-5"
+          !loading && data.length === 0 ? "" : "grid-cols-5"
         } gap-y-10 gap-x-4 `}
       >
         {loading ? (
           [...Array(5)].map((_, idx) => (
             <div className="flex flex-col gap-3 " key={idx}>
               <div className="skeleton h-95 w-full"></div>
-              <div className="skeleton h-4 w-[70%]"></div>
+              <div className="skeleton h-6 w-[90%]"></div>
+              <div className="flex flex-wrap gap-2">
+                <div className="skeleton h-4 w-1/4"></div>
+                <div className="skeleton h-4 w-1/4"></div>
+                <div className="skeleton h-4 w-1/4"></div>
+              </div>
             </div>
           ))
         ) : data.length === 0 ? (
           <div className="h-100 flex flex-col gap-4  w-full  items-center justify-center">
-            <p className="text-white text-xl">
+            <p className="text-base-content text-xl">
               You haven't added any favorites yet.
             </p>
             <Link to={"/"} className="underline underline-offset-4">

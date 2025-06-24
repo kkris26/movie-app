@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import HeroSectionLoad from "../components/Loading/HeroSectionLoad";
+import { GoArrowUpRight } from "react-icons/go";
 
 const HeroLayout = ({ data, id, loading }) => {
   let indexImage = 0;
@@ -21,6 +22,7 @@ const HeroLayout = ({ data, id, loading }) => {
     <>
       {loading.now_playing_movie ? (
         <HeroSectionLoad />
+        
       ) : (
         <div className="h-screen relative flex items-center   transition-all duration-300 ease-in-out">
           {data.length > 0 &&
@@ -36,7 +38,7 @@ const HeroLayout = ({ data, id, loading }) => {
               />
             ))}
           <div className="flex flex-col gap-4 w-200 mx-40">
-            <div className="z-1  flex flex-col gap-6">
+            <div className="z-1  flex flex-col gap-6 text-white">
               <h1 className="text-8xl text-start">
                 Your Gateway to the World of Movies
               </h1>
@@ -46,9 +48,13 @@ const HeroLayout = ({ data, id, loading }) => {
                 one place. Movora is your personalized home for cinematic
                 discovery.
               </p>
-              <button className="btn btn-lg btn-outline border-white hover:bg-white hover:text-black rounded-none w-max">
-                <a href={`#${id}`}>Start Explore</a>
-              </button>
+              <a
+                className="text-xl border-b font-light flex gap-2 w-max items-center hover:text-white/80"
+                href={`#${id}`}
+              >
+                Start Explore
+                <GoArrowUpRight className="text-xl mb-[-4px]" />
+              </a>
             </div>
           </div>
           <div className=" inset-0 absolute bg-black/30"></div>

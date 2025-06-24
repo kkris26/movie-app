@@ -2,8 +2,8 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <>
-      <footer className="footer sm:footer-horizontal pt-15 text-base-content p-10">
+    <footer className="flex flex-col gap-10">
+      <section className="footer max-w-7xl mx-auto sm:footer-horizontal pt-15 text-base-content">
         <aside>
           <svg
             width="50"
@@ -42,16 +42,16 @@ const Footer = () => {
           <a className="link link-hover">Privacy policy</a>
           <a className="link link-hover">Cookie policy</a>
         </nav>
-      </footer>
-      <footer className="footer sm:footer-horizontal footer-center text-base-content p-4">
+      </section>
+      <section className="footer sm:footer-horizontal footer-center text-base-content p-4">
         <aside>
           <p>
             Copyright © {new Date().getFullYear()} - All right reserved by ACME
             Industries Ltd
           </p>
         </aside>
-      </footer>
-    </>
+      </section>
+    </footer>
   );
 };
 
