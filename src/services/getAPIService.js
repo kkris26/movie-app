@@ -11,6 +11,7 @@ export const getAPIData = async ({
   setter,
   setterLoading,
   resultData = "results",
+  type = "",
 }) => {
   try {
     const localData = localStorage.getItem(key);
@@ -23,7 +24,7 @@ export const getAPIData = async ({
     // console.log(data);
     const results = !resultData ? data : data[resultData];
     setter(results);
-    localStorage.setItem(key, JSON.stringify(results));
+    type !== "search" && localStorage.setItem(key, JSON.stringify(results));
     console.log("Done Fetching Data " + key);
   } catch (err) {
     console.log(err);

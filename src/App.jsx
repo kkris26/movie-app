@@ -17,7 +17,7 @@ function App() {
     <>
       <Navbar />
       <SmoothFollower />
-      <AudioPlay />
+      {/* <AudioPlay /> */}
       <MainLayout>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
