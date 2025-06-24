@@ -6,6 +6,7 @@ import { FiSearch } from "react-icons/fi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoMdHeart } from "react-icons/io";
 import { useFavorite } from "../../contexts/FavoriteContext";
+import { formatDate } from "../utilities/Formatter/formatter";
 
 const Navbar = (pathname) => {
   const [isTop, setIsTop] = useState(true);
@@ -63,7 +64,7 @@ const Navbar = (pathname) => {
       setLoading({ searchMovie: true });
       return;
     }
-    const searchMovie = setTimeout(() => {
+    const searchMovieTO = setTimeout(() => {
       setLoading({ searchMovie: true });
       getAPIData({
         key: "searchMovie",
@@ -73,9 +74,9 @@ const Navbar = (pathname) => {
         type: "search",
       });
       console.log(searchQuery);
-    }, 1000);
+    }, 800);
     return () => {
-      clearTimeout(searchMovie);
+      clearTimeout(searchMovieTO);
     };
   }, [searchQuery]);
 
@@ -127,9 +128,9 @@ const Navbar = (pathname) => {
             </button>
           </div>
           {loading.searchMovie ? (
-            <div className="h-100 flex items-center justify-center">
-              <p className="text-gray-200/70">
-                {searchQuery ? "Loading ..." : "Start Searching"}
+            <div className="h-50 flex items-center justify-center">
+              <p className="text-gray-200/70 text-sm">
+                {searchQuery ? "Loading ..." : "Start typing to search"}
               </p>
             </div>
           ) : (
@@ -137,9 +138,9 @@ const Navbar = (pathname) => {
               <p className="text-xs pt-2 border-b border-base-content/5 bg-base-content/3 px-4  pb-2">
                 Search Results for "{searchQuery}"
               </p>
-              <ul className="h-100 overflow-auto px-4">
-                {searchMovies.length > 0 ? (
-                  searchMovies.map(
+              {searchMovies.length > 0 ? (
+                <ul className="h-100 overflow-auto px-4 ">
+                  {searchMovies.map(
                     (item) =>
                       item.poster_path && (
                         <Link
@@ -156,8 +157,11 @@ const Navbar = (pathname) => {
                             alt=""
                           />
                           <div className="gap-0 flex flex-col">
+                            {/* <p className="line-clamp-1 text-[10px] text-base-content/80">
+                              {formatDate(item.release_date)}
+                            </p> */}
                             <p
-                              className="text-sm text-base-content/90"
+                              className="text-sm line-clamp-1 text-base-content/90"
                               key={item.id}
                             >
                               {item.title}
@@ -168,13 +172,13 @@ const Navbar = (pathname) => {
                           </div>
                         </Link>
                       )
-                  )
-                ) : (
-                  <div className="h-full flex items-center justify-center">
-                    <p className="text-gray-200/70">Not Found</p>
-                  </div>
-                )}
-              </ul>
+                  )}
+                </ul>
+              ) : (
+                <div className="h-50 flex items-center justify-center">
+                  <p className="text-gray-200/70 text-sm">Not Found</p>
+                </div>
+              )}
             </div>
           )}
         </div>

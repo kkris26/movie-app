@@ -19,9 +19,9 @@ const MovieCard = ({ item, genre, type }) => {
               <p>{formatDate(item.release_date)}</p>
             </div>
           ) : (
-            <div className="absolute right-4 top-4 text-white  bg-amber-500 px-2 rounded flex items-center gap-1 z-2">
-              <FaStar className="text-md" />
-              <p>{formatRating(item.vote_average)}</p>
+            <div className="absolute right-4 top-4 text-white  bg-amber-500 px-1 rounded-sm flex items-center gap-1 z-2">
+              <FaStar className="text-sm" />
+              <p className="text-sm">{formatRating(item.vote_average)}</p>
             </div>
           )}
           <div className="inset-0 z-1 absolute  hover:bg-black/20 bg-black/0 transition-all 0.3s"></div>

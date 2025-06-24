@@ -15,23 +15,31 @@ export const FavoriteProvider = ({ children }) => {
     if (favorite.find((fav) => fav.id === obj.id)) {
       setFavorite((prev) => prev.filter((item) => item.id !== obj.id));
       setErrorItem(obj.title);
-      setTimeout(() => {
-        setErrorItem("");
-      }, 2000);
-      return console.log("fav sudah ada");
+      return;
     }
     setFavorite((prev) => [...prev, obj]);
     setItemFav(obj.title);
   };
   useEffect(() => {
-    const setItem = setTimeout(() => {
+    const setItemTO = setTimeout(() => {
       setItemFav("");
-    }, 2000);
+    }, 4000);
 
     return () => {
-      clearTimeout(setItem);
+      clearTimeout(setItemTO);
     };
   }, [itemFav]);
+
+  useEffect(() => {
+    const errorItemTO = setTimeout(() => {
+      setErrorItem("");
+    }, 4000);
+
+    return () => {
+      clearTimeout(errorItemTO);
+    };
+  }, [errorItem]);
+
   useEffect(() => {
     localStorage.setItem("favorite", JSON.stringify(favorite));
   }, [favorite]);
@@ -41,12 +49,12 @@ export const FavoriteProvider = ({ children }) => {
       <div className="fixed flex flex-col gap-2 justify-end items-end  z-9 bottom-20 right-5">
         {itemFav && (
           <SuccessToast itemFav={itemFav}>
-            {itemFav} Berhasil ditambahkan
+            {itemFav} Added to favorites.
           </SuccessToast>
         )}
         {errorItem && (
           <DangerToast errorItem={errorItem}>
-            {errorItem} Berhasil Dihapus
+            {errorItem} Removed from favorites.
           </DangerToast>
         )}
       </div>
