@@ -47,8 +47,8 @@ const MovieListSection = () => {
         <HeroSectionLoad />
       ) : (
         <>
-          <HeroSection image={movieList[0].backdrop_path} />
-          <ContentLayouts>
+          {/* <HeroSection image={movieList[0].backdrop_path} /> */}
+          <ContentLayouts type="no-hero">
             <MovieListLayout
               data={movieList}
               genre={genre}

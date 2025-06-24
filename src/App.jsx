@@ -10,12 +10,13 @@ import AudioPlay from "./components/Button/AudioPlay";
 import MovieByGenres from "./pages/MovieByGenres";
 import MovieCategoryPage from "./pages/MovieCategoryPage";
 import Footer from "./components/Footer/Footer";
+import FavoriteMoviePage from "./pages/FavoriteMoviePage";
 
 function App() {
   const location = useLocation();
   return (
     <>
-      <Navbar />
+      <Navbar pathname={location.pathname} />
       <SmoothFollower />
       {/* <AudioPlay /> */}
       <MainLayout>
@@ -50,6 +51,14 @@ function App() {
               element={
                 <PageTransitions>
                   <MovieCategoryPage />
+                </PageTransitions>
+              }
+            />
+            <Route
+              path="/favorite"
+              element={
+                <PageTransitions>
+                  <FavoriteMoviePage />
                 </PageTransitions>
               }
             />

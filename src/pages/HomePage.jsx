@@ -95,8 +95,6 @@ const HomePage = () => {
           max={5}
           btnLink="/now_playing"
           btntext="View More"
-          fav={favorite}
-          setFav={setFavorite}
         />
         <MovieListLayout
           data={popularMovie}

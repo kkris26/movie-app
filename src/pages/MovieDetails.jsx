@@ -77,8 +77,6 @@ const MovieDetails = () => {
   useEffect(() => {
     getRelated();
   }, [movieByID]);
-  console.log(loading.genre);
-  console.log(movieByID);
   return (
     <>
       {loading[id] ? (

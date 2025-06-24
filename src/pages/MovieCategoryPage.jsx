@@ -50,8 +50,7 @@ const MovieCategoryPage = () => {
         <HeroSectionLoad />
       ) : (
         <>
-          <HeroSection image={movieCategory[0].backdrop_path} />
-          <ContentLayouts>
+          <ContentLayouts type="no-hero">
             <MovieListLayout
               data={movieCategory}
               genre={genre}

@@ -5,15 +5,11 @@ import { formatDate, formatRating } from "../utilities/Formatter/formatter";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { useEffect, useState } from "react";
 import GenreLabelLink from "../Label/GenreLabelLink";
+import { useFavorite } from "../../contexts/FavoriteContext";
 
-const MovieCard = ({ item, genre, type, fav, setFav }) => {
-  const handleFavorite = (id) => {
-    setFav((prev) => ({ ...prev, [id]: !fav[id] }));
-  };
-  useEffect(() => {
-    localStorage.setItem("favorite", JSON.stringify(fav));
-    console.log(fav);
-  }, [fav]);
+const MovieCard = ({ item, genre, type }) => {
+  const { favorite, toggleFavorite } = useFavorite();
+
   return (
     <div className="flex flex-col gap-3 ">
       <div className="relative group img-card cursor-pointer rounded-sm overflow-hidden ">
@@ -40,17 +36,24 @@ const MovieCard = ({ item, genre, type, fav, setFav }) => {
       <div className="flex justify-between items-center gap-1">
         <Link
           to={`/movie/${item.id}`}
-          className="text-md z-1 cursor-pointer hover:text-base-content/70 transition-all 0.3s line-clamp-1"
+          className="text-md z-1 hover:underline hover:underline-offset-2 cursor-pointer hover:text-base-content/70 transition-all 0.3s line-clamp-1"
         >
           {item.title}
         </Link>
         <div
           className="text-lg  cursor-pointer relative"
-          onClick={() => handleFavorite(item.id)}
+          onClick={() => toggleFavorite(item)}
         >
-          {/* <IoMdHeart className={`block `} /> */}
-          <IoMdHeart className={fav?.[item.id] ? `block ` : `hidden`} />
-          <IoMdHeartEmpty className={fav?.[item.id] ? `hidden ` : `block`} />
+          <IoMdHeart
+            className={
+              favorite.find((fav) => fav.id === item.id) ? `block ` : `hidden`
+            }
+          />
+          <IoMdHeartEmpty
+            className={
+              favorite.find((fav) => fav.id === item.id) ? `hidden ` : `block`
+            }
+          />
         </div>
       </div>
       <div className="w-full overflow-auto z-0 scroll-thin">
