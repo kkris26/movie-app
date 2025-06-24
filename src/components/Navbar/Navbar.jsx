@@ -1,31 +1,27 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { getAPIData } from "../../services/getAPIService";
 import { GoArrowUpRight } from "react-icons/go";
 import { FiSearch } from "react-icons/fi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoMdHeart } from "react-icons/io";
-import { useFavorite } from "../../contexts/FavoriteContext";
-import { formatDate } from "../utilities/Formatter/formatter";
+import { useGlobalContext } from "../../contexts/globalContext";
 
 const Navbar = (pathname) => {
   const [isTop, setIsTop] = useState(true);
-  const [genres, setGenres] = useState([]);
   const [loading, setLoading] = useState({
     searchMovie: true,
   });
   const [searchMovies, setSearchMovies] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  useEffect(() => {
-    getGenre();
-  }, []);
   const [bgNavbar, setBgNavbar] = useState(true);
-  const { favorite } = useFavorite();
-
+  const { favorite } = useGlobalContext();
   const menuRef = useRef();
   const inputSearchRef = useRef();
   const closeSearchRef = useRef();
   const modalSearchRef = useRef();
+
+  const { genres } = useGlobalContext();
 
   window.addEventListener("scroll", () => {
     if (document.body.scrollTop > 0 || document.documentElement.scrollTop > 0) {
@@ -33,16 +29,6 @@ const Navbar = (pathname) => {
     }
     setIsTop(true);
   });
-  const getGenre = () => {
-    getAPIData({
-      key: "genre",
-      apiUrl: import.meta.env.VITE_GENRE_LIST,
-      setter: setGenres,
-      text: "Fetch Genre",
-      resultData: "genres",
-      setterLoading: setLoading,
-    });
-  };
 
   const handleCloseMenu = () => {
     menuRef.current.checked = false;
@@ -73,7 +59,6 @@ const Navbar = (pathname) => {
         setterLoading: setLoading,
         type: "search",
       });
-      console.log(searchQuery);
     }, 800);
     return () => {
       clearTimeout(searchMovieTO);
@@ -93,7 +78,7 @@ const Navbar = (pathname) => {
       currentPathname === "/" || currentPathname.startsWith("/movie")
         ? setBgNavbar(true)
         : setBgNavbar(false);
-      console.log(currentPathname);
+      // console.log(currentPathname);
     }, 500);
 
     return () => {
@@ -227,7 +212,11 @@ const Navbar = (pathname) => {
                 <FiSearch />
               </button>
               <Link className="text-2xl relative" to={"/favorite"}>
-                <IoMdHeart />
+                <IoMdHeart
+                  className={`transition-all duration-500 ${
+                    bgNavbar && isTop ? "text-white" : " text-red-500"
+                  }`}
+                />
                 <p className="text-[8px] text-white w-max leading-1.5 p-[3px] rounded-full bg-info flex items-center justify-center absolute top-[-3px] left-[18px]">
                   {favorite.length}
                 </p>

@@ -6,6 +6,7 @@
 @plugin "daisyui/theme" {
   name: "light";
   --color-accent: #f6d804;
+  --color-red-500: #ff6367;
 }
 @plugin "daisyui/theme" {
   name: "dark";

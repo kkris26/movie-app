@@ -1,10 +1,11 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import SuccessToast from "../components/Toast/SuccessToast";
 import DangerToast from "../components/Toast/DangerToast";
+import useGetGenres from "../hooks/useGetGenres";
 
-const FavoriteContext = createContext();
+const globalContext = createContext();
 
-export const FavoriteProvider = ({ children }) => {
+export const GlobalProvider = ({ children }) => {
   const localFavorite = localStorage.getItem("favorite");
   const [itemFav, setItemFav] = useState("");
   const [errorItem, setErrorItem] = useState("");
@@ -44,8 +45,12 @@ export const FavoriteProvider = ({ children }) => {
     localStorage.setItem("favorite", JSON.stringify(favorite));
   }, [favorite]);
 
+  const { genres, loadingGenres } = useGetGenres();
+
   return (
-    <FavoriteContext.Provider value={{ favorite, toggleFavorite }}>
+    <globalContext.Provider
+      value={{ favorite, toggleFavorite, genres, loadingGenres }}
+    >
       <div className="fixed flex flex-col gap-2 justify-end items-end  z-9 bottom-20 right-5">
         {itemFav && (
           <SuccessToast itemFav={itemFav}>
@@ -59,8 +64,8 @@ export const FavoriteProvider = ({ children }) => {
         )}
       </div>
       {children}
-    </FavoriteContext.Provider>
+    </globalContext.Provider>
   );
 };
 
-export const useFavorite = () => useContext(FavoriteContext);
+export const useGlobalContext = () => useContext(globalContext);

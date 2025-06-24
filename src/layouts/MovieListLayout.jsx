@@ -5,7 +5,6 @@ import { GoArrowUpRight } from "react-icons/go";
 
 const MovieListLayout = ({
   data,
-  genre,
   heading = "Movie List",
   type = "",
   max,
@@ -15,6 +14,7 @@ const MovieListLayout = ({
   btnLink = "/",
   loadCardItem = 5,
 }) => {
+ 
   return (
     <div className={`flex flex-col gap-4 overflow-hidden  ${customClass} `}>
       <div className="flex justify-between w-full items-center z-1">
@@ -58,11 +58,11 @@ const MovieListLayout = ({
           data
             .slice(0, max)
             .map((item) => (
-              <MovieCard item={item} key={item.id} genre={genre} type={type} />
+              <MovieCard item={item} key={item.id} type={type} />
             ))
         ) : (
           data.map((item) => (
-            <MovieCard item={item} key={item.id} genre={genre} type={type} />
+            <MovieCard item={item} key={item.id} type={type} />
           ))
         )}
       </div>

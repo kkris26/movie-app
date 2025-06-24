@@ -1,52 +1,26 @@
-import React, { use, useEffect, useState } from "react";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { getAPIData } from "../services/getAPIService";
 import MovieListLayout from "../layouts/MovieListLayout";
 import ContentLayouts from "../layouts/ContentLayouts";
-import HeroSection from "../layouts/HeroSection";
-import HeroSectionLoad from "../components/Loading/HeroSectionLoad";
+import { useGlobalContext } from "../contexts/globalContext";
+import useGetMovieByGenre from "../hooks/useGetMovieByGenre";
 
 const MovieListSection = () => {
   const { id } = useParams();
-  const [movieList, setMovieList] = useState([]);
   const [loading, setLoading] = useState({
     [id]: true,
   });
-  const [genre, setGenre] = useState([]);
-  const getMovieList = () => {
-    getAPIData({
-      key: id,
-      apiUrl: import.meta.env.VITE_MOVIE_LIST_BY_GENRE + id,
-      setter: setMovieList,
-      setterLoading: setLoading,
-    });
-  };
-  const getGenre = () => {
-    getAPIData({
-      key: "genre",
-      apiUrl: import.meta.env.VITE_GENRE_LIST,
-      setter: setGenre,
-      resultData: "genres",
-      setterLoading: setLoading,
-    });
-  };
+  const { genres } = useGlobalContext();
+  const { movieByGenre } = useGetMovieByGenre(setLoading, id);
 
   const genreName =
-    genre.length > 0 && genre.find((item) => item.id == id).name;
-  console.log(id);
-  useEffect(() => {
-    getMovieList();
-    getGenre();
-  }, []);
+    genres.length > 0 && genres.find((item) => item.id == id).name;
 
-  console.log(loading[id]);
-  console.log("genres");
   return (
     <>
       <ContentLayouts type="no-hero">
         <MovieListLayout
-          data={movieList}
-          genre={genre}
+          data={movieByGenre}
           heading={genreName + " Movies"}
           loading={loading[id]}
           loadCardItem={10}

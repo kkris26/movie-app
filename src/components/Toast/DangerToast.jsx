@@ -4,7 +4,7 @@ const DangerToast = ({ children, errorItem }) => {
   return (
     <div
       role="alert"
-      className={`alert text-xs alert-error flex w-max  transition-all duration-300`}
+      className={`alert text-xs alert-error bg-red-500 flex w-max  transition-all duration-300 text-white`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

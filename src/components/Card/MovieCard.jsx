@@ -1,21 +1,19 @@
 import { Link } from "react-router-dom";
-
 import { FaStar } from "react-icons/fa";
 import { formatDate, formatRating } from "../utilities/Formatter/formatter";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
-import { useEffect, useState } from "react";
 import GenreLabelLink from "../Label/GenreLabelLink";
-import { useFavorite } from "../../contexts/FavoriteContext";
+import { useGlobalContext } from "../../contexts/globalContext";
 
-const MovieCard = ({ item, genre, type }) => {
-  const { favorite, toggleFavorite } = useFavorite();
+const MovieCard = ({ item, type }) => {
+  const { favorite, toggleFavorite } = useGlobalContext();
 
   return (
     <div className="flex flex-col gap-3 ">
       <div className="relative group img-card cursor-pointer rounded-sm overflow-hidden ">
         <Link to={`/movie/${item.id}`}>
           {type === "upcoming" ? (
-            <div className="absolute right-3 top-3  bg-red-600 px-[5px] py-[2px] text-white rounded-sm flex items-center gap-1 z-1 text-xs">
+            <div className="absolute right-3 top-3  bg-red-600 z-2 px-[5px] py-[2px] text-white rounded-sm flex items-center gap-1 z-1 text-xs">
               <p>{formatDate(item.release_date)}</p>
             </div>
           ) : (
@@ -29,7 +27,7 @@ const MovieCard = ({ item, genre, type }) => {
           <img
             src={import.meta.env.VITE_IMAGE_PATH + item.poster_path}
             alt={item.title}
-            className="rounded-md w-full object-cover bg-red-600 group-hover:scale-105 transition-all 1s ease-in-out"
+            className="rounded-md w-full object-cover bg-base-300 group-hover:scale-105 transition-all 1s ease-in-out"
           />
         </Link>
       </div>
@@ -57,13 +55,12 @@ const MovieCard = ({ item, genre, type }) => {
         </div>
       </div>
       <div className="w-full overflow-auto z-0 scroll-thin">
-        {/* {type === "byGenre" && ( */}
         <ul className="flex gap-1 flex-wrap">
-          {item.genre_ids.map((genreId, index) => (
-            <GenreLabelLink key={index} genreId={genreId} genre={genre} />
-          ))}
+          {item.genre_ids?.length > 0 &&
+            item.genre_ids.map((genreId, index) => (
+              <GenreLabelLink key={index} genreId={genreId} />
+            ))}
         </ul>
-        {/* )} */}
       </div>
     </div>
   );

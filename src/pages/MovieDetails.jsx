@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { BsPerson } from "react-icons/bs";
 import { FaEye, FaStar } from "react-icons/fa";
 import { GoArrowUpRight, GoPerson } from "react-icons/go";
-import { IoIosStar, IoMdTime } from "react-icons/io";
+import { IoIosStar, IoMdHeart, IoMdHeartEmpty, IoMdTime } from "react-icons/io";
 import {
   IoEyeOutline,
   IoEyeSharp,
@@ -22,7 +22,9 @@ import MovieListLayout from "../layouts/MovieListLayout";
 import ListLabel from "../components/Label/ListLabel";
 import GenreLabelLink from "../components/Label/GenreLabelLink";
 import ContentLayouts from "../layouts/ContentLayouts";
-import HeroSectionLoad from "../components/Loading/HeroSectionLoad";
+import { useGlobalContext } from "../contexts/globalContext";
+import useGetMovieById from "../hooks/useGetMovieById";
+import useGetRelatedMovie from "../hooks/useGetRelatedMovie";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -31,55 +33,10 @@ const MovieDetails = () => {
     ["relatedMovie-" + id]: true,
     genre: true,
   });
-  const [movieByID, setMovieByID] = useState({});
-  const [genre, setGenre] = useState([]);
-  const [relatedMovie, setRelatedMovie] = useState([]);
-
+  const { favorite, toggleFavorite, loadingGenres } = useGlobalContext();
   const sectionRef = useRef();
-
-  const getMovieByID = async () => {
-    getAPIData({
-      key: id,
-      apiUrl: import.meta.env.VITE_MOVIE_DETAILS + id,
-      setter: setMovieByID,
-      text: "Fetch Movie by ID",
-      resultData: null,
-      setterLoading: setLoading,
-    });
-  };
-
-  const getGenre = async () => {
-    getAPIData({
-      key: "genre",
-      apiUrl: import.meta.env.VITE_GENRE_LIST,
-      setter: setGenre,
-      text: "Fetch Genre",
-      resultData: "genres",
-      setterLoading: setLoading,
-    });
-  };
-
-  const getRelated = () => {
-    if (movieByID?.genres) {
-      const genreList = movieByID.genres.map((item) => item.id);
-      const genreListJoin = genreList.length > 0 && genreList.join("|");
-      getAPIData({
-        key: "relatedMovie-" + id,
-        apiUrl: import.meta.env.VITE_MOVIE_LIST_BY_GENRE + genreListJoin,
-        setter: setRelatedMovie,
-        text: "Fetch Movie By Genres",
-        setterLoading: setLoading,
-      });
-    }
-  };
-
-  useEffect(() => {
-    getMovieByID();
-    getGenre();
-  }, []);
-  useEffect(() => {
-    getRelated();
-  }, [movieByID]);
+  const { movieById } = useGetMovieById(setLoading, id);
+  const {relatedMovie} = useGetRelatedMovie(setLoading, movieById, id)
 
   const scroolTo = () => {
     sectionRef.current.scrollIntoView({ behavior: "smooth" });
@@ -113,32 +70,32 @@ const MovieDetails = () => {
           className="h-screen bg-cover relative flex items-center px-10"
           style={{
             backgroundImage: `url(${
-              import.meta.env.VITE_IMAGE_PATH_ORIGINAL + movieByID.backdrop_path
+              import.meta.env.VITE_IMAGE_PATH_ORIGINAL + movieById.backdrop_path
             }`,
           }}
         >
           <div className="w-7xl mx-auto">
             <div className="z-1 relative w-150 flex flex-col gap-5 justify-start text-white">
-              <h1 className="text-7xl tracking-wider">{movieByID.title}</h1>
+              <h1 className="text-7xl tracking-wider">{movieById.title}</h1>
               <div className="flex gap-4 text-sm text-gray-200">
                 <div className="flex gap-1 items-center ">
                   <FaStar className="text-yellow-500 text-md" />
 
                   <div className="flex items-center gap-1">
                     <p>
-                      {formatRating(movieByID.vote_average)} /{" "}
-                      {movieByID.vote_count}
+                      {formatRating(movieById.vote_average)} /{" "}
+                      {movieById.vote_count}
                     </p>
                     <IoPersonSharp className="text-[11px]" />
                   </div>
                 </div>
                 <div className="flex items-center gap-1">
                   <IoMdTime className="text-lg" />
-                  <p>{movieByID.runtime} min</p>
+                  <p>{movieById.runtime} min</p>
                 </div>
               </div>
               <p className="text-gray-200 font-light line-clamp-2 w-full">
-                {movieByID.overview}
+                {movieById.overview}
               </p>
               <button
                 onClick={scroolTo}
@@ -185,49 +142,58 @@ const MovieDetails = () => {
               ref={sectionRef}
               className="flex gap-10 items-center h-screen w-5xl mx-auto pb-15"
             >
-              <div className=" flex items-center p-2 rounded-md border-2 border-base-content ">
+              <div className=" flex items-center p-2 border-2 border-base-content ">
                 <img
-                  src={import.meta.env.VITE_IMAGE_PATH + movieByID.poster_path}
+                  src={import.meta.env.VITE_IMAGE_PATH + movieById.poster_path}
                   alt=""
                   srcSet=""
-                  className="w-90 rounded"
+                  className="w-90"
                 />
               </div>
-              <div className=" flex flex-col justify-center flex-1 h-full items-start gap-4 z-1">
-                <h2 className="text-3xl">{movieByID.title}</h2>
-                <ul className="flex gap-2 flex-wrap">
-                  {loading.genre ? (
-                    <p>Loading ...</p>
-                  ) : (
-                    movieByID.genres.map((genreId, index) => (
-                      <GenreLabelLink
-                        key={index}
-                        genreId={genreId.id}
-                        genre={genre}
-                      />
-                    ))
-                  )}
-                </ul>
+              <div className=" flex flex-col justify-center flex-1 h-full items-start gap-5 z-1">
+                <h2 className="text-3xl">{movieById.title}</h2>
+                {loadingGenres.genres ? (
+                  <p>Loading ...</p>
+                ) : (
+                  movieById.genres?.length > 0 && (
+                    <ul className="flex gap-2 flex-wrap">
+                      {movieById.genres.map((genreId, index) => (
+                        <GenreLabelLink key={index} genreId={genreId.id} />
+                      ))}
+                    </ul>
+                  )
+                )}
                 <p className="text-sm">
-                  Release on {formatDate(movieByID.release_date)}
+                  Release on {formatDate(movieById.release_date)}
                 </p>
-                <p className="text-sm">{movieByID.overview}</p>
-                {movieByID.production_companies.length > 0 && (
+                <p className="text-sm">{movieById.overview}</p>
+                {movieById.production_companies?.length > 0 && (
                   <div className="flex flex-col gap-2">
                     <p className="text-sm">Production by</p>
                     <ul className="flex gap-2 flex-wrap">
-                      {movieByID.production_companies.map((item) => (
+                      {movieById.production_companies.map((item) => (
                         <ListLabel key={item.id}>{item.name}</ListLabel>
                       ))}
                     </ul>
                   </div>
                 )}
+                <div onClick={() => toggleFavorite(movieById)}>
+                  {favorite.find((fav) => fav.id === movieById.id) ? (
+                    <button className="p-2 flex items-center text-sm cursor-pointer gap-2 bg-base-300 rounded">
+                      <IoMdHeart className="text-lg" />
+                      Remove from Favorite
+                    </button>
+                  ) : (
+                    <button className="p-2 flex items-center text-sm cursor-pointer gap-1 bg-red-500 light:bg-red-800 text-white rounded">
+                      <IoMdHeartEmpty className="text-lg" /> Add to Favorite
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           )}
           <MovieListLayout
             data={relatedMovie.filter((item) => item.id !== parseInt(id))}
-            genre={genre}
             heading="Related Movie"
             type="byGenre"
             loading={loading["relatedMovie-" + id]}

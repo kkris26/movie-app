@@ -25,11 +25,11 @@ export const getAPIData = async ({
     const results = !resultData ? data : data[resultData];
     setter(results);
     type !== "search" && localStorage.setItem(key, JSON.stringify(results));
-    console.log("Done Fetching Data " + key);
+    // console.log("Done Fetching Data " + key);
   } catch (err) {
     console.log(err);
   } finally {
     setterLoading((prev) => ({ ...prev, [key]: false }));
-    console.log(key + " finish load");
+    // console.log(key + " finish load");
   }
 };
