@@ -6,7 +6,7 @@ import GenreLabelLink from "../Label/GenreLabelLink";
 import { useGlobalContext } from "../../contexts/globalContext";
 
 const MovieCard = ({ item, type }) => {
-  const { favorite, toggleFavorite } = useGlobalContext();
+  const { favorite, toggleFavorite, loadingGenres } = useGlobalContext();
   return (
     <div className="flex flex-col gap-3 ">
       <div className="relative group img-card cursor-pointer rounded-sm overflow-hidden ">
@@ -55,14 +55,18 @@ const MovieCard = ({ item, type }) => {
           />
         </div>
       </div>
-      <div className="w-full overflow-auto z-0 scroll-thin">
-        <ul className="flex gap-1 flex-wrap">
-          {item.genre_ids?.length > 0 &&
-            item.genre_ids.map((genreId, index) => (
-              <GenreLabelLink key={index} genreId={genreId} />
-            ))}
-        </ul>
-      </div>
+      {loadingGenres.genres ? (
+        <div>Loading</div>
+      ) : (
+        <div className="w-full overflow-auto z-0 scroll-thin">
+          <ul className="flex gap-1 flex-wrap">
+            {item.genre_ids?.length > 0 &&
+              item.genre_ids.map((genreId, index) => (
+                <GenreLabelLink key={index} genreId={genreId} />
+              ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

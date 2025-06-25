@@ -29,7 +29,7 @@ export const GlobalProvider = ({ children }) => {
       return setFavToRemove({});
     }, 200);
   };
-  
+
   const toggleFavorite = (obj) => {
     if (favorite.find((fav) => fav.id === obj.id)) {
       setFavToRemove(obj);
@@ -64,6 +64,8 @@ export const GlobalProvider = ({ children }) => {
   }, [favorite]);
 
   const { genres, loadingGenres } = useGetGenres();
+  console.log(favorite);
+  console.log(genres);
 
   return (
     <globalContext.Provider

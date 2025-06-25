@@ -6,7 +6,7 @@ const HeroSection = ({ image }) => {
       <img
         src={import.meta.env.VITE_IMAGE_PATH_ORIGINAL + image}
         className="absolute inset-0 w-full h-full object-cover"
-        alt=""
+        alt="No Image"
       />
       <div className="absolute h-full bg-black/20 w-full inset-0"></div>
     </div>

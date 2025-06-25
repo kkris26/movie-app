@@ -1,5 +1,3 @@
-import React from "react";
-
 const NavigationButton = ({ children, action, ref }) => {
   return (
     <button

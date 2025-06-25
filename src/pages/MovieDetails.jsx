@@ -136,7 +136,7 @@ const MovieDetails = () => {
               <div className=" flex items-center p-2 border-2 border-base-content ">
                 <img
                   src={import.meta.env.VITE_IMAGE_PATH + movieById.poster_path}
-                  alt=""
+                  alt={movieById.title}
                   srcSet=""
                   className="w-90"
                 />
@@ -183,6 +183,7 @@ const MovieDetails = () => {
               </div>
             </div>
           )}
+
           <MovieSliderLayouts
             data={relatedMovie.filter((item) => item.id !== parseInt(id))}
             heading="Related Movie"

@@ -12,15 +12,17 @@ export const getAPIData = async ({
   setterLoading,
   resultData = "results",
   type = "",
+  setTotalPage,
 }) => {
   try {
     const localData = localStorage.getItem(key);
-    if (localData) {
-      setter(JSON.parse(localData));
-      return;
-    }
+    // if (localData) {
+    //   setter(JSON.parse(localData));
+    //   return;
+    // }
     const response = await fetch(apiUrl, options);
     const data = await response.json();
+    setTotalPage && setTotalPage(data.total_pages);
     // console.log(data);
     const results = !resultData ? data : data[resultData];
     setter(results);
@@ -30,6 +32,7 @@ export const getAPIData = async ({
     console.log(err);
   } finally {
     setterLoading((prev) => ({ ...prev, [key]: false }));
+
     // console.log(key + " finish load");
   }
 };

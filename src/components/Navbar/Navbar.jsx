@@ -138,7 +138,7 @@ const Navbar = (pathname) => {
                               import.meta.env.VITE_IMAGE_PATH + item.poster_path
                             }
                             className="w-10 min-w-10 min-h-12 bg-base-content rounded-xs"
-                            alt=""
+                            alt={item.title}
                           />
                           <div className="gap-0 flex flex-col">
                             <p

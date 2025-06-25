@@ -5,15 +5,10 @@ import { GoArrowUpRight } from "react-icons/go";
 import MovieCardLoading from "../components/Loading/MovieCardLoading";
 import MovieListWrapper from "./MovieListWrapper";
 
-const MovieListLayout = ({
-  data,
-  heading,
-  type = "",
-  loading,
-}) => {
+const MovieListLayout = ({ data, heading, type = "", loading, sectionRef }) => {
   return (
     <MovieListWrapper>
-      <div className="flex justify-between w-full items-center z-1">
+      <div ref={sectionRef} className="flex justify-between w-full z-1">
         <h2 className="text-2xl">{heading}</h2>
 
         <Link
@@ -30,7 +25,7 @@ const MovieListLayout = ({
         } gap-y-10 gap-x-4 `}
       >
         {loading ? (
-          [...Array(10)].map((_, idx) => <MovieCardLoading key={idx} />)
+          [...Array(20)].map((_, idx) => <MovieCardLoading key={idx} />)
         ) : data.length === 0 ? (
           <div className="h-100 flex flex-col gap-4  w-full  items-center justify-center">
             <p className="text-base-content text-xl">

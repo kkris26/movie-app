@@ -1,7 +1,7 @@
-const ContentLayouts = ({ children, customClass, ref, type }) => {
+const ContentLayouts = ({ children, customClass, sectionRef, type }) => {
   return (
     <div
-      ref={ref}
+      ref={sectionRef}
       className={`py-15 max-w-7xl mx-auto min-h-screen ${customClass} ${
         type === "no-hero" && "pt-20"
       }`}

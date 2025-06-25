@@ -27,6 +27,7 @@ const HeroLayout = ({ data, loading, scrollAction }) => {
           {data.length > 0 &&
             data.map((item, idx) => (
               <img
+              alt={item.title}
                 key={idx}
                 src={
                   import.meta.env.VITE_IMAGE_PATH_ORIGINAL + item.backdrop_path

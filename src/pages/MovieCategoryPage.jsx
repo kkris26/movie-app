@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { getAPIData } from "../services/getAPIService";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
-import HeroSectionLoad from "../components/Loading/HeroSectionLoad";
-import HeroSection from "../layouts/HeroSection";
 import MovieListLayout from "../layouts/MovieListLayout";
 import ContentLayouts from "../layouts/ContentLayouts";
 import useGetCategoryMovie from "../hooks/useGetCategoryMovie";
+import PaginationButton from "../components/Pagination/PaginationButton";
 
 const MovieCategoryPage = () => {
   const { category } = useParams();
   const [loading, setLoading] = useState({
     [category]: true,
   });
-  const { movieCategory } = useGetCategoryMovie(category, setLoading);
-
+  const [page, setPage] = useState(1);
+  const { movieCategory, totalPage } = useGetCategoryMovie(
+    category,
+    setLoading,
+    page
+  );
+  const sectionRef = useRef();
   const movieList = [
     { name: "Now Playing", link: "now_playing" },
     { name: "Popular", link: "popular" },
@@ -22,7 +25,7 @@ const MovieCategoryPage = () => {
   ];
   return (
     <>
-      <ContentLayouts type="no-hero">
+      <ContentLayouts type="no-hero" sectionRef={sectionRef}>
         <MovieListLayout
           data={movieCategory}
           heading={
@@ -31,6 +34,12 @@ const MovieCategoryPage = () => {
           loading={loading[category]}
           type={category}
           loadCardItem={10}
+        />
+        <PaginationButton
+          page={page}
+          totalPage={totalPage}
+          setPage={setPage}
+          sectionRef={sectionRef}
         />
       </ContentLayouts>
     </>
