@@ -7,13 +7,12 @@ import { useGlobalContext } from "../../contexts/globalContext";
 
 const MovieCard = ({ item, type }) => {
   const { favorite, toggleFavorite } = useGlobalContext();
-
   return (
     <div className="flex flex-col gap-3 ">
       <div className="relative group img-card cursor-pointer rounded-sm overflow-hidden ">
         <Link to={`/movie/${item.id}`}>
           {type === "upcoming" ? (
-            <div className="absolute right-3 top-3  bg-red-600 z-2 px-[5px] py-[2px] text-white rounded-sm flex items-center gap-1 z-1 text-xs">
+            <div className="absolute right-3 top-3  bg-red-500 z-2 px-[5px] py-[2px] text-white rounded-sm flex items-center gap-1 text-xs">
               <p>{formatDate(item.release_date)}</p>
             </div>
           ) : (
@@ -27,14 +26,14 @@ const MovieCard = ({ item, type }) => {
           <img
             src={import.meta.env.VITE_IMAGE_PATH + item.poster_path}
             alt={item.title}
-            className="rounded-md w-full object-cover bg-base-300 group-hover:scale-105 transition-all 1s ease-in-out"
+            className="rounded-md aspect-[2/3] w-full object-cover bg-base-300 group-hover:scale-105 transition-all 1s ease-in-out"
           />
         </Link>
       </div>
       <div className="flex justify-between items-center gap-1">
         <Link
           to={`/movie/${item.id}`}
-          className="text-md z-1 hover:underline hover:underline-offset-2 cursor-pointer hover:text-base-content/70 transition-all 0.3s line-clamp-1"
+          className="text-md z-1 hover:underline hover:underline-offset-2 cursor-pointer  transition-all 0.3s line-clamp-1"
         >
           {item.title}
         </Link>
@@ -44,7 +43,9 @@ const MovieCard = ({ item, type }) => {
         >
           <IoMdHeart
             className={
-              favorite.find((fav) => fav.id === item.id) ? `block ` : `hidden`
+              favorite.find((fav) => fav.id === item.id)
+                ? `block text-red-500`
+                : `hidden`
             }
           />
           <IoMdHeartEmpty

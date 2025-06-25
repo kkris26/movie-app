@@ -6,7 +6,7 @@ const useGetUpcomingMovie = (setLoading) => {
   const getTopRatedMovie = () => {
     getAPIData({
       key: "upcoming_movie",
-      apiUrl: import.meta.env.VITE_TOP_RATED_MOVIE_LIST,
+      apiUrl: import.meta.env.VITE_UPCOMING_MOVIE_LIST,
       setter: setUpcomingMovie,
       setterLoading: setLoading,
     });

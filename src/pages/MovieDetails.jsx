@@ -1,24 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import { BsPerson } from "react-icons/bs";
-import { FaEye, FaStar } from "react-icons/fa";
-import { GoArrowUpRight, GoPerson } from "react-icons/go";
-import { IoIosStar, IoMdHeart, IoMdHeartEmpty, IoMdTime } from "react-icons/io";
-import {
-  IoEyeOutline,
-  IoEyeSharp,
-  IoPersonOutline,
-  IoPersonSharp,
-  IoTime,
-} from "react-icons/io5";
-import { MdDateRange } from "react-icons/md";
 
-import { data, Link, useParams } from "react-router-dom";
+import { FaStar } from "react-icons/fa";
+import { GoArrowUpRight, GoPerson } from "react-icons/go";
+import { IoMdHeart, IoMdHeartEmpty, IoMdTime } from "react-icons/io";
+import { IoPersonSharp } from "react-icons/io5";
+import { useParams } from "react-router-dom";
 import {
   formatDate,
   formatRating,
 } from "../components/utilities/Formatter/formatter";
-import { getAPIData } from "../services/getAPIService";
-import MovieListLayout from "../layouts/MovieListLayout";
 import ListLabel from "../components/Label/ListLabel";
 import GenreLabelLink from "../components/Label/GenreLabelLink";
 import ContentLayouts from "../layouts/ContentLayouts";
@@ -37,7 +27,7 @@ const MovieDetails = () => {
   const { favorite, toggleFavorite, loadingGenres } = useGlobalContext();
   const sectionRef = useRef();
   const { movieById } = useGetMovieById(setLoading, id);
-  const {relatedMovie} = useGetRelatedMovie(setLoading, movieById, id)
+  const { relatedMovie } = useGetRelatedMovie(setLoading, movieById, id);
 
   const scroolTo = () => {
     sectionRef.current.scrollIntoView({ behavior: "smooth" });
@@ -181,7 +171,7 @@ const MovieDetails = () => {
                 <div onClick={() => toggleFavorite(movieById)}>
                   {favorite.find((fav) => fav.id === movieById.id) ? (
                     <button className="p-2 flex items-center text-sm cursor-pointer gap-2 bg-base-300 rounded">
-                      <IoMdHeart className="text-lg" />
+                      <IoMdHeart className="text-lg text-red-500" />
                       Remove from Favorite
                     </button>
                   ) : (

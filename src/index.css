@@ -7,8 +7,10 @@
   name: "light";
   --color-accent: #f6d804;
   --color-red-500: #ff6367;
+  --color-primary: "#2563EB";
 }
 @plugin "daisyui/theme" {
   name: "dark";
   --color-accent: white;
+  --color-primary: "#1D4ED8";
 }

@@ -168,7 +168,7 @@ const Navbar = (pathname) => {
         </form>
       </dialog>
       {/* modal */}
-      <div className="drawer z-3">
+      <div className="drawer z-10">
         <input
           ref={menuRef}
           id="my-drawer"
@@ -217,7 +217,7 @@ const Navbar = (pathname) => {
                   }`}
                 />
                 {favorite.length > 0 && (
-                  <p className="text-[8px] text-white w-max leading-1.5 p-[3px] rounded-full bg-info flex items-center justify-center absolute top-[-3px] left-[18px]">
+                  <p className="text-[8px] text-white w-max leading-1.5 p-[3px] rounded-full bg-primary flex items-center justify-center absolute top-[-3px] left-[18px]">
                     {favorite.length}
                   </p>
                 )}
