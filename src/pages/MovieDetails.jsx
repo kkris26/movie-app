@@ -25,6 +25,7 @@ import ContentLayouts from "../layouts/ContentLayouts";
 import { useGlobalContext } from "../contexts/globalContext";
 import useGetMovieById from "../hooks/useGetMovieById";
 import useGetRelatedMovie from "../hooks/useGetRelatedMovie";
+import MovieSliderLayouts from "../layouts/MovieSliderLayouts";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -192,12 +193,11 @@ const MovieDetails = () => {
               </div>
             </div>
           )}
-          <MovieListLayout
+          <MovieSliderLayouts
             data={relatedMovie.filter((item) => item.id !== parseInt(id))}
             heading="Related Movie"
-            type="byGenre"
             loading={loading["relatedMovie-" + id]}
-            max={10}
+            type={"related-movie"}
           />
         </ContentLayouts>
       </>

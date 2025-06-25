@@ -2,29 +2,25 @@ import React from "react";
 import MovieCard from "../components/Card/MovieCard";
 import { Link } from "react-router-dom";
 import { GoArrowUpRight } from "react-icons/go";
+import MovieCardLoading from "../components/Loading/MovieCardLoading";
+import MovieListWrapper from "./MovieListWrapper";
 
 const MovieListLayout = ({
   data,
-  heading = "Movie List",
+  heading,
   type = "",
-  max,
   loading,
-  customClass = "",
-  btntext = "Go Back",
-  btnLink = "/",
-  loadCardItem = 5,
 }) => {
- 
   return (
-    <div className={`flex flex-col gap-4 overflow-hidden  ${customClass} `}>
+    <MovieListWrapper>
       <div className="flex justify-between w-full items-center z-1">
         <h2 className="text-2xl">{heading}</h2>
 
         <Link
-          to={btnLink}
+          to="/"
           className=" border-b gap-1 flex items-center hover:text-base-content/80"
         >
-          {btntext}
+          Go Back
           <GoArrowUpRight className="text-xl mb-[-4px]" />
         </Link>
       </div>
@@ -34,17 +30,7 @@ const MovieListLayout = ({
         } gap-y-10 gap-x-4 `}
       >
         {loading ? (
-          [...Array(loadCardItem)].map((_, idx) => (
-            <div className="flex flex-col gap-3 " key={idx}>
-              <div className="skeleton h-95 w-full"></div>
-              <div className="skeleton h-6 w-[90%]"></div>
-              <div className="flex flex-wrap gap-2">
-                <div className="skeleton h-4 w-1/4"></div>
-                <div className="skeleton h-4 w-1/4"></div>
-                <div className="skeleton h-4 w-1/4"></div>
-              </div>
-            </div>
-          ))
+          [...Array(10)].map((_, idx) => <MovieCardLoading key={idx} />)
         ) : data.length === 0 ? (
           <div className="h-100 flex flex-col gap-4  w-full  items-center justify-center">
             <p className="text-base-content text-xl">
@@ -54,19 +40,13 @@ const MovieListLayout = ({
               Browse Movies
             </Link>
           </div>
-        ) : data.length > 0 && max ? (
-          data
-            .slice(0, max)
-            .map((item) => (
-              <MovieCard item={item} key={item.id} type={type} />
-            ))
         ) : (
           data.map((item) => (
             <MovieCard item={item} key={item.id} type={type} />
           ))
         )}
       </div>
-    </div>
+    </MovieListWrapper>
   );
 };
 

@@ -6,6 +6,7 @@ import useGetNowPlaying from "../hooks/useGetNowPlaying";
 import useGetPopularMovie from "../hooks/useGetPopularMovie";
 import useGetTopRatedMovie from "../hooks/useGetTopRatedMovie";
 import useGetUpcomingMovie from "../hooks/useGetUpcomingMovie";
+import MovieSliderLayouts from "../layouts/MovieSliderLayouts";
 
 const HomePage = () => {
   const [loading, setLoading] = useState({
@@ -33,39 +34,31 @@ const HomePage = () => {
         scrollAction={scroolTo}
       />
 
-      <ContentLayouts customClass="flex flex-col gap-10 pt-20" ref={sectionRef}>
-        <MovieListLayout
+      <ContentLayouts customClass="flex flex-col gap-8 pt-20" ref={sectionRef}>
+        <MovieSliderLayouts
           data={nowPlayingMovie}
           heading="Now Playing"
           loading={loading.now_playing_movie}
-          max={5}
-          btnLink="/now_playing"
-          btntext="View More"
+          link={"/now_playing"}
         />
-        <MovieListLayout
+        <MovieSliderLayouts
           data={popularMovie}
           heading="Popular Movie"
           loading={loading.popular_movie}
-          max={5}
-          btnLink="/popular"
-          btntext="View More"
+          link={"/popular"}
         />
-        <MovieListLayout
+        <MovieSliderLayouts
           data={topRatedMovie}
           heading="Top Rated"
           loading={loading.top_rated_movie}
-          max={5}
-          btnLink="/top_rated"
-          btntext="View More"
+          link={"/top_rated"}
         />
-        <MovieListLayout
+        <MovieSliderLayouts
           data={upcomingMovie}
           heading="Upcoming List"
           type="upcoming"
           loading={loading.upcoming_movie}
-          max={5}
-          btnLink="/upcoming"
-          btntext="View More"
+          link={"/upcoming"}
         />
       </ContentLayouts>
     </>

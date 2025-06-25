@@ -78,7 +78,6 @@ const Navbar = (pathname) => {
       currentPathname === "/" || currentPathname.startsWith("/movie")
         ? setBgNavbar(true)
         : setBgNavbar(false);
-      // console.log(currentPathname);
     }, 500);
 
     return () => {
@@ -217,9 +216,11 @@ const Navbar = (pathname) => {
                     bgNavbar && isTop ? "text-white" : " text-red-500"
                   }`}
                 />
-                <p className="text-[8px] text-white w-max leading-1.5 p-[3px] rounded-full bg-info flex items-center justify-center absolute top-[-3px] left-[18px]">
-                  {favorite.length}
-                </p>
+                {favorite.length > 0 && (
+                  <p className="text-[8px] text-white w-max leading-1.5 p-[3px] rounded-full bg-info flex items-center justify-center absolute top-[-3px] left-[18px]">
+                    {favorite.length}
+                  </p>
+                )}
               </Link>
             </div>
           </div>
