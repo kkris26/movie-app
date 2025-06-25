@@ -40,7 +40,7 @@ const Footer = () => {
         <aside>
           <p>
             &copy; {new Date().getFullYear()} - All rights reserved. Made with{" "}
-            <span className="text-red-500">❤️</span> by Krisnu
+            <span className="text-red-400">❤️</span> by Krisnu
           </p>
         </aside>
       </section>

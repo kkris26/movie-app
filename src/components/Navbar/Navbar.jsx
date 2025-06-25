@@ -213,7 +213,7 @@ const Navbar = (pathname) => {
               <Link className="text-xl relative" to={"/favorite"}>
                 <IoMdHeart
                   className={`transition-all duration-500 ${
-                    bgNavbar && isTop ? "text-white" : " text-red-500"
+                    bgNavbar && isTop ? "text-white" : " text-red-400"
                   }`}
                 />
                 {favorite.length > 0 && (

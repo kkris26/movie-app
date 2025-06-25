@@ -64,9 +64,6 @@ export const GlobalProvider = ({ children }) => {
   }, [favorite]);
 
   const { genres, loadingGenres } = useGetGenres();
-  console.log(favorite);
-  console.log(genres);
-
   return (
     <globalContext.Provider
       value={{ favorite, toggleFavorite, genres, loadingGenres }}

@@ -32,6 +32,7 @@ const MovieDetails = () => {
   const scroolTo = () => {
     sectionRef.current.scrollIntoView({ behavior: "smooth" });
   };
+  console.log(movieById);
   return (
     <>
       {loading[id] ? (

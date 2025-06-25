@@ -5,8 +5,6 @@ import { useGlobalContext } from "../../contexts/globalContext";
 
 const GenreLabelLink = ({ genreId }) => {
   const { genres } = useGlobalContext();
-  console.log(genres, genreId);
-
   return (
     <ListLabel>
       <Link

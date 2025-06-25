@@ -12,7 +12,7 @@ const MovieCard = ({ item, type }) => {
       <div className="relative group img-card cursor-pointer rounded-sm overflow-hidden ">
         <Link to={`/movie/${item.id}`}>
           {type === "upcoming" ? (
-            <div className="absolute right-3 top-3  bg-red-500 z-2 px-[5px] py-[2px] text-white rounded-sm flex items-center gap-1 text-xs">
+            <div className="absolute right-3 top-3  bg-red-400 z-2 px-[5px] py-[2px] text-white rounded-sm flex items-center gap-1 text-xs">
               <p>{formatDate(item.release_date)}</p>
             </div>
           ) : (
@@ -44,7 +44,7 @@ const MovieCard = ({ item, type }) => {
           <IoMdHeart
             className={
               favorite.find((fav) => fav.id === item.id)
-                ? `block text-red-500`
+                ? `block text-red-400`
                 : `hidden`
             }
           />
@@ -55,18 +55,19 @@ const MovieCard = ({ item, type }) => {
           />
         </div>
       </div>
-      {/* {loadingGenres.genres ? (
-        <div>Loading</div>
-      ) : ( */}
-        <div className="w-full overflow-auto z-0 scroll-thin">
-          <ul className="flex gap-1 flex-wrap">
-            {item.genre_ids?.length > 0 &&
-              item.genre_ids.map((genreId, index) => (
-                <GenreLabelLink key={index} genreId={genreId} />
-              ))}
-          </ul>
-        </div>
-      {/* )} */}
+      <div className="w-full overflow-auto z-0 scroll-thin">
+        <ul className="flex gap-1 flex-wrap">
+          {(item.genre_ids ? item.genre_ids : item.genres).length > 0 &&
+            (item.genre_ids ? item.genre_ids : item.genres).map(
+              (genreId, index) => (
+                <GenreLabelLink
+                  key={index}
+                  genreId={item.genre_ids ? genreId : genreId.id}
+                />
+              )
+            )}
+        </ul>
+      </div>
     </div>
   );
 };
