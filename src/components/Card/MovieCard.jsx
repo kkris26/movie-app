@@ -55,9 +55,9 @@ const MovieCard = ({ item, type }) => {
           />
         </div>
       </div>
-      {loadingGenres.genres ? (
+      {/* {loadingGenres.genres ? (
         <div>Loading</div>
-      ) : (
+      ) : ( */}
         <div className="w-full overflow-auto z-0 scroll-thin">
           <ul className="flex gap-1 flex-wrap">
             {item.genre_ids?.length > 0 &&
@@ -66,7 +66,7 @@ const MovieCard = ({ item, type }) => {
               ))}
           </ul>
         </div>
-      )}
+      {/* )} */}
     </div>
   );
 };

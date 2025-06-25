@@ -5,6 +5,7 @@ import { useGlobalContext } from "../../contexts/globalContext";
 
 const GenreLabelLink = ({ genreId }) => {
   const { genres } = useGlobalContext();
+  console.log(genres, genreId);
 
   return (
     <ListLabel>
@@ -12,8 +13,7 @@ const GenreLabelLink = ({ genreId }) => {
         className="hover:underline underline-offset-2"
         to={"/genre/" + genreId}
       >
-        {genres.length > 0 &&
-          genres.map((item) => item.id === genreId && item.name)}
+        {genres.length > 0 && genres.find((item) => item.id === genreId).name}
       </Link>
     </ListLabel>
   );

@@ -113,7 +113,7 @@ const Navbar = (pathname) => {
           </div>
           {loading.searchMovie ? (
             <div className="h-50 flex items-center justify-center">
-              <p className="text-gray-200/70 text-sm">
+              <p className="text-base-content/60 text-sm">
                 {searchQuery ? "Loading ..." : "Start typing to search"}
               </p>
             </div>
@@ -157,7 +157,7 @@ const Navbar = (pathname) => {
                 </ul>
               ) : (
                 <div className="h-50 flex items-center justify-center">
-                  <p className="text-gray-200/70 text-sm">Not Found</p>
+                  <p className="text-base-content/60 text-sm">Not Found</p>
                 </div>
               )}
             </div>
@@ -189,7 +189,7 @@ const Navbar = (pathname) => {
               <label
                 htmlFor="my-drawer"
                 aria-label="open sidebar"
-                className={`text-2xl cursor-pointer  hover:${
+                className={`text-xl cursor-pointer  hover:${
                   bgNavbar && isTop ? "text-white/80" : "text-base-content/80"
                 } focus:outline-0`}
               >
@@ -203,14 +203,14 @@ const Navbar = (pathname) => {
             </div>
             <div className="navbar-end items-center gap-3">
               <button
-                className={`text-2xl cursor-pointer  hover:${
+                className={`text-xl cursor-pointer  hover:${
                   bgNavbar && isTop ? "text-white/80" : "text-base-content/80"
                 } focus:outline-0`}
                 onClick={handleOpenSearchModal}
               >
                 <FiSearch />
               </button>
-              <Link className="text-2xl relative" to={"/favorite"}>
+              <Link className="text-xl relative" to={"/favorite"}>
                 <IoMdHeart
                   className={`transition-all duration-500 ${
                     bgNavbar && isTop ? "text-white" : " text-red-500"
