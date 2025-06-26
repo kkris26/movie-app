@@ -8,6 +8,7 @@ import { IoMdHeart } from "react-icons/io";
 import { useGlobalContext } from "../../contexts/globalContext";
 import { IoCloseOutline } from "react-icons/io5";
 import ListLabel from "../Label/ListLabel";
+import DetailsHover from "../Hover/DetailsHover";
 
 const Navbar = (pathname) => {
   const [isTop, setIsTop] = useState(true);
@@ -179,7 +180,7 @@ const Navbar = (pathname) => {
           className="drawer-toggle"
         />
         <div
-          className={`drawer-content transition-all duration-300 ease-in-out  ${
+          className={`drawer-content transition-all duration-300 ease-in-out px-4 lg:px-0   ${
             isTop
               ? ` ${
                   bgNavbar
@@ -208,19 +209,21 @@ const Navbar = (pathname) => {
             </div>
             <div className="navbar-end items-center gap-3">
               <button
-                className={`text-xl cursor-pointer  hover:${
+                className={`text-xl relative cursor-pointer group hover:${
                   bgNavbar && isTop ? "text-white/80" : "text-base-content/80"
                 } focus:outline-0`}
                 onClick={handleOpenSearchModal}
               >
                 <FiSearch />
+                <DetailsHover>Search</DetailsHover>
               </button>
-              <Link className="text-xl relative" to={"/favorite"}>
+              <Link className="text-xl group relative " to={"/favorite"}>
                 <IoMdHeart
-                  className={`transition-all duration-500 ${
+                  className={` transition-all duration-500 ${
                     bgNavbar && isTop ? "text-white" : " text-red-400"
                   }`}
                 />
+                <DetailsHover>Favorite</DetailsHover>
                 {favorite.length > 0 && (
                   <p className="text-[8px] text-white w-max leading-1.5 p-[3px] rounded-full bg-primary flex items-center justify-center absolute top-[-3px] left-[18px]">
                     {favorite.length}

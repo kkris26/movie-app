@@ -14,23 +14,35 @@ const MovieSliderLayouts = ({ heading, loading, data, type, link }) => {
   return (
     <>
       <MovieListWrapper>
-        <div className="flex justify-between w-full items-center z-1">
-          <h2 className="text-2xl">{heading}</h2>
-          <div className="flex justify-end gap-2">
+        <div className="flex  justify-between w-full items-center z-1">
+          <h2 className="text-md md:text-2xl">{heading}</h2>
+          <div className="flex justify-end gap-1 lg:gap-2">
             <NavigationButton ref={swiperRef} action={"prev"}>
-              <FiChevronLeft className="text-xl" />
+              <FiChevronLeft />
             </NavigationButton>
             <NavigationButton ref={swiperRef} action={"next"}>
-              <FiChevronRight className="text-xl" />
+              <FiChevronRight />
             </NavigationButton>
           </div>
         </div>
         <Swiper
           className="mySwiper w-full "
-          slidesPerView={5}
-          spaceBetween={15}
           onSwiper={(swiper) => {
             swiperRef.current = swiper;
+          }}
+          breakpoints={{
+            0: {
+              slidesPerView: 2,
+              spaceBetween: 8,
+            },
+            640: {
+              slidesPerView: 4,
+              spaceBetween: 12,
+            },
+            1024: {
+              slidesPerView: 5,
+              spaceBetween: 15,
+            },
           }}
         >
           {loading

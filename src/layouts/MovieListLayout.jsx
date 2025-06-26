@@ -9,20 +9,22 @@ const MovieListLayout = ({ data, heading, type = "", loading, sectionRef }) => {
   return (
     <MovieListWrapper>
       <div ref={sectionRef} className="flex justify-between w-full z-1">
-        <h2 className="text-2xl">{heading}</h2>
+        <h2 className="text-md md:text-lg lg:text-2xl">{heading}</h2>
 
         <Link
           to="/"
-          className=" border-b gap-1 flex items-center hover:text-base-content/80"
+          className=" text-xs md:text-md  lg:text-lg border-b gap-1 flex items-center hover:text-base-content/80"
         >
           Go Back
-          <GoArrowUpRight className="text-xl mb-[-4px]" />
+          <GoArrowUpRight className="text-sm md:text-lg  lg:text-xl mb-[-4px]" />
         </Link>
       </div>
       <div
         className={`grid ${
-          !loading && data.length === 0 ? "" : "grid-cols-5"
-        } gap-y-10 gap-x-4 `}
+          !loading && data.length === 0
+            ? ""
+            : "grid-cols-2 md:grid-cols-4 lg:grid-cols-5"
+        } gap-x-3 gap-y-5 lg:gap-y-10 lg:gap-x-4 `}
       >
         {loading ? (
           [...Array(20)].map((_, idx) => <MovieCardLoading key={idx} />)

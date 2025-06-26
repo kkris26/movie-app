@@ -1,6 +1,6 @@
 const ListLabel = ({ children }) => {
   return (
-    <li className="bg-base-300 w-max p-1 px-2 rounded-md text-[11px] cursor-pointer hover:bg-base-200  transition-all 0.3s">
+    <li className="bg-base-300 w-max py-[3px] lg:py-1 px-[5px] lg:px-2 rounded-xs md:rounded-sm lg:rounded-md text-[8px] lg:text-xs cursor-pointer hover:bg-base-200  transition-all 0.3s">
       {children}
     </li>
   );

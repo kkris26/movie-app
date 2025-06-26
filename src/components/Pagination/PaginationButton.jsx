@@ -6,7 +6,7 @@ const PaginationButton = ({ page, totalPage, setPage, sectionRef }) => {
     sectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    <div className="flex mt-10 justify-center w-full">
+    <div className="flex mt-10 justify-center w-full ">
       <div className="join">
         <button
           className="join-item btn"
@@ -16,7 +16,7 @@ const PaginationButton = ({ page, totalPage, setPage, sectionRef }) => {
         >
           <FiChevronLeft className="text-lg" />
         </button>
-        <button className="join-item btn">
+        <button className="join-item btn text-xs lg:text-sm">
           Page {page} of {totalPage}
         </button>
         <button
