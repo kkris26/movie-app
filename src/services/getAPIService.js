@@ -16,23 +16,19 @@ export const getAPIData = async ({
 }) => {
   try {
     const localData = localStorage.getItem(key);
-    // if (localData) {
-    //   setter(JSON.parse(localData));
-    //   return;
-    // }
+    if (localData) {
+      setter(JSON.parse(localData));
+      return;
+    }
     const response = await fetch(apiUrl, options);
     const data = await response.json();
     setTotalPage && setTotalPage(data.total_pages);
-    // console.log(data);
     const results = !resultData ? data : data[resultData];
     setter(results);
     type !== "search" && localStorage.setItem(key, JSON.stringify(results));
-    // console.log("Done Fetching Data " + key);
   } catch (err) {
     console.log(err);
   } finally {
     setterLoading((prev) => ({ ...prev, [key]: false }));
-
-    // console.log(key + " finish load");
   }
 };

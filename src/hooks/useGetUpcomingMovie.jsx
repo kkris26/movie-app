@@ -6,14 +6,13 @@ const useGetUpcomingMovie = (setLoading) => {
   const getTopRatedMovie = () => {
     getAPIData({
       key: "upcoming_movie",
-      apiUrl: import.meta.env.VITE_UPCOMING_MOVIE_LIST,
+      apiUrl: import.meta.env.VITE_MOVIE_BASE_API + "upcoming?region=ID",
       setter: setUpcomingMovie,
       setterLoading: setLoading,
     });
   };
   useEffect(() => {
     getTopRatedMovie();
-    console.log("genres from get Upcoming");
   }, []);
   return { upcomingMovie };
 };

@@ -8,11 +8,11 @@ import PaginationButton from "../components/Pagination/PaginationButton";
 
 const MovieListSection = () => {
   const { id } = useParams();
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState({
-    [id]: true,
+    [id + "_" + page]: true,
   });
   const { genres } = useGlobalContext();
-  const [page, setPage] = useState(1);
   const { movieByGenre, totalPage } = useGetMovieByGenre(setLoading, id, page);
   const sectionRef = useRef(null);
   const genreName =
@@ -24,7 +24,7 @@ const MovieListSection = () => {
         <MovieListLayout
           data={movieByGenre}
           heading={genreName + " Movies"}
-          loading={loading[id]}
+          loading={loading[id + "_" + page]}
           loadCardItem={10}
         />
         <PaginationButton
@@ -32,6 +32,7 @@ const MovieListSection = () => {
           totalPage={totalPage}
           setPage={setPage}
           sectionRef={sectionRef}
+          loading={loading[id + "_" + page]}
         />
       </ContentLayouts>
     </>

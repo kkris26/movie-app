@@ -6,7 +6,9 @@ const useGetNowPlaying = (setLoading) => {
   const getMovieNowPlaying = () => {
     getAPIData({
       key: "now_playing_movie",
-      apiUrl: import.meta.env.VITE_NOW_PLAYING_MOVIE_LIST,
+      apiUrl:
+        import.meta.env.VITE_MOVIE_BASE_API +
+        "now_playing?region=ID",
       setter: setNowPlayingMovie,
       setterLoading: setLoading,
     });
@@ -14,7 +16,6 @@ const useGetNowPlaying = (setLoading) => {
 
   useEffect(() => {
     getMovieNowPlaying();
-    console.log("genres from get Now Playing");
   }, []);
   return { nowPlayingMovie };
 };

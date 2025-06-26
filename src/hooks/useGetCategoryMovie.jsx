@@ -6,9 +6,9 @@ const useGetCategoryMovie = (category, setLoading, page) => {
   const [totalPage, setTotalPage] = useState();
   const getCategoryMovie = () => {
     getAPIData({
-      key: category,
+      key: category + "_" + page,
       apiUrl:
-        import.meta.env.VITE_MOVIE_DETAILS +
+        import.meta.env.VITE_MOVIE_BASE_API +
         category +
         `?page=${page}&region=ID`,
       setter: setMovieCategory,
@@ -18,7 +18,7 @@ const useGetCategoryMovie = (category, setLoading, page) => {
   };
 
   useEffect(() => {
-    setLoading((prev) => ({ ...prev, [category]: true }));
+    setLoading((prev) => ({ ...prev, [category + "_" + page]: true }));
     getCategoryMovie();
   }, [page]);
   return { movieCategory, totalPage };

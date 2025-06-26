@@ -55,15 +55,15 @@ const MovieCard = ({ item, type }) => {
             }
           />
           <DetailsHover
-            customClass={`text-[10px]  ${
+            customClass={`text-[6px] md:text-[8px] lg:text-[11px]  ${
               favorite.find((fav) => fav.id === item.id)
                 ? "bg-base-300"
-                : "bg-red-400"
+                : "bg-red-400 text-white"
             }`}
           >
             {favorite.find((fav) => fav.id === item.id)
-              ? "Remove Fav"
-              : "Add to Fav"}
+              ? "Remove Favorite"
+              : "Add to Favorite"}
           </DetailsHover>
         </div>
       </div>

@@ -6,11 +6,11 @@ import MovieDetails from "./pages/MovieDetails";
 import SmoothFollower from "./components/utilities/CursorAnimation";
 import PageTransitions from "./components/utilities/transitions/PageTransitions";
 import { AnimatePresence } from "framer-motion";
-import AudioPlay from "./components/Button/AudioPlay";
 import MovieByGenres from "./pages/MovieByGenres";
 import MovieCategoryPage from "./pages/MovieCategoryPage";
 import Footer from "./components/Footer/Footer";
 import FavoriteMoviePage from "./pages/FavoriteMoviePage";
+import ThemeToggle from "./components/Button/ThemeToggle";
 
 function App() {
   const location = useLocation();
@@ -18,53 +18,52 @@ function App() {
     <>
       <Navbar pathname={location.pathname} />
       <SmoothFollower />
-      <AudioPlay />
-      <MainLayout>
-        <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            <Route
-              path="/"
-              element={
-                <PageTransitions>
-                  <HomePage />
-                </PageTransitions>
-              }
-            />
-            <Route
-              path="/movie/:id"
-              element={
-                <PageTransitions>
-                  <MovieDetails />
-                </PageTransitions>
-              }
-            />
-            <Route
-              path="/genre/:id"
-              element={
-                <PageTransitions>
-                  <MovieByGenres />
-                </PageTransitions>
-              }
-            />
-            <Route
-              path="/:category"
-              element={
-                <PageTransitions>
-                  <MovieCategoryPage />
-                </PageTransitions>
-              }
-            />
-            <Route
-              path="/favorite"
-              element={
-                <PageTransitions>
-                  <FavoriteMoviePage />
-                </PageTransitions>
-              }
-            />
-          </Routes>
-        </AnimatePresence>
-      </MainLayout>
+      {/* <AudioPlay /> */}
+      <ThemeToggle />
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          <Route
+            path="/"
+            element={
+              <PageTransitions>
+                <HomePage />
+              </PageTransitions>
+            }
+          />
+          <Route
+            path="/movie/:id"
+            element={
+              <PageTransitions>
+                <MovieDetails />
+              </PageTransitions>
+            }
+          />
+          <Route
+            path="/genre/:id"
+            element={
+              <PageTransitions>
+                <MovieByGenres />
+              </PageTransitions>
+            }
+          />
+          <Route
+            path="/:category"
+            element={
+              <PageTransitions>
+                <MovieCategoryPage />
+              </PageTransitions>
+            }
+          />
+          <Route
+            path="/favorite"
+            element={
+              <PageTransitions>
+                <FavoriteMoviePage />
+              </PageTransitions>
+            }
+          />
+        </Routes>
+      </AnimatePresence>
       <Footer />
     </>
   );

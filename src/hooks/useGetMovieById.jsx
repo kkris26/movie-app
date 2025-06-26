@@ -6,7 +6,7 @@ const useGetMovieById = (setLoading, id) => {
   const getMovieById = () => {
     getAPIData({
       key: id,
-      apiUrl: import.meta.env.VITE_MOVIE_DETAILS + id,
+      apiUrl: import.meta.env.VITE_MOVIE_BASE_API + id,
       setter: setMovieById,
       setterLoading: setLoading,
       resultData: null,
@@ -14,7 +14,6 @@ const useGetMovieById = (setLoading, id) => {
   };
   useEffect(() => {
     getMovieById();
-    console.log("movie from get Movie by Id " + id);
   }, []);
   return { movieById };
 };

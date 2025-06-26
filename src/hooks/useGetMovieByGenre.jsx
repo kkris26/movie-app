@@ -3,10 +3,10 @@ import { getAPIData } from "../services/getAPIService";
 
 const useGetMovieByGenre = (setLoading, id, page) => {
   const [movieByGenre, setMovieByGenre] = useState([]);
-  const [totalPage, setTotalPage] = useState();
+  const [totalPage, setTotalPage] = useState(0);
   const getMovieByGenre = () => {
     getAPIData({
-      key: id,
+      key: id + "_" + page,
       apiUrl:
         import.meta.env.VITE_MOVIE_LIST_BY_GENRE +
         `?page=${page}&with_genres=${id}`,
@@ -16,7 +16,7 @@ const useGetMovieByGenre = (setLoading, id, page) => {
     });
   };
   useEffect(() => {
-    setLoading((prev) => ({ ...prev, [id]: true }));
+    setLoading((prev) => ({ ...prev, [id + "_" + page]: true }));
     getMovieByGenre();
   }, [page]);
   return { movieByGenre, totalPage };

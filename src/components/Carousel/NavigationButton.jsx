@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const NavigationButton = ({ children, action, ref, setCount }) => {
+const NavigationButton = ({ children, action, ref }) => {
   return (
     <>
       <button

@@ -6,14 +6,13 @@ const useGetTopRatedMovie = (setLoading) => {
   const getTopRatedMovie = () => {
     getAPIData({
       key: "top_rated_movie",
-      apiUrl: import.meta.env.VITE_TOP_RATED_MOVIE_LIST,
+      apiUrl: import.meta.env.VITE_MOVIE_BASE_API + "top_rated?region=ID",
       setter: setTopRatedMovie,
       setterLoading: setLoading,
     });
   };
   useEffect(() => {
     getTopRatedMovie();
-    console.log("genres from get Top Rated");
   }, []);
   return { topRatedMovie };
 };

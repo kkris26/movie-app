@@ -20,7 +20,6 @@ const useGetGenres = () => {
       return;
     }
     handleGetGenres();
-    console.log("genres from custom hook");
   }, []);
   return { genres, loadingGenres };
 };

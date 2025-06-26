@@ -1,7 +1,13 @@
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { handleNextPage, handlePrevPage } from "./handlePaginationButton";
 
-const PaginationButton = ({ page, totalPage, setPage, sectionRef }) => {
+const PaginationButton = ({
+  page,
+  totalPage,
+  setPage,
+  sectionRef,
+  loading,
+}) => {
   const scroolTo = () => {
     sectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -17,7 +23,8 @@ const PaginationButton = ({ page, totalPage, setPage, sectionRef }) => {
           <FiChevronLeft className="text-lg" />
         </button>
         <button className="join-item btn text-xs lg:text-sm">
-          Page {page} of {totalPage}
+          Page {loading ? "... " : page} of{" "}
+          {loading || !totalPage ? "... " : totalPage}
         </button>
         <button
           className="join-item btn"

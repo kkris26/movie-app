@@ -19,12 +19,10 @@ export const GlobalProvider = ({ children }) => {
   const hanldeDeleteFavorite = () => {
     setFavorite((prev) => prev.filter((item) => item.id !== favToRemove.id));
     setErrorItem(favToRemove.title);
-    console.log("success delete item");
     clearItemToDelete();
     return;
   };
   const clearItemToDelete = () => {
-    console.log("clear item to delete");
     setTimeout(() => {
       return setFavToRemove({});
     }, 200);

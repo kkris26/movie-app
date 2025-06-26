@@ -1,12 +1,12 @@
 import { useRef, useState } from "react";
-import HeroLayout from "../layouts/HeroLayout";
-import MovieListLayout from "../layouts/MovieListLayout";
 import ContentLayouts from "../layouts/ContentLayouts";
 import useGetNowPlaying from "../hooks/useGetNowPlaying";
 import useGetPopularMovie from "../hooks/useGetPopularMovie";
 import useGetTopRatedMovie from "../hooks/useGetTopRatedMovie";
 import useGetUpcomingMovie from "../hooks/useGetUpcomingMovie";
 import MovieSliderLayouts from "../layouts/MovieSliderLayouts";
+import HeroSectionLoad from "../components/Loading/HeroSectionLoad";
+import FadeSlider from "../components/Slider/FadeSlider";
 
 const HomePage = () => {
   const [loading, setLoading] = useState({
@@ -22,17 +22,18 @@ const HomePage = () => {
   const { upcomingMovie } = useGetUpcomingMovie(setLoading);
   const sectionRef = useRef();
 
-  const scroolTo = () => {
-    sectionRef.current.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
     <>
-      <HeroLayout
-        loading={loading}
-        data={nowPlayingMovie}
-        scrollAction={scroolTo}
-      />
+      {loading.now_playing_movie ? (
+        <HeroSectionLoad />
+      ) : (
+        <div className="h-dvh relative flex items-center transition-all duration-300 ease-in-out">
+          <FadeSlider
+            item={nowPlayingMovie}
+            customClass="inset-0   swiper-absolute"
+          />
+        </div>
+      )}
 
       <ContentLayouts
         customClass="flex flex-col gap-6 md:gap-8 lg:gap-10 -mt-10 pt-22 md:pt-25 lg:pt-30"

@@ -7,7 +7,6 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import { IoMdHeart } from "react-icons/io";
 import { useGlobalContext } from "../../contexts/globalContext";
 import { IoCloseOutline } from "react-icons/io5";
-import ListLabel from "../Label/ListLabel";
 import DetailsHover from "../Hover/DetailsHover";
 
 const Navbar = (pathname) => {

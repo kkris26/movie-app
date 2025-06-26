@@ -14,8 +14,8 @@ const Footer = () => {
 
   const { genres } = useGlobalContext();
   return (
-    <footer className="flex flex-col gap-6 md:gap-10 bg-base-200 px-4 lg:px-0">
-      <section className="footer gap-6 flex flex-col md:flex-row justify-between max-w-7xl mx-auto sm:footer-horizontal pt-10 md:pt-13 lg:pt-15 text-base-content">
+    <footer className="flex flex-col gap-6 md:gap-10 bg-base-200 px-4 lg:px-0 ">
+      <section className="z-1 footer gap-6 flex flex-col md:flex-row justify-between max-w-7xl mx-auto sm:footer-horizontal pt-10 md:pt-13 lg:pt-15 text-base-content">
         <aside className="w-full md:w-70 lg:w-100">
           <Link to={"/"} className="text-3xl md:text-4xl">
             MovoRa
@@ -47,7 +47,7 @@ const Footer = () => {
           ))}
         </div>
       </section>
-      <section className="footer border-t border-base-content/2 sm:footer-horizontal footer-center text-base-content p-4">
+      <section className="z-1 footer border-t border-base-content/2 sm:footer-horizontal footer-center text-base-content p-4">
         <aside>
           <p className="text-xs md:text-sm">
             &copy; {new Date().getFullYear()} - All rights reserved. Made with{" "}
