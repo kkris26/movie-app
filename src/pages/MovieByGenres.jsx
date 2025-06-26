@@ -14,9 +14,7 @@ const MovieListSection = () => {
   const { genres } = useGlobalContext();
   const [page, setPage] = useState(1);
   const { movieByGenre, totalPage } = useGetMovieByGenre(setLoading, id, page);
-
   const sectionRef = useRef(null);
-
   const genreName =
     genres.length > 0 && genres.find((item) => item.id == id).name;
 

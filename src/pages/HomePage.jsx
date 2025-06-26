@@ -34,7 +34,7 @@ const HomePage = () => {
         scrollAction={scroolTo}
       />
 
-      <ContentLayouts customClass="flex flex-col gap-10 pt-20" ref={sectionRef}>
+      <ContentLayouts customClass="flex flex-col gap-10 pt-20" sectionRef={sectionRef}>
         <MovieSliderLayouts
           data={nowPlayingMovie}
           heading="Now Playing"

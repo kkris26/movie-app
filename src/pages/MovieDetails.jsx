@@ -32,7 +32,6 @@ const MovieDetails = () => {
   const scroolTo = () => {
     sectionRef.current.scrollIntoView({ behavior: "smooth" });
   };
-  console.log(movieById);
   return (
     <>
       {loading[id] ? (
@@ -132,54 +131,58 @@ const MovieDetails = () => {
           ) : (
             <div
               ref={sectionRef}
-              className="flex gap-10 items-center h-screen w-5xl mx-auto pb-15"
+              className="flex gap-10 items-center max-w-6xl -mt-15 mx-auto py-24"
             >
-              <div className=" flex items-center p-2 border-2 border-base-content ">
-                <img
-                  src={import.meta.env.VITE_IMAGE_PATH + movieById.poster_path}
-                  alt={movieById.title}
-                  srcSet=""
-                  className="w-90"
-                />
-              </div>
-              <div className=" flex flex-col justify-center flex-1 h-full items-start gap-5 z-1">
-                <h2 className="text-3xl">{movieById.title}</h2>
-                {loadingGenres.genres ? (
-                  <p>Loading ...</p>
-                ) : (
-                  movieById.genres?.length > 0 && (
-                    <ul className="flex gap-2 flex-wrap">
-                      {movieById.genres.map((genreId, index) => (
-                        <GenreLabelLink key={index} genreId={genreId.id} />
-                      ))}
-                    </ul>
-                  )
-                )}
-                <p className="text-sm">
-                  Release on {formatDate(movieById.release_date)}
-                </p>
-                <p className="text-sm">{movieById.overview}</p>
-                {movieById.production_companies?.length > 0 && (
-                  <div className="flex flex-col gap-2">
-                    <p className="text-sm">Production by</p>
-                    <ul className="flex gap-2 flex-wrap">
-                      {movieById.production_companies.map((item) => (
-                        <ListLabel key={item.id}>{item.name}</ListLabel>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                <div onClick={() => toggleFavorite(movieById)}>
-                  {favorite.find((fav) => fav.id === movieById.id) ? (
-                    <button className="p-2 flex items-center text-sm cursor-pointer gap-2 bg-base-300 rounded">
-                      <IoMdHeart className="text-lg text-red-500" />
-                      Remove from Favorite
-                    </button>
+              <div className="flex gap-10 items-center bg-base-200 p-5 rounded-md w-full">
+                <div className=" flex items-center p-2 border-2 border-base-content ">
+                  <img
+                    src={
+                      import.meta.env.VITE_IMAGE_PATH + movieById.poster_path
+                    }
+                    alt={movieById.title}
+                    srcSet=""
+                    className="w-90"
+                  />
+                </div>
+                <div className=" flex flex-col justify-center flex-1 h-full items-start gap-5 z-1 pe-10">
+                  <h2 className="text-3xl">{movieById.title}</h2>
+                  {loadingGenres.genres ? (
+                    <p>Loading ...</p>
                   ) : (
-                    <button className="p-2 flex items-center text-sm cursor-pointer gap-1 bg-red-500 light:bg-red-800 text-white rounded">
-                      <IoMdHeartEmpty className="text-lg" /> Add to Favorite
-                    </button>
+                    movieById.genres?.length > 0 && (
+                      <ul className="flex gap-2 flex-wrap">
+                        {movieById.genres.map((genreId, index) => (
+                          <GenreLabelLink key={index} genreId={genreId.id} />
+                        ))}
+                      </ul>
+                    )
                   )}
+                  <p className="text-sm">
+                    Release on {formatDate(movieById.release_date)}
+                  </p>
+                  <p className="text-sm font-light">{movieById.overview}</p>
+                  {movieById.production_companies?.length > 0 && (
+                    <div className="flex flex-col gap-2">
+                      <p className="text-sm">Production by</p>
+                      <ul className="flex gap-2 flex-wrap">
+                        {movieById.production_companies.map((item) => (
+                          <ListLabel key={item.id}>{item.name}</ListLabel>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  <div onClick={() => toggleFavorite(movieById)}>
+                    {favorite.find((fav) => fav.id === movieById.id) ? (
+                      <button className="p-2 flex items-center text-sm cursor-pointer gap-2 bg-base-300 rounded">
+                        <IoMdHeart className="text-lg text-red-500" />
+                        Remove from Favorite
+                      </button>
+                    ) : (
+                      <button className="p-2 flex items-center text-sm cursor-pointer gap-1 bg-red-500 light:bg-red-800 text-white rounded">
+                        <IoMdHeartEmpty className="text-lg" /> Add to Favorite
+                      </button>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

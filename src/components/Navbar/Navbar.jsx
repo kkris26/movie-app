@@ -6,6 +6,8 @@ import { FiSearch } from "react-icons/fi";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoMdHeart } from "react-icons/io";
 import { useGlobalContext } from "../../contexts/globalContext";
+import { IoCloseOutline } from "react-icons/io5";
+import ListLabel from "../Label/ListLabel";
 
 const Navbar = (pathname) => {
   const [isTop, setIsTop] = useState(true);
@@ -50,8 +52,8 @@ const Navbar = (pathname) => {
       setLoading({ searchMovie: true });
       return;
     }
+    setLoading({ searchMovie: true });
     const searchMovieTO = setTimeout(() => {
-      setLoading({ searchMovie: true });
       getAPIData({
         key: "searchMovie",
         apiUrl: import.meta.env.VITE_SEARCH_MOVIES + searchQuery,
@@ -59,7 +61,7 @@ const Navbar = (pathname) => {
         setterLoading: setLoading,
         type: "search",
       });
-    }, 800);
+    }, 700);
     return () => {
       clearTimeout(searchMovieTO);
     };
@@ -70,9 +72,10 @@ const Navbar = (pathname) => {
     { name: "Popular", link: "/popular" },
     { name: "Top Rated", link: "/top_rated" },
     { name: "Upcoming", link: "/upcoming" },
+    { name: "Favorite", link: "/favorite" },
   ];
 
-  const currentPathname = location.pathname;
+  const currentPathname = pathname.pathname;
   useEffect(() => {
     const timeout = setTimeout(() => {
       currentPathname === "/" || currentPathname.startsWith("/movie")
@@ -99,7 +102,7 @@ const Navbar = (pathname) => {
               ref={inputSearchRef}
               type="text"
               id="search-movie"
-              placeholder="Seacrh Movie"
+              placeholder="Search Movie"
               className="input input-ghost focus:outline-0 w-full input-sm p-0 outline-0"
               onChange={(e) => handleOnChangeSearch(e)}
             />
@@ -178,10 +181,12 @@ const Navbar = (pathname) => {
         <div
           className={`drawer-content transition-all duration-300 ease-in-out  ${
             isTop
-              ? `bg-transparent ${
-                  bgNavbar ? "text-white" : "text-base-content"
+              ? ` ${
+                  bgNavbar
+                    ? "text-white bg-transparent"
+                    : "text-base-content shadow-md"
                 }`
-              : "bg-base-100"
+              : "bg-base-100  shadow-md"
           } fixed w-full flex justify-center`}
         >
           <div className={` navbar max-w-7xl px-0`}>
@@ -225,22 +230,29 @@ const Navbar = (pathname) => {
             </div>
           </div>
         </div>
-        <div className="drawer-side">
+        <div className="drawer-side m-0">
           <label
             htmlFor="my-drawer"
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <div className="menu bg-base-200 text-base-content h-full w-80 p-6 gap-2 flex-col justify-between flex">
-            <div className="flex flex-col gap-5">
-              <h1 className="text-4xl">Category</h1>
-              <div className=" flex flex-col gap-5 text-2xl font-light">
+          <div className="menu bg-base-200 text-base-content h-full w-80 p-0 gap-2 flex-col justify-between flex">
+            <div className="flex flex-col gap-5 pt-4 px-6">
+              <div className="flex justify-between items-center  text-3xl border-b border-base-content/10 pb-4">
+                <h1 to="/">MovoRa</h1>
+                <IoCloseOutline
+                  className="cursor-pointer text-2xl"
+                  onClick={handleCloseMenu}
+                />
+              </div>
+              {/* <h1 className="text-2xl">Category</h1> */}
+              <div className=" flex flex-col gap-5 text-lg font-light">
                 {movieMenu.map((item, index) => (
                   <Link
                     key={index}
                     to={item.link}
                     onClick={handleCloseMenu}
-                    className="text-base-content/90 underline underline-offset-6 flex items-center gap-4 justify-between hover:text-base-content"
+                    className="text-base-content/90 hover:underline underline-offset-6 flex items-center gap-4 justify-between hover:text-base-content"
                   >
                     {item.name}
                     <GoArrowUpRight />
@@ -248,19 +260,38 @@ const Navbar = (pathname) => {
                 ))}
               </div>
             </div>
-            <div className="flex flex-col gap-2">
-              <h1 className="text-xl">Movie Genre</h1>
-              <div className=" flex flex-wrap gap-x-4 text-md ">
-                {genres.map((item) => (
-                  <Link
-                    key={item.id}
-                    to={"genre/" + item.id}
-                    onClick={handleCloseMenu}
-                    className="text-base-content/90 underline underline-offset-3 items-center hover:text-base-content"
+            <div>
+              <div className="flex flex-col gap-4 px-6">
+                <h1 className="text-lg border-b border-base-content/10 py-2">
+                  Movie Genre
+                </h1>
+                <div className=" flex flex-wrap gap-x-4 gap-y-2 text-md ">
+                  {genres.map((item) => (
+                    <Link
+                      key={item.id}
+                      to={"genre/" + item.id}
+                      onClick={handleCloseMenu}
+                      className="text-base-content/90 hover:underline underline-offset-3 text-sm items-center hover:text-base-content"
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              </div>
+              <div className="mt-10 px-6 py-4 text-xs bg-base-300/80">
+                {" "}
+                <p>
+                  &copy; {new Date().getFullYear()} - MovoRa. Made with{" "}
+                  <span className="text-red-400">❤️</span> by{" "}
+                  <a
+                    href="https://www.krisnu.com"
+                    target="blank"
+                    className="underline underline-offset-2"
                   >
-                    {item.name}
-                  </Link>
-                ))}
+                    {" "}
+                    Krisnu
+                  </a>
+                </p>
               </div>
             </div>
           </div>
