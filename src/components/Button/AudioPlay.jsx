@@ -20,20 +20,24 @@ const AudioPlay = () => {
       <div
         className={`fixed h-dvh overflow-hidden ${
           first ? "opacity-100 z-999" : "opacity-0 z-0"
-        } transition-all duration-800 inset-0 bg-base-200 flex items-center justify-start max-w-7xl mx-auto lg:px-0 px-4`}
-      >
-        <div className="z-1  flex flex-col gap-4 md:gap-5 lg:gap-6 md:w-110 lg:w-130">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl text-start">Welcome to Movora</h1>
-          <p className="text-start text-sm md:text-md">
-            Movora lets you browse trending, upcoming, and top-rated films by
-            genre. Explore now and never miss a great movie again.
-          </p>
-          <button
-            className="btn btn-lg btn-outline border-white hover:bg-white hover:text-black rounded-none w-max"
-            onClick={handlePlay}
-          >
-            Explore Movies
-          </button>
+        } transition-all duration-800 inset-0 bg-base-200 flex items-center justify-center mx-auto lg:px-0 px-4`}
+      > 
+        <div className="flex w-7xl">
+          <div className="z-1  flex flex-col gap-4 md:gap-5 lg:gap-6 md:w-110 lg:w-130">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl text-start">
+              Welcome to Movora
+            </h1>
+            <p className="text-start text-sm md:text-md">
+              Movora lets you browse trending, upcoming, and top-rated films by
+              genre. Explore now and never miss a great movie again.
+            </p>
+            <button
+              className="btn btn-lg btn-outline border-white hover:bg-white hover:text-black rounded-none w-max"
+              onClick={handlePlay}
+            >
+              Explore Movies
+            </button>
+          </div>
         </div>
         <img
           src="/cinema-bg.jpeg"

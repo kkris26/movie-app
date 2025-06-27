@@ -1,12 +1,31 @@
-# React + Vite
+# 🎬 Movora Movie App by Krisnu
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Movora** is a movie search and discovery application built with React, powered by [The Movie Database (TMDb)](https://www.themoviedb.org/) API.  
+Users can explore movies by categories such as **Now Playing**, **Popular**, **Top Rated**, and **Upcoming**, and view detailed information for each film.
 
-Currently, two official plugins are available:
+🔗 **Live Demo:** [https://movie-app-krisnu.vercel.app](https://movie-app-krisnu.vercel.app/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## ✨ Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 🔍 Search movies by title
+- 🗂 Filter movies by category and genre
+- ❤️ Add movies to favorites (stored in localStorage)
+- 📃 View full movie details
+- 📱 Fully responsive design for all devices
+- 🚫 404 Not Found page for invalid routes
+- 🔁 Caches movie data locally to improve performance
+
+---
+
+## 🛠️ Technologies Used
+
+- ⚛️ **React** (Vite)
+- 🌐 **React Router DOM** for client-side routing
+- 💅 **Tailwind CSS** for styling
+- 🎞️ **TMDb API** as data source
+- 💾 **LocalStorage** for caching and favorites
+- 🚀 **Vercel** for serverless deployment
+
+---
