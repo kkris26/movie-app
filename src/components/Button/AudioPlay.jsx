@@ -25,7 +25,7 @@ const AudioPlay = () => {
         <div className="flex w-7xl">
           <div className="z-1  flex flex-col gap-4 md:gap-5 lg:gap-6 md:w-110 lg:w-130">
             <h1 className="text-5xl md:text-7xl lg:text-8xl text-start">
-              Welcome to Movora
+              Welcome to MovoRa
             </h1>
             <p className="text-start text-sm md:text-md">
               Movora lets you browse trending, upcoming, and top-rated films by
