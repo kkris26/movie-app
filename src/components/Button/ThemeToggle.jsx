@@ -26,7 +26,7 @@ const ThemeToggle = () => {
       <input
         ref={toggleRef}
         type="checkbox"
-        className="theme-controller"
+        className="theme-controller hidden"
         value="light"
       />
       <AnimatePresence>
