@@ -3,6 +3,7 @@ import SuccessToast from "../components/Toast/SuccessToast";
 import DangerToast from "../components/Toast/DangerToast";
 import useGetGenres from "../hooks/useGetGenres";
 import WarningModal from "../components/WarningModal/WarningModal";
+import { AnimatePresence, motion } from "framer-motion";
 
 const globalContext = createContext();
 
@@ -66,17 +67,35 @@ export const GlobalProvider = ({ children }) => {
     <globalContext.Provider
       value={{ favorite, toggleFavorite, genres, loadingGenres }}
     >
-      <div className="fixed flex flex-col gap-2 justify-end items-end  z-9 bottom-20 right-5">
-        {itemFav && (
-          <SuccessToast itemFav={itemFav}>
-            {itemFav} Added to favorites.
-          </SuccessToast>
-        )}
-        {errorItem && (
-          <DangerToast errorItem={errorItem}>
-            {errorItem} Removed from favorites.
-          </DangerToast>
-        )}
+      <div className="fixed flex flex-col gap-2 justify-end items-end  z-9 bottom-15 right-5">
+        <AnimatePresence initial={false}>
+          {itemFav && (
+            <motion.div
+              initial={{ opacity: 0, y: 0 }}
+              animate={{ opacity: 1, y: -20 }}
+              exit={{ opacity: 0, y: 0 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+            >
+              <SuccessToast itemFav={itemFav}>
+                {itemFav} Added to favorites.
+              </SuccessToast>
+            </motion.div>
+          )}
+        </AnimatePresence>
+        <AnimatePresence initial={false}>
+          {errorItem && (
+            <motion.div
+              initial={{ opacity: 0, y: 0 }}
+              animate={{ opacity: 1, y: -20 }}
+              exit={{ opacity: 0, y: 0 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+            >
+              <DangerToast errorItem={errorItem}>
+                {errorItem} Removed from favorites.
+              </DangerToast>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
       <WarningModal
         ref={modalRef}

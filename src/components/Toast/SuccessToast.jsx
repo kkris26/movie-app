@@ -4,7 +4,7 @@ const SuccessToast = ({ children, itemFav }) => {
   return (
     <div
       role="alert"
-      className={`alert bg-succes text-xs alert-success flex w-max transition-all duration-300 text-white`}
+      className={`alert bg-succes p-2 md:p-3 gap-1 md:gap-4 text-[11px] leading-tight md:leading-normal md:text-xs alert-success flex w-max transition-all duration-300 text-white max-w-80 md:max-w-100`}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
