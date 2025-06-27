@@ -67,7 +67,7 @@ const MovieSliderLayouts = ({ heading, loading, data, type, link }) => {
                 ) : (
                   <div className="h-full">
                     <Link
-                      to={link}
+                      to={"/category" + link}
                       className="text-xs md:text-sm lg:text-md cursor-pointer flex items-center gap-1 border-b z-3 absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2"
                     >
                       View all

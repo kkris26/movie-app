@@ -47,7 +47,7 @@ const HomePage = () => {
         />
         <MovieSliderLayouts
           data={popularMovie}
-          heading="Popular Movie"
+          heading="Popular Movies"
           loading={loading.popular_movie}
           link={"/popular"}
         />
@@ -59,7 +59,7 @@ const HomePage = () => {
         />
         <MovieSliderLayouts
           data={upcomingMovie}
-          heading="Upcoming List"
+          heading="Coming Soon"
           type="upcoming"
           loading={loading.upcoming_movie}
           link={"/upcoming"}
