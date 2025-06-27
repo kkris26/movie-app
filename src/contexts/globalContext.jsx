@@ -67,7 +67,7 @@ export const GlobalProvider = ({ children }) => {
     <globalContext.Provider
       value={{ favorite, toggleFavorite, genres, loadingGenres }}
     >
-      <div className="fixed flex flex-col gap-2 justify-end items-end  z-9 bottom-15 right-5">
+      <div className="fixed flex flex-col gap-2 justify-end items-end  z-9 bottom-12 md:bottom-15 right-5">
         <AnimatePresence initial={false}>
           {itemFav && (
             <motion.div
