@@ -21,7 +21,7 @@ function App() {
     <>
       <Navbar pathname={location.pathname} />
       <SmoothFollower />
-      {/* <AudioPlay /> */}
+      <AudioPlay />
       <ThemeToggle />
       <MainLayout>
         <AnimatePresence mode="wait">
