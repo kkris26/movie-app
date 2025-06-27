@@ -11,7 +11,7 @@ const MovieCategoryPage = () => {
   const [loading, setLoading] = useState({
     [category + "_" + page]: true,
   });
-  const { movieCategory, totalPage, notFound } = useGetCategoryMovie(
+  const { movieCategory, totalPage } = useGetCategoryMovie(
     category,
     setLoading,
     page

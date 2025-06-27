@@ -8,12 +8,12 @@ import MovieListWrapper from "./MovieListWrapper";
 const MovieListLayout = ({ data, heading, type = "", loading, sectionRef }) => {
   return (
     <MovieListWrapper>
-      <div ref={sectionRef} className="flex justify-between w-full z-1">
+      <div ref={sectionRef} className="flex justify-between items-center w-full z-1">
         <h2 className="text-md md:text-lg lg:text-2xl">{heading}</h2>
 
         <Link
           to="/"
-          className=" text-xs md:text-md  lg:text-lg border-b gap-1 flex items-center hover:text-base-content/80"
+          className="h-fit min-w-max text-xs md:text-md  lg:text-lg border-b gap-1 flex items-center hover:text-base-content/80"
         >
           Go Back
           <GoArrowUpRight className="text-sm md:text-lg  lg:text-xl mb-[-4px]" />
@@ -31,9 +31,17 @@ const MovieListLayout = ({ data, heading, type = "", loading, sectionRef }) => {
         ) : data.length === 0 ? (
           <div className="  flex flex-col gap-4 h-[70vh]  items-center justify-center">
             <p className="text-base-content text-md md:text-2xl text-center">
-              {type === "favorite"
-                ? "You haven't added any favorites yet."
-                : `No ${heading} movies found in this list.`}
+              {type === "favorite" ? (
+                "You haven't added any favorites yet."
+              ) : (
+                <>
+                  No{" "}
+                  <span className="lowercase">
+                    {heading}
+                  </span>{" "}
+                  to display.
+                </>
+              )}
             </p>
             <Link
               to={"/"}
@@ -41,7 +49,7 @@ const MovieListLayout = ({ data, heading, type = "", loading, sectionRef }) => {
             >
               {type === "favorite"
                 ? "Browse Movies"
-                : "Try exploring other categories"}
+                : "Try exploring other movies"}
             </Link>
           </div>
         ) : (

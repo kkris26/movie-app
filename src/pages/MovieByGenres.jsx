@@ -29,13 +29,15 @@ const MovieListSection = () => {
           loading={loading[id + "_" + page]}
           loadCardItem={10}
         />
-        <PaginationButton
-          page={page}
-          totalPage={totalPage}
-          setPage={setPage}
-          sectionRef={sectionRef}
-          loading={loading[id + "_" + page]}
-        />
+        {movieByGenre.length > 0 && (
+          <PaginationButton
+            page={page}
+            totalPage={totalPage}
+            setPage={setPage}
+            sectionRef={sectionRef}
+            loading={loading[id + "_" + page]}
+          />
+        )}
       </ContentLayouts>
     </>
   );

@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { getAPIData } from "../../services/getAPIService";
 import { GoArrowUpRight } from "react-icons/go";
 import { FiSearch } from "react-icons/fi";
 import { RxHamburgerMenu } from "react-icons/rx";
@@ -8,21 +7,22 @@ import { IoMdHeart } from "react-icons/io";
 import { useGlobalContext } from "../../contexts/globalContext";
 import { IoCloseOutline } from "react-icons/io5";
 import DetailsHover from "../Hover/DetailsHover";
+import useAPIService from "../../services/getAPIService";
+import useSearchMovie from "../../hooks/useSearchMovie";
 
 const Navbar = (pathname) => {
   const [isTop, setIsTop] = useState(true);
-  const [loading, setLoading] = useState({
-    searchMovie: true,
-  });
-  const [searchMovies, setSearchMovies] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  let page = 1;
+  const [loading, setLoading] = useState({
+    ["search_" + page]: true,
+  });
   const [bgNavbar, setBgNavbar] = useState(true);
   const { favorite } = useGlobalContext();
   const menuRef = useRef();
   const inputSearchRef = useRef();
   const closeSearchRef = useRef();
   const modalSearchRef = useRef();
-
   const { genres } = useGlobalContext();
 
   window.addEventListener("scroll", () => {
@@ -47,25 +47,11 @@ const Navbar = (pathname) => {
   const handleCloseSearchModal = () => {
     modalSearchRef.current.close();
   };
-  useEffect(() => {
-    if (searchQuery == "") {
-      setLoading({ searchMovie: true });
-      return;
-    }
-    setLoading({ searchMovie: true });
-    const searchMovieTO = setTimeout(() => {
-      getAPIData({
-        key: "searchMovie",
-        path: "search/movie?query=" + searchQuery,
-        setter: setSearchMovies,
-        setterLoading: setLoading,
-        type: "search",
-      });
-    }, 700);
-    return () => {
-      clearTimeout(searchMovieTO);
-    };
-  }, [searchQuery]);
+  const { searchMovies, totalPage } = useSearchMovie(
+    searchQuery,
+    setLoading,
+    page
+  );
 
   const movieMenu = [
     { name: "Now Playing", link: "/now_playing" },
@@ -87,7 +73,6 @@ const Navbar = (pathname) => {
       clearTimeout(timeout);
     };
   }, [currentPathname]);
-
   return (
     <>
       {/* modal */}
@@ -114,7 +99,7 @@ const Navbar = (pathname) => {
               Esc
             </button>
           </div>
-          {loading.searchMovie ? (
+          {loading["search_" + page] ? (
             <div className="h-50 flex items-center justify-center">
               <p className="text-base-content/60 text-sm">
                 {searchQuery ? "Loading ..." : "Start typing to search"}
@@ -126,37 +111,52 @@ const Navbar = (pathname) => {
                 Search Results for "{searchQuery}"
               </p>
               {searchMovies.length > 0 ? (
-                <ul className="h-100 overflow-auto px-4 ">
-                  {searchMovies.map(
-                    (item) =>
-                      item.poster_path && (
-                        <Link
-                          onClick={handleCloseSearchModal}
-                          to={"/movie/" + item.id}
-                          key={item.id}
-                          className="flex items-center w-full border-b  border-base-content/5  hover:bg-gray-500/10 gap-3 py-2"
-                        >
-                          <img
-                            src={
-                              import.meta.env.VITE_IMAGE_PATH + item.poster_path
-                            }
-                            className="w-10 min-w-10 min-h-12 bg-base-content rounded-xs"
-                            alt={item.title}
-                          />
-                          <div className="gap-0 flex flex-col">
-                            <p
-                              className="text-sm line-clamp-1 text-base-content/90"
-                              key={item.id}
-                            >
-                              {item.title}
-                            </p>
-                            <p className="line-clamp-1 text-xs text-base-content/80">
-                              {item.overview}
-                            </p>
-                          </div>
-                        </Link>
-                      )
-                  )}
+                <ul className="h-100 overflow-auto px-4 flex justify-between flex-col">
+                  <div>
+                    {searchMovies.map(
+                      (item) =>
+                        item.poster_path && (
+                          <Link
+                            onClick={handleCloseSearchModal}
+                            to={"/movie/" + item.id}
+                            key={item.id}
+                            className="flex items-center w-full border-b  border-base-content/5  hover:bg-gray-500/10 gap-3 py-2"
+                          >
+                            <img
+                              src={
+                                import.meta.env.VITE_IMAGE_PATH +
+                                item.poster_path
+                              }
+                              className="w-10 min-w-10 min-h-12 bg-base-content rounded-xs"
+                              alt={item.title}
+                            />
+                            <div className="gap-0 flex flex-col">
+                              <p
+                                className="text-sm line-clamp-1 text-base-content/90"
+                                key={item.id}
+                              >
+                                {item.title}
+                              </p>
+                              <p className="line-clamp-1 text-xs text-base-content/80">
+                                {item.overview}
+                              </p>
+                            </div>
+                          </Link>
+                        )
+                    )}
+                  </div>
+                  <Link
+                    to={`/search?q=${searchQuery}&p=${
+                      totalPage === 1 ? page : page + 1
+                    }`}
+                    onClick={() => {
+                      handleCloseSearchModal();
+                    }}
+                    className="w-full text-center mt-3 btn"
+                  >
+                    See All
+                    <GoArrowUpRight className="text-lg"/>
+                  </Link>
                 </ul>
               ) : (
                 <div className="h-50 flex items-center justify-center">
@@ -239,7 +239,7 @@ const Navbar = (pathname) => {
             className="drawer-overlay"
           ></label>
           <div className="menu bg-base-200 text-base-content h-full w-80 p-0 gap-2 flex-col justify-between flex">
-            <div className="flex flex-col gap-5 pt-4 px-6">
+            <div className="flex flex-col gap-3 md:gap-5 pt-4 px-6">
               <div className="flex justify-between items-center  text-3xl border-b border-base-content/10 pb-4">
                 <h1 to="/">MovoRa</h1>
                 <IoCloseOutline
@@ -248,7 +248,7 @@ const Navbar = (pathname) => {
                 />
               </div>
               {/* <h1 className="text-2xl">Category</h1> */}
-              <div className=" flex flex-col gap-5 text-lg font-light">
+              <div className=" flex flex-col gap-3 md:gap-5 text-lg font-light">
                 {movieMenu.map((item, index) => (
                   <Link
                     key={index}

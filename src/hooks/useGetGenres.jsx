@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { getAPIData } from "../services/getAPIService";
+import useAPIService from "../services/getAPIService";
 
+const { getAPIData } = useAPIService();
 const useGetGenres = () => {
   const [genres, setGenres] = useState([]);
-  const [loadingGenres, setLoadingGenres] = useState({genres : true});
-
+  const [loadingGenres, setLoadingGenres] = useState({ genres: true });
   const handleGetGenres = () => {
     getAPIData({
       key: "genres",
@@ -14,7 +14,6 @@ const useGetGenres = () => {
       setterLoading: setLoadingGenres,
     });
   };
-
   useEffect(() => {
     if (genres.length > 0) {
       return;

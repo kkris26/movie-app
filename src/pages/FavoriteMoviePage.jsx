@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
 import ContentLayouts from "../layouts/ContentLayouts";
 import MovieListLayout from "../layouts/MovieListLayout";
-import { getAPIData } from "../services/getAPIService";
 import { useGlobalContext } from "../contexts/globalContext";
 
 const FavoriteMoviePage = () => {

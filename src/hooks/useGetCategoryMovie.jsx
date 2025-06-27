@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { getAPIData } from "../services/getAPIService";
+import { useEffect, useState } from "react";
+import useAPIService from "../services/getAPIService";
 
+const { getAPIData } = useAPIService();
 const useGetCategoryMovie = (category, setLoading, page) => {
   const [movieCategory, setMovieCategory] = useState([]);
-  const [totalPage, setTotalPage] = useState();
-  const [notFound, setNotFound] = useState(false);
+  const [totalPage, setTotalPage] = useState(0);
   const getCategoryMovie = () => {
     getAPIData({
       key: category + "_" + page,
@@ -12,15 +12,13 @@ const useGetCategoryMovie = (category, setLoading, page) => {
       setter: setMovieCategory,
       setterLoading: setLoading,
       setTotalPage: setTotalPage,
-      setNotFound: setNotFound,
     });
   };
-
   useEffect(() => {
     setLoading((prev) => ({ ...prev, [category + "_" + page]: true }));
     getCategoryMovie();
   }, [page]);
-  return { movieCategory, totalPage, notFound };
+  return { movieCategory, totalPage };
 };
 
 export default useGetCategoryMovie;

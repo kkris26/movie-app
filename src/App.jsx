@@ -12,6 +12,8 @@ import Footer from "./components/Footer/Footer";
 import FavoriteMoviePage from "./pages/FavoriteMoviePage";
 import ThemeToggle from "./components/Button/ThemeToggle";
 import NotFoundPage from "./pages/NotFoundPage";
+import AudioPlay from "./components/Button/AudioPlay";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
   const location = useLocation();
@@ -53,6 +55,14 @@ function App() {
               element={
                 <PageTransitions>
                   <MovieCategoryPage />
+                </PageTransitions>
+              }
+            />
+            <Route
+              path="/search"
+              element={
+                <PageTransitions>
+                  <SearchPage />
                 </PageTransitions>
               }
             />

@@ -12,10 +12,10 @@ const PaginationButton = ({
     sectionRef.current?.scrollIntoView({ behavior: "smooth" });
   };
   return (
-    <div className="flex mt-10 justify-center w-full ">
+    <div className="flex mt-10 justify-center w-full">
       <div className="join">
         <button
-          className="join-item btn"
+          className="join-item btn z-1"
           onClick={() => {
             handlePrevPage({ page, setPage }), scroolTo();
           }}
@@ -27,7 +27,7 @@ const PaginationButton = ({
           {loading || !totalPage ? "... " : totalPage}
         </button>
         <button
-          className="join-item btn"
+          className="join-item btn z-1"
           onClick={() => {
             handleNextPage({ page, totalPage, setPage }), scroolTo();
           }}

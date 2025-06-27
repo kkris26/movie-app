@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { getAPIData } from "../services/getAPIService";
+import useAPIService from "../services/getAPIService";
 
+const { getAPIData } = useAPIService();
 const useGetPopularMovie = (setLoading) => {
   const [popularMovie, setPopularMovie] = useState([]);
   const getPopularMovie = () => {
@@ -11,7 +12,6 @@ const useGetPopularMovie = (setLoading) => {
       setterLoading: setLoading,
     });
   };
-
   useEffect(() => {
     getPopularMovie();
   }, []);

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { getAPIData } from "../services/getAPIService";
+import useAPIService from "../services/getAPIService";
 
+const { getAPIData } = useAPIService();
 const useGetTopRatedMovie = (setLoading) => {
   const [topRatedMovie, setTopRatedMovie] = useState([]);
   const getTopRatedMovie = () => {

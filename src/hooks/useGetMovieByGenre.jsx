@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { getAPIData } from "../services/getAPIService";
+import useAPIService from "../services/getAPIService";
 
+const { getAPIData } = useAPIService();
 const useGetMovieByGenre = (setLoading, id, page) => {
   const [movieByGenre, setMovieByGenre] = useState([]);
   const [totalPage, setTotalPage] = useState(0);

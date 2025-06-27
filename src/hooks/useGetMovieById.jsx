@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { getAPIData } from "../services/getAPIService";
+import { useEffect, useState } from "react";
+import useAPIService from "../services/getAPIService";
 
+const { getAPIData } = useAPIService();
 const useGetMovieById = (setLoading, id) => {
   const [movieById, setMovieById] = useState({});
   const [notFound, setNotFound] = useState(false);

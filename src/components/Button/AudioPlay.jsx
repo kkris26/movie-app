@@ -1,7 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaPause, FaPlay } from "react-icons/fa";
-import { Link } from "react-router-dom";
-
 const AudioPlay = () => {
   const [isPlay, setIsPlay] = useState(false);
   const [first, setFirst] = useState(true);
@@ -17,9 +15,6 @@ const AudioPlay = () => {
     setIsPlay(false);
   };
 
-  //   window.onload = () => {
-  //     setFirst(true);
-  //   };
   return (
     <>
       <div

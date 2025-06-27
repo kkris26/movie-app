@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import { getAPIData } from "../services/getAPIService";
+import useAPIService from "../services/getAPIService";
 
+const { getAPIData } = useAPIService();
 const useGetNowPlaying = (setLoading) => {
   const [nowPlayingMovie, setNowPlayingMovie] = useState([]);
   const getMovieNowPlaying = () => {
@@ -11,7 +12,6 @@ const useGetNowPlaying = (setLoading) => {
       setterLoading: setLoading,
     });
   };
-
   useEffect(() => {
     getMovieNowPlaying();
   }, []);

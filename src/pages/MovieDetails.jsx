@@ -35,7 +35,6 @@ const MovieDetails = () => {
   if (notFound) {
     return <Navigate to={"404"} />;
   }
-  console.log(notFound);
   return (
     <>
       {loading[id] ? (
