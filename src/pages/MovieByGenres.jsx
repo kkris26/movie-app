@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import MovieListLayout from "../layouts/MovieListLayout";
 import ContentLayouts from "../layouts/ContentLayouts";
 import { useGlobalContext } from "../contexts/globalContext";
@@ -15,9 +15,11 @@ const MovieListSection = () => {
   const { genres } = useGlobalContext();
   const { movieByGenre, totalPage } = useGetMovieByGenre(setLoading, id, page);
   const sectionRef = useRef(null);
+  if (genres.length > 0 && !genres.find((item) => item.id == id)) {
+    return <Navigate to={"404"} />;
+  }
   const genreName =
-    genres.length > 0 && genres.find((item) => item.id == id).name;
-
+    genres.length > 0 && genres.find((item) => item.id == id)?.name;
   return (
     <>
       <ContentLayouts sectionRef={sectionRef} type="no-hero">

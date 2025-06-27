@@ -6,7 +6,7 @@ const useGetTopRatedMovie = (setLoading) => {
   const getTopRatedMovie = () => {
     getAPIData({
       key: "top_rated_movie",
-      apiUrl: import.meta.env.VITE_MOVIE_BASE_API + "top_rated?region=ID",
+      path: "movie/top_rated?region=ID",
       setter: setTopRatedMovie,
       setterLoading: setLoading,
     });

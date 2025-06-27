@@ -45,7 +45,7 @@ const MovieSliderLayouts = ({ heading, loading, data, type, link }) => {
             },
           }}
         >
-          {loading
+          {loading || data.length === 0
             ? [...Array(10)].map((_, i) => (
                 <SwiperSlide key={i}>
                   <MovieCardLoading />

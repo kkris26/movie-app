@@ -24,7 +24,7 @@ const HomePage = () => {
 
   return (
     <>
-      {loading.now_playing_movie ? (
+      {loading.now_playing_movie || nowPlayingMovie.length === 0 ? (
         <HeroSectionLoad />
       ) : (
         <div className="h-dvh relative flex items-center transition-all duration-300 ease-in-out">

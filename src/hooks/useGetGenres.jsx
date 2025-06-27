@@ -8,7 +8,7 @@ const useGetGenres = () => {
   const handleGetGenres = () => {
     getAPIData({
       key: "genres",
-      apiUrl: import.meta.env.VITE_GENRE_LIST,
+      path: "genre/movie/list",
       setter: setGenres,
       resultData: "genres",
       setterLoading: setLoadingGenres,

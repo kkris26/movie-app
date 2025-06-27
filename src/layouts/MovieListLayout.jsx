@@ -29,12 +29,19 @@ const MovieListLayout = ({ data, heading, type = "", loading, sectionRef }) => {
         {loading ? (
           [...Array(20)].map((_, idx) => <MovieCardLoading key={idx} />)
         ) : data.length === 0 ? (
-          <div className="h-100 flex flex-col gap-4  w-full  items-center justify-center">
-            <p className="text-base-content text-xl">
-              You haven't added any favorites yet.
+          <div className="  flex flex-col gap-4 h-[70vh]  items-center justify-center">
+            <p className="text-base-content text-md md:text-2xl text-center">
+              {type === "favorite"
+                ? "You haven't added any favorites yet."
+                : `No ${heading} movies found in this list.`}
             </p>
-            <Link to={"/"} className="underline underline-offset-4">
-              Browse Movies
+            <Link
+              to={"/"}
+              className="underline underline-offset-4 text-sm md:text-lg"
+            >
+              {type === "favorite"
+                ? "Browse Movies"
+                : "Try exploring other categories"}
             </Link>
           </div>
         ) : (

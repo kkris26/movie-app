@@ -56,7 +56,7 @@ const Navbar = (pathname) => {
     const searchMovieTO = setTimeout(() => {
       getAPIData({
         key: "searchMovie",
-        apiUrl: import.meta.env.VITE_SEARCH_MOVIES + searchQuery,
+        path: "search/movie?query=" + searchQuery,
         setter: setSearchMovies,
         setterLoading: setLoading,
         type: "search",
@@ -252,7 +252,11 @@ const Navbar = (pathname) => {
                 {movieMenu.map((item, index) => (
                   <Link
                     key={index}
-                    to={item.link}
+                    to={
+                      item.link === "/favorite"
+                        ? item.link
+                        : "category" + item.link
+                    }
                     onClick={handleCloseMenu}
                     className="text-base-content/90 hover:underline underline-offset-6 flex items-center gap-4 justify-between hover:text-base-content"
                   >

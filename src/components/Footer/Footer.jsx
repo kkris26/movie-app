@@ -30,7 +30,7 @@ const Footer = () => {
           {movieMenu.map((item, index) => (
             <Link
               key={index}
-              to={item.link}
+              to={"category" + item.link}
               className="text-base-content/90 hover:underline underline-offset-6 flex items-center gap-4 justify-between hover:text-base-content"
             >
               {item.name}

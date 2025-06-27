@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useRef, useState } from "react";
+import { Navigate, useParams } from "react-router-dom";
 import MovieListLayout from "../layouts/MovieListLayout";
 import ContentLayouts from "../layouts/ContentLayouts";
 import useGetCategoryMovie from "../hooks/useGetCategoryMovie";
@@ -11,7 +11,7 @@ const MovieCategoryPage = () => {
   const [loading, setLoading] = useState({
     [category + "_" + page]: true,
   });
-  const { movieCategory, totalPage } = useGetCategoryMovie(
+  const { movieCategory, totalPage, notFound } = useGetCategoryMovie(
     category,
     setLoading,
     page
@@ -23,6 +23,9 @@ const MovieCategoryPage = () => {
     { name: "Top Rated", link: "top_rated" },
     { name: "Upcoming", link: "upcoming" },
   ];
+  if (!movieList.find((item) => item.link == category)) {
+    return <Navigate to={"404"} />;
+  }
   return (
     <>
       <ContentLayouts type="no-hero" sectionRef={sectionRef}>
@@ -35,13 +38,15 @@ const MovieCategoryPage = () => {
           type={category}
           loadCardItem={10}
         />
-        <PaginationButton
-          page={page}
-          totalPage={totalPage}
-          setPage={setPage}
-          sectionRef={sectionRef}
-          loading={loading[category + "_" + page]}
-        />
+        {movieCategory.length > 0 && (
+          <PaginationButton
+            page={page}
+            totalPage={totalPage}
+            setPage={setPage}
+            sectionRef={sectionRef}
+            loading={loading[category + "_" + page]}
+          />
+        )}
       </ContentLayouts>
     </>
   );

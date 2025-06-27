@@ -14,6 +14,7 @@ const FavoriteMoviePage = () => {
           heading={"Favorite Movie"}
           loading={loadingGenres.genres}
           loadCardItem={10}
+          type="favorite"
         />
       </ContentLayouts>
     </>

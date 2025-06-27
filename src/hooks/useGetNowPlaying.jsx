@@ -6,9 +6,7 @@ const useGetNowPlaying = (setLoading) => {
   const getMovieNowPlaying = () => {
     getAPIData({
       key: "now_playing_movie",
-      apiUrl:
-        import.meta.env.VITE_MOVIE_BASE_API +
-        "now_playing?region=ID",
+      path: "/movie/now_playing?region=ID",
       setter: setNowPlayingMovie,
       setterLoading: setLoading,
     });

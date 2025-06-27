@@ -4,7 +4,7 @@ import { FaStar } from "react-icons/fa";
 import { GoArrowUpRight, GoPerson } from "react-icons/go";
 import { IoMdHeart, IoMdHeartEmpty, IoMdTime } from "react-icons/io";
 import { IoPersonSharp } from "react-icons/io5";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import {
   formatDate,
   formatRating,
@@ -24,14 +24,18 @@ const MovieDetails = () => {
     ["relatedMovie-" + id]: true,
     genre: true,
   });
+
   const { favorite, toggleFavorite, loadingGenres } = useGlobalContext();
   const sectionRef = useRef();
-  const { movieById } = useGetMovieById(setLoading, id);
+  const { movieById, notFound } = useGetMovieById(setLoading, id);
   const { relatedMovie } = useGetRelatedMovie(setLoading, movieById, id);
-
   const scroolTo = () => {
     sectionRef.current.scrollIntoView({ behavior: "smooth" });
   };
+  if (notFound) {
+    return <Navigate to={"404"} />;
+  }
+  console.log(notFound);
   return (
     <>
       {loading[id] ? (

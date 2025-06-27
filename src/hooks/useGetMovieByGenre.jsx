@@ -7,9 +7,7 @@ const useGetMovieByGenre = (setLoading, id, page) => {
   const getMovieByGenre = () => {
     getAPIData({
       key: id + "_" + page,
-      apiUrl:
-        import.meta.env.VITE_MOVIE_LIST_BY_GENRE +
-        `?page=${page}&with_genres=${id}`,
+      path: `discover/movie?page=${page}&with_genres=${id}`,
       setter: setMovieByGenre,
       setterLoading: setLoading,
       setTotalPage: setTotalPage,

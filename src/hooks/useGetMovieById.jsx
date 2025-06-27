@@ -2,20 +2,22 @@ import React, { useEffect, useState } from "react";
 import { getAPIData } from "../services/getAPIService";
 
 const useGetMovieById = (setLoading, id) => {
-  const [movieById, setMovieById] = useState([]);
+  const [movieById, setMovieById] = useState({});
+  const [notFound, setNotFound] = useState(false);
   const getMovieById = () => {
     getAPIData({
       key: id,
-      apiUrl: import.meta.env.VITE_MOVIE_BASE_API + id,
+      path: `movie/${id}`,
       setter: setMovieById,
       setterLoading: setLoading,
       resultData: null,
+      setNotFound: setNotFound,
     });
   };
   useEffect(() => {
     getMovieById();
   }, []);
-  return { movieById };
+  return { movieById, notFound };
 };
 
 export default useGetMovieById;
