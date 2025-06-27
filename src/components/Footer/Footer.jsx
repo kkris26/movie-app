@@ -8,7 +8,7 @@ const Footer = () => {
     { name: "Now Playing", link: "/now_playing" },
     { name: "Popular", link: "/popular" },
     { name: "Top Rated", link: "/top_rated" },
-    { name: "Upcoming", link: "/upcoming" },
+    { name: "Coming Soon", link: "/upcoming" },
     { name: "Favorite", link: "/favorite" },
   ];
 
@@ -30,7 +30,9 @@ const Footer = () => {
           {movieMenu.map((item, index) => (
             <Link
               key={index}
-              to={"category" + item.link}
+              to={
+                item.link === "/favorite" ? item.link : "category" + item.link
+              }
               className="text-base-content/90 hover:underline underline-offset-6 flex items-center gap-4 justify-between hover:text-base-content"
             >
               {item.name}

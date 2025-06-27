@@ -29,7 +29,7 @@ const MovieListLayout = ({ data, heading, type = "", loading, sectionRef }) => {
         {loading ? (
           [...Array(20)].map((_, idx) => <MovieCardLoading key={idx} />)
         ) : data.length === 0 ? (
-          <div className="  flex flex-col gap-4 h-[70vh]  items-center justify-center">
+          <div className="  flex flex-col gap-4 h-[70vh]  items-center justify-center z-1">
             <p className="text-base-content text-md md:text-2xl text-center">
               {type === "favorite" ? (
                 "You haven't added any favorites yet."

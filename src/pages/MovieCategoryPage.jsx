@@ -21,7 +21,7 @@ const MovieCategoryPage = () => {
     { name: "Now Playing", link: "now_playing" },
     { name: "Popular", link: "popular" },
     { name: "Top Rated", link: "top_rated" },
-    { name: "Upcoming", link: "upcoming" },
+    { name: "Coming Soon", link: "upcoming" },
   ];
   if (!movieList.find((item) => item.link == category)) {
     return <Navigate to={"404"} />;
@@ -31,9 +31,7 @@ const MovieCategoryPage = () => {
       <ContentLayouts type="no-hero" sectionRef={sectionRef}>
         <MovieListLayout
           data={movieCategory}
-          heading={
-            "Category " + movieList.find((item) => item.link == category).name
-          }
+          heading={movieList.find((item) => item.link == category).name}
           loading={loading[category + "_" + page]}
           type={category}
           loadCardItem={10}

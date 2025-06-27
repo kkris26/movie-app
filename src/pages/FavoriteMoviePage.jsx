@@ -9,7 +9,7 @@ const FavoriteMoviePage = () => {
       <ContentLayouts type="no-hero">
         <MovieListLayout
           data={favorite}
-          heading={"Favorite Movie"}
+          heading={"Favorite Movies"}
           loading={loadingGenres.genres}
           loadCardItem={10}
           type="favorite"
