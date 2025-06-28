@@ -14,6 +14,7 @@ import ThemeToggle from "./components/Button/ThemeToggle";
 import NotFoundPage from "./pages/NotFoundPage";
 import AudioPlay from "./components/Button/AudioPlay";
 import SearchPage from "./pages/SearchPage";
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   const location = useLocation();
@@ -95,6 +96,7 @@ function App() {
         </AnimatePresence>
       </MainLayout>
       <Footer />
+      <Analytics />
     </>
   );
 }
