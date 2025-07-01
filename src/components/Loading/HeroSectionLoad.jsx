@@ -1,5 +1,3 @@
-import React from "react";
-
 const HeroSectionLoad = () => {
   return (
     <div className="h-screen  flex items-center">

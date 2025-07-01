@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 
-import { FaStar } from "react-icons/fa";
+import { FaPlay, FaStar } from "react-icons/fa";
 import { GoArrowUpRight, GoPerson } from "react-icons/go";
 import { IoMdHeart, IoMdHeartEmpty, IoMdTime } from "react-icons/io";
 import { IoPersonSharp } from "react-icons/io5";
@@ -16,6 +16,8 @@ import { useGlobalContext } from "../contexts/globalContext";
 import useGetMovieById from "../hooks/useGetMovieById";
 import useGetRelatedMovie from "../hooks/useGetRelatedMovie";
 import MovieSliderLayouts from "../layouts/MovieSliderLayouts";
+import useGetVideo from "../hooks/useGetVideo";
+import VideoPopup from "../components/Popup/VideoPopup";
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -23,18 +25,36 @@ const MovieDetails = () => {
     [id]: true,
     ["relatedMovie-" + id]: true,
     genre: true,
+    ["videoKey" + id]: true,
   });
+  const [videoKey, setVideoKey] = useState([]);
+  const [videoUrl, setVideoUrl] = useState([]);
 
   const { favorite, toggleFavorite, loadingGenres } = useGlobalContext();
-  const sectionRef = useRef();
+  const sectionRef = useRef(null);
+  const videoRef = useRef(null);
   const { movieById, notFound } = useGetMovieById(setLoading, id);
   const { relatedMovie } = useGetRelatedMovie(setLoading, movieById, id);
   const scroolTo = () => {
     sectionRef.current.scrollIntoView({ behavior: "smooth" });
   };
+  const { video } = useGetVideo(id, setLoading);
   if (notFound) {
     return <Navigate to={"404"} />;
   }
+  useEffect(() => {
+    const filter = video.find((item) =>
+      item.name === "Official Trailer"
+        ? item.name === "Official Trailer" && item.site === "YouTube"
+        : item.type === "Trailer" && item.site === "YouTube"
+    )?.key;
+    setVideoKey(filter);
+  }, [video]);
+
+  const handlePlayVideo = () => {
+    videoRef.current?.showModal();
+    setVideoUrl(`https://www.youtube.com/embed/${videoKey}?autoplay=1`);
+  };
   return (
     <>
       {loading[id] ? (
@@ -141,7 +161,10 @@ const MovieDetails = () => {
                       <div className="skeleton h-5 w-28 rounded-full"></div>
                     </div>
                   </div>
-                  <div className="skeleton h-10 w-48 rounded mt-2"></div>
+                  <div className="flex gap-3 md:gap-4 items-center mt-2">
+                    <div className="skeleton h-8 w-30 rounded "></div>
+                    <div className="skeleton h-8 w-30 rounded "></div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -192,20 +215,44 @@ const MovieDetails = () => {
                       </ul>
                     </div>
                   )}
-                  <div
-                    className="mt-2"
-                    onClick={() => toggleFavorite(movieById)}
-                  >
-                    {favorite.find((fav) => fav.id === movieById.id) ? (
-                      <button className="p-2 flex items-center text-sm lg:text-md cursor-pointer gap-2 bg-base-300 rounded">
-                        <IoMdHeart className="text-sm lg:text-md text-red-400" />
-                        Remove from Favorite
-                      </button>
+                  <div className="flex gap-3 lg:gap-4 items-center mt-2">
+                    <div className="" onClick={() => toggleFavorite(movieById)}>
+                      {favorite.find((fav) => fav.id === movieById.id) ? (
+                        <button className="p-2 flex items-center text-sm lg:text-md cursor-pointer gap-2 bg-base-300 rounded">
+                          <IoMdHeart className="text-sm lg:text-md text-red-400" />
+                          Remove Favorite
+                        </button>
+                      ) : (
+                        <button className="p-2 flex items-center text-sm lg:text-md cursor-pointer gap-1 bg-red-400 light:bg-red-800 text-white rounded">
+                          <IoMdHeartEmpty className="text-lg lg:text-md" /> Add
+                          Favorite
+                        </button>
+                      )}
+                    </div>
+
+                    {loading[videoKey + id] ? (
+                      <div className="skeleton h-8 w-30 rounded "></div>
                     ) : (
-                      <button className="p-2 flex items-center text-xs lg:text-md cursor-pointer gap-1 bg-red-400 light:bg-red-800 text-white rounded">
-                        <IoMdHeartEmpty className="text-sm lg:text-md" /> Add to
-                        Favorite
-                      </button>
+                      videoKey && (
+                        <>
+                          <button
+                            className="p-2 bg-primary focus:border-none focus:outline-0 text-white flex items-center text-sm lg:text-md cursor-pointer gap-2 rounded"
+                            onClick={handlePlayVideo}
+                          >
+                            <FaPlay className="text-xs lg:text-xs" />
+                            Watch Trailer
+                          </button>
+
+                          <VideoPopup
+                            videoUrl={videoUrl}
+                            videoRef={videoRef}
+                            setVideoUrl={setVideoUrl}
+                            favorite={favorite}
+                            toggleFavorite={toggleFavorite}
+                            movieById={movieById}
+                          />
+                        </>
+                      )
                     )}
                   </div>
                 </div>
