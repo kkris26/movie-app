@@ -19,7 +19,9 @@ const MovieCard = ({ item, type }) => {
           ) : (
             <div className="absolute right-2 top-2 md:right-3 md:top-3 text-white  bg-amber-500 px-[5px] py-[2px] rounded-xs md:rounded-sm flex items-center gap-1 z-2">
               <FaStar className="text-xs md:text-sm" />
-              <p className="text-[11px] md:text-xs">{formatRating(item.vote_average)}</p>
+              <p className="text-[11px] md:text-xs">
+                {formatRating(item.vote_average)}
+              </p>
             </div>
           )}
           <div className="inset-0 z-1 absolute  hover:bg-black/20 bg-black/0 transition-all 0.3s"></div>
@@ -34,7 +36,7 @@ const MovieCard = ({ item, type }) => {
       <div className="flex mt-1 md:mt-2 lg:mt-0 justify-between items-center gap-1">
         <Link
           to={`/movie/${item.id}`}
-          className="text-[11px] md:text-md lg:text-lg z-1 hover:underline hover:underline-offset-2 cursor-pointer  transition-all 0.3s line-clamp-1"
+          className="text-xs md:text-md lg:text-lg z-1 hover:underline hover:underline-offset-2 cursor-pointer  transition-all 0.3s line-clamp-1"
         >
           {item.title}
         </Link>

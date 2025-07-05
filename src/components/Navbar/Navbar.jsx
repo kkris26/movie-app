@@ -248,7 +248,7 @@ const Navbar = (pathname) => {
                 />
               </div>
               {/* <h1 className="text-2xl">Category</h1> */}
-              <div className=" flex flex-col gap-3 md:gap-5 text-lg font-light">
+              <div className=" flex flex-col gap-3 md:gap-5 text-lg">
                 {movieMenu.map((item, index) => (
                   <Link
                     key={index}
