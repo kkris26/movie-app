@@ -16,6 +16,22 @@ export const GlobalProvider = ({ children }) => {
     localFavorite ? JSON.parse(localFavorite) : []
   );
 
+  useEffect(() => {
+    const now = Date.now();
+    const firstVisit = localStorage.getItem("firstVisit");
+
+    if (!firstVisit) {
+      localStorage.setItem("firstVisit", now);
+    } else {
+      const diffInMinutes = (now - Number(firstVisit)) / (1000 * 60 * 60 * 24);
+
+      if (diffInMinutes > 1) {
+        localStorage.clear();
+        localStorage.setItem("firstVisit", now);
+      }
+    }
+  }, []);
+
   const modalRef = useRef(null);
   const hanldeDeleteFavorite = () => {
     setFavorite((prev) => prev.filter((item) => item.id !== favToRemove.id));
