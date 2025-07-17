@@ -6,13 +6,17 @@ import MovieListLayout from "../layouts/MovieListLayout";
 import { Navigate, useSearchParams } from "react-router-dom";
 
 const SearchPage = () => {
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get("q");
   const page = Number(searchParams.get("p") || 1);
   const [pages, setPages] = useState(page);
   useEffect(() => {
     setPages(page);
   }, [query, page]);
+
+  useEffect(() => {
+    setSearchParams(`?q=${query}&p=${pages}`);
+  }, [pages]);
   const [loading, setLoading] = useState({});
   const { searchMovies, totalPage, notFound } = useSearchMovie(
     query,
